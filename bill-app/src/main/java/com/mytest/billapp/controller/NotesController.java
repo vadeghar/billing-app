@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Notes;
-import com.mytest.billapp.service.NoteService;
+import com.mytest.billapp.service.NotesService;
 
 @Controller
 public class NotesController {
 	
 	@Autowired
-	NoteService noteService;
+	NotesService notesService;
 	
 	@GetMapping("/notesList")
 	public String getAllNotes(Model model) {
-		model.addAttribute("notesList", noteService.findAll());
+		model.addAttribute("notesList", notesService.findAll());
 	    return "notesList";
 	}
 	
@@ -32,36 +32,36 @@ public class NotesController {
 	@RequestMapping(value = "saveNotes", method = RequestMethod.POST)
 	public String saveNotes(@ModelAttribute Notes notes, Model model) {
 		System.out.println("DFDFD");
-		model.addAttribute("notes", noteService.save(notes));
+		model.addAttribute("notes", notesService.save(notes));
 	    return "notes";
 	}
 	
 	@GetMapping("/notes/{id}")
-	public String getNoteById(@PathVariable(value = "id") Long noteId, Model model) {
-		if(noteId == null || noteId.intValue() == 0)
+	public String getNotesById(@PathVariable(value = "id") Long id, Model model) {
+		if(id == null || id.intValue() == 0)
 			model.addAttribute("notes", new Notes());
-		model.addAttribute("notes", noteService.findById(noteId));
+		model.addAttribute("notes", notesService.findById(id));
 	    /*return noteService.findById(noteId)
 	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));*/
 		return "notes";
 	}
 	
 	@PutMapping("/notes/update/{id}")
-	public String updateNote(@PathVariable(value = "id") Long noteId,  @Valid @ModelAttribute Notes noteDetails, Model model) {
+	public String updateNotes(@PathVariable(value = "id") Long id,  @Valid @ModelAttribute Notes notes, Model model) {
 
-	    Notes note = noteService.findById(noteId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
-	    note.setTitle(noteDetails.getTitle());
-	    note.setContent(noteDetails.getContent());
-	    model.addAttribute("notes",noteService.save(note));
+	    Notes notes1 = notesService.findById(id)
+	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
+	    notes1.setTitle(notes.getTitle());
+	    notes1.setContent(notes.getContent());
+	    model.addAttribute("notes",notesService.save(notes1));
 	    return "notes";
 	}
 	
 	@GetMapping("/notes/delete/{id}")
-	public String deleteNote(@PathVariable(value = "id") Long noteId, Model model) {
-	    Notes note = noteService.findById(noteId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
-	    noteService.delete(note);
+	public String deleteNotes(@PathVariable(value = "id") Long id, Model model) {
+	    Notes notes = notesService.findById(id)
+	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
+	    notesService.delete(notes);
 	    return getAllNotes(model);
 	}
 }

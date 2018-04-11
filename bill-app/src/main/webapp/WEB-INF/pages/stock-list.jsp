@@ -8,8 +8,8 @@
 	<thead>
 		<tr class="text-white">
 			<th>ID</th>
-            <th>Title</th>
-            <th>Content</th>
+           <!--  <th>Title</th>
+            <th>Content</th> -->
  			<th>Action</th>
 		</tr>
 	</thead>
@@ -17,13 +17,13 @@
 	
 	<!--Table body-->
 	<tbody>
-		<c:forEach var="notes" items="${notesList}">
+		<c:forEach var="stock" items="${stockList}">
            <tr>
-               <td>${notes.id}</td>
-               <td>${notes.title}</td>
-               <td>${notes.content}</td>
-               <td><a href='${pageContext.request.contextPath}/notes/${notes.id}'>Edit</a>
-                   <a href='${pageContext.request.contextPath}/notes/delete/${notes.id}'>Delete</a>
+               <td>${stock.id}</td>
+               <%-- <td>${stock.title}</td>
+               <td>${stock.content}</td> --%>
+               <td><a href='${pageContext.request.contextPath}/stock/${stock.id}'>Edit</a>
+                   <a href='${pageContext.request.contextPath}/stock/delete/${stock.id}'>Delete</a>
               </td>
            </tr>
          </c:forEach>

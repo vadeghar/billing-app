@@ -8,74 +8,74 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.mytest.billapp.model.Notes;
-import com.mytest.billapp.repsitory.NoteRepository;
-import com.mytest.billapp.service.NoteService;
+import com.mytest.billapp.repsitory.NotesRepository;
+import com.mytest.billapp.service.NotesService;
 
 @Service
-public class NoteServiceImpl implements NoteService {
+public class NotesServiceImpl implements NotesService {
 	
 	@Autowired
-	NoteRepository noteRepository; 
+	NotesRepository notesRepository; 
 	
 	public Notes save(Notes entity) {
-		return noteRepository.save(entity);
+		return notesRepository.save(entity);
 	}
 	
 	public List<Notes> saveAll(List<Notes> entities) {
-		return noteRepository.saveAll(entities);
+		return notesRepository.saveAll(entities);
 	}
 	
 	public void flush() {
-		noteRepository.flush();
+		notesRepository.flush();
 	}
 	
 	public void deleteById(Long id) {
-		noteRepository.deleteById(id);
+		notesRepository.deleteById(id);
 	}
 	
 	public void delete(Notes entity) {
-		noteRepository.delete(entity);
+		notesRepository.delete(entity);
 	}
 	
 	public void deleteAll(List<Notes> entities) {
-		noteRepository.deleteAll(entities);
+		notesRepository.deleteAll(entities);
 	}
 	
 	public void deleteInBatch(List<Notes> entities) {
-		noteRepository.deleteInBatch(entities);
+		notesRepository.deleteInBatch(entities);
 	}
 	
 	public void deleteAll() {
-		noteRepository.deleteAll();
+		notesRepository.deleteAll();
 	}
 	
 	public Notes getOne(Long id) {
-		return noteRepository.getOne(id);
+		return notesRepository.getOne(id);
 	}
 	public Optional<Notes> findById(Long id) {
-		return noteRepository.findById(id);
+		return notesRepository.findById(id);
 	}
 	
 	public boolean existsById(Long id) {
-		return noteRepository.existsById(id);
+		return notesRepository.existsById(id);
 	}
 	
 	public List<Notes> findAll() {
-		return noteRepository.findAll();
+		return notesRepository.findAll();
 	}
 	
 	public List<Notes> findAll(Sort sort) {
-		return noteRepository.findAll(sort);
+		return notesRepository.findAll(sort);
 	}
 	
 	public long count() {
-		return noteRepository.count();
+		return notesRepository.count();
 	}
 	
 	
 	
 	public Notes saveAndFlush(Notes entity) {
-		return noteRepository.saveAndFlush(entity);
+		return notesRepository.saveAndFlush(entity);
 	}
 	
 }
