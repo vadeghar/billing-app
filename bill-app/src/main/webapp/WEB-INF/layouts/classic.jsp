@@ -17,6 +17,7 @@
 <link href="${pageContext.request.contextPath}/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 <!-- Custom styles for this template -->
 <link href="${pageContext.request.contextPath}/static/css/style.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/static/css/sweetalert.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -27,11 +28,11 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="http://www.chartjs.org/dist/2.7.1/Chart.bundle.js"></script>
 <script src="http://www.chartjs.org/samples/latest/utils.js"></script>
-<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
-<!-- 
-<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet">
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
- -->
+<script src="${pageContext.request.contextPath}/static/js/sweetalert.min.js"></script>
+
+<!-- <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet"> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 
 
 </head>
