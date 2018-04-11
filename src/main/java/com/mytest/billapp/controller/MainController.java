@@ -14,7 +14,7 @@ public class MainController {
     }
  
      
-    @RequestMapping(value = { "/contactus" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/contactus" }, method = RequestMethod.POST)
     public String contactusPage(Model model) {
         model.addAttribute("address", "Vietnam");
         model.addAttribute("phone", "...");
