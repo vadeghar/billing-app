@@ -26,9 +26,14 @@ public class NotesController {
 	
 	@RequestMapping(value = "saveNotes", method = RequestMethod.POST)
 	public String saveNotes(@ModelAttribute Notes notes, Model model) {
-		System.out.println("DFDFD");
-		model.addAttribute("notes", notesService.save(notes));
-		model.addAttribute("message", "Succesfullt Saved.");
+		try {
+			model.addAttribute("notes", notesService.save(notes));
+			model.addAttribute("message", "Succesfully Saved.");
+		} catch (Exception e) {
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			e.printStackTrace();
+			return "notes";
+		}
 	    return "notes";
 	}
 	
@@ -37,19 +42,29 @@ public class NotesController {
 	public String addNotes(@ModelAttribute("id") Long id,  Model model) {
 		if(id == null || id.intValue() == 0)
 			model.addAttribute("notes", new Notes());
-		model.addAttribute("notes", notesService.findById(id));
-		model.addAttribute("message", "");
-	    /*return noteService.findById(noteId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));*/
+		try {
+			model.addAttribute("notes", notesService.findById(id));
+			model.addAttribute("message", "");
+		} catch (Exception e) {
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			e.printStackTrace();
+			return "notes";
+		}
 		return "notes";
 	}
 	
 	
 	@RequestMapping(value = "deleteNotes", method = RequestMethod.POST)
 	public String deleteNotes(@ModelAttribute("id") Long id, Model model) {
-	    Notes notes = notesService.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
-	    notesService.delete(notes);
+	    try {
+			Notes notes = notesService.findById(id)
+			        .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
+			notesService.delete(notes);
+		} catch (ResourceNotFoundException e) {
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			e.printStackTrace();
+			return getAllNotes(model);
+		}
 	    return getAllNotes(model);
 	}
 }

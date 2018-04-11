@@ -60,10 +60,26 @@ function addNotes() {
 }
 
 function deleteNotes(id) {
-	document.getElementById("id").value = id;
+	swal({
+		  title: "Are you sure?",
+		  text: "Once deleted, you will not be able to recover this!",
+		  icon: "warning",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+		  if (willDelete) {
+			document.getElementById("id").value = id;
+			document.getElementById("myForm").action = "/deleteNotes";
+			document.getElementById("myForm").submit();
+		  } else {
+		    
+		  }
+		});
+	/* document.getElementById("id").value = id;
 	document.getElementById("myForm").action = "/deleteNotes";
 	if(confirm("Are you sure want to delete?"))
-		document.getElementById("myForm").submit();
+		document.getElementById("myForm").submit(); */
 	
 }
 
