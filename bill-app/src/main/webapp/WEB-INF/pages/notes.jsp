@@ -1,16 +1,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-
+<form:form action="${pageContext.request.contextPath}/saveNotes" method="post" modelAttribute="notes" class="form-inline margin-top-30" id="myForm" >
+<div id="message" style="margin-top: -40px; float: left;"><c:out value="${message}"/>  </div>
+<input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="List Notes" onclick="listNotes()" >
+		
 <div role="tabpanel" class="account-search" id="">
 	<!-- Tab #4 Content Start -->
 	<div class="account-search collection-status">
-		<form:form action="${pageContext.request.contextPath}/saveNotes" method="post" modelAttribute="notes" class="form-inline">
+		
 			<div class="panel panel-primary">
+			
 				<div class="panel-heading">
 					<h3 class="panel-title">Details</h3>
 				</div>
 				<div class="panel-body">
+					
 					<div class="row">
 						<div class="col-sm-24 col-md-14">
 							<div class="col-md-12 col-sm-6">
@@ -29,18 +34,28 @@
 							<div class="row margin-top-20">
 								<div class="col-md-12">
 									<button id="btnSubmit" type="submit" class="btn btn-primary add-row">Save</button>
-									<a href="${pageContext.request.contextPath}/notesList" data-toggle="tab" class="btn btn-warning">Cancel</a>
+									<button id="btnSubmit" type="button" class="btn btn-primary add-row" onclick="listNotes();">Cancel</button>
+									<%-- <a href="${pageContext.request.contextPath}/notesList" data-toggle="tab" class="btn btn-warning">Cancel</a> --%>
 								</div>									
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</form:form>
+		
 	</div>
 </div>
+</form:form>
+<script type="text/javascript">
 
+function listNotes() {
+	document.getElementById("id").value = id;
+	document.getElementById("myForm").action = "/notesList";
+	//document.getElementById("myForm").method = "get";
+	document.getElementById("myForm").submit();
+}
 
+</script>
 
 
 
