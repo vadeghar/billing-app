@@ -3,9 +3,9 @@ package com.mytest.billapp.repsitory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.mytest.billapp.model.Notes;
+import com.mytest.billapp.model.User;
 
 @Repository
-public interface NoteRepository extends JpaRepository<Notes, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
 }

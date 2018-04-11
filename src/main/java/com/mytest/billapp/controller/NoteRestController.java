@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Notes;
-import com.mytest.billapp.repsitory.NoteRepository;
+import com.mytest.billapp.repsitory.NotesRepository;
 
 @RequestMapping("/api")
 public class NoteRestController {
 	
 	@Autowired
-	NoteRepository noteRepository;
+	NotesRepository noteRepository;
 	
 	@GetMapping("/notes")
 	public List<Notes> getAllNotes() {

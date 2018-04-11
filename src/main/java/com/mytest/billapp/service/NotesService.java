@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort;
 
 import com.mytest.billapp.model.Notes;
 
-public interface NoteService {
+public interface NotesService {
 	
 	public Notes save(Notes entity);
 	public List<Notes> saveAll(List<Notes> entities);
