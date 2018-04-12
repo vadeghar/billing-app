@@ -16,27 +16,35 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-sm-24 col-md-12">
-							<div class="">
+						<div class="col-sm-24 col-md-12 borderOnePx">
+							<div class="margin-10 form-content">
 								<form:hidden path="id"/>
 								<div class="form-group">
 									<label for="title" class="rightAlign">Title: <span class="require">*</span></label>
 									<form:input path="title" class="form-control"/>
 								</div>
-							</div>
-							<div class="">
+							
 								<div class="form-group">
 									<label for="content"  class="rightAlign">Content: <span class="require">*</span></label>
 									<form:textarea path="content" class="form-control" cols="25"/>
 								</div>
+								
+								<div class="row margin-top-20">
+									<div class="" style="text-align: center;">
+										<button id="btnSubmit" type="submit" class="btn btn-primary add-row">Save</button>
+										<button id="btnSubmit" type="button" class="btn btn-primary add-row" onclick="listNotes();">Cancel</button>
+										<%-- <a href="${pageContext.request.contextPath}/notesList" data-toggle="tab" class="btn btn-warning">Cancel</a> --%>
+									</div>									
+								</div>
+								
+								
 							</div>
 							
-							<div class="row margin-top-20">
-								<div class="">
-									<button id="btnSubmit" type="submit" class="btn btn-primary add-row">Save</button>
-									<button id="btnSubmit" type="button" class="btn btn-primary add-row" onclick="listNotes();">Cancel</button>
-									<%-- <a href="${pageContext.request.contextPath}/notesList" data-toggle="tab" class="btn btn-warning">Cancel</a> --%>
-								</div>									
+							
+						</div>
+						<div class="col-sm-24 col-md-12 borderOnePx">
+							<div class="margin-10 form-content">
+							
 							</div>
 						</div>
 					</div>

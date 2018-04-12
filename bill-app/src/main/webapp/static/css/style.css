@@ -10,6 +10,11 @@ a:hover, a:focus {
     color: #337ab7;
 }
 /*** Margins ***/
+.margin-5 { margin: 5px; }
+.margin-10 { margin: 10px; }
+.margin-20 { margin: 20px; }
+.margin-30 { margin: 30px; }
+
 .margin-top-5 { margin-top: 5px; }
 .margin-top-10 { margin-top: 1.0em; }
 .margin-top-20 { margin-top: 2.0em; }
@@ -238,7 +243,7 @@ a:hover, a:focus {
 
 @media (min-width: 1200px) {
 	.container {
-		width: 1160px;
+		width: 95%;
 	}
 }
 @media (min-width: 1200px) {
@@ -491,6 +496,10 @@ legend.scheduler-border {
 .tab-content {
 	min-height: 500px;
 }
+
+.form-content {
+	min-height: 200px;
+}
 .no-content {
 	position: relative;
     padding: 10px;
@@ -636,4 +645,8 @@ legend.scheduler-border {
 }
 .tab_5 {
 	background-color: #ed5565 !important;		
+}
+
+.borderOnePx {
+	border: solid 1px gainsboro;
 }
