@@ -44,38 +44,49 @@
 						</div>
 						<div class="col-sm-24 col-md-12 borderOnePx">
 							<div class="margin-5">
-								<table class="table table-bordered tb-color darken">								
-									<!--Table head-->
-									<thead>
-										<tr class="text-white">
-											<th>ID</th>
-								            <th>Title</th>
-								            <th>Content</th>
-								 			<th>Action</th>
-										</tr>
-									</thead>
-									<!--Table head-->
-									
-									<!--Table body-->
-									<tbody>
-										<c:forEach var="notes" items="${notesList}">
-								           <tr>
-								               <td>${notes.id}</td>
-								               <td>${notes.title}</td>
-								               <td>${notes.content}</td>
-								               <td>
-								               <button type="button" class="" onclick="editNotes('${notes.id}')">
-										          <span class="glyphicon glyphicon-pencil"></span>
-										        </button>
-										        <button type="button" class="" onclick="deleteNotes('${notes.id}')">
-										          <span class="glyphicon glyphicon glyphicon-remove"></span>
-										        </button>
-								              </td>
-								           </tr>
-								         </c:forEach>
-									</tbody>
-									<!--Table body-->
-								</table>
+								<c:choose>
+									<c:when test="${not empty notesList}">
+									<table class="table table-bordered tb-color darken">								
+										<!--Table head-->
+										<thead>
+											<tr class="text-white">
+												<th>ID</th>
+									            <th>Title</th>
+									            <th>Content</th>
+									 			<th>Action</th>
+											</tr>
+										</thead>
+										<!--Table head-->
+										
+										<!--Table body-->
+										<tbody>
+											<c:forEach var="notes" items="${notesList}">
+									           <tr>
+									               <td>${notes.id}</td>
+									               <td>${notes.title}</td>
+									               <td>${notes.content}</td>
+									               <td>
+									               <button type="button" class="" onclick="editNotes('${notes.id}')">
+											          <span class="glyphicon glyphicon-pencil"></span>
+											        </button>
+											        <button type="button" class="" onclick="deleteNotes('${notes.id}')">
+											          <span class="glyphicon glyphicon glyphicon-remove"></span>
+											        </button>
+									              </td>
+									           </tr>
+									         </c:forEach>
+										</tbody>
+										<!--Table body-->
+									</table>
+									</c:when>
+									<c:otherwise>
+										<table class="table table-bordered tb-color darken">
+											<tbody>
+												<tr style="width: 100%; text-align: center; color: red;"> <td> No Data Found </td> </tr>
+											</tbody>
+										</table>
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</div>
 					</div>
