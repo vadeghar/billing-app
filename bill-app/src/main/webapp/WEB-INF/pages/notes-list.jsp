@@ -39,7 +39,7 @@
 	<!--Table body-->
 </table>
 <%-- <form:hidden path="id" /> --%>
-<input type="hidden" id="id" name="id" value="${id}">
+<input type="hidden" id="selectedId" name="selectedId" value="${selectedId}">
 
 <!--Table-->
 <!-- Tab #5 Content End -->	
@@ -48,13 +48,13 @@
 <script type="text/javascript">
 
 function editNotes(id) {
-	document.getElementById("id").value = id;
+	document.getElementById("selectedId").value = id;
 	document.getElementById("myForm").action = "/notes";
 	document.getElementById("myForm").submit();
 }
 
 function addNotes() {
-	document.getElementById("id").value = 0;
+	document.getElementById("selectedId").value = 0;
 	document.getElementById("myForm").action = "/notes";
 	document.getElementById("myForm").submit();
 }
@@ -69,7 +69,7 @@ function deleteNotes(id) {
 		})
 		.then((willDelete) => {
 		  if (willDelete) {
-			document.getElementById("id").value = id;
+			document.getElementById("selectedId").value = id;
 			document.getElementById("myForm").action = "/deleteNotes";
 			document.getElementById("myForm").submit();
 		  } else {
