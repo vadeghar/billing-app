@@ -2,8 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <div class="form-inline margin-top-30">
+<form:form action="${pageContext.request.contextPath}/saveNotes" method="post" modelAttribute="notes"  id="myForm" >
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
-<input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="List Notes" onclick="listNotes()" >
+<input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="Refresh" onclick="listNotes()" >
 		
 <div role="tabpanel" class="" id="">
 	<!-- Tab #4 Content Start -->
@@ -12,12 +13,12 @@
 			<div class="panel panel-primary">
 			
 				<div class="panel-heading">
-					<h3 class="panel-title">Details</h3>
+					<h3 class="panel-title">Notes</h3>
 				</div>
 				<div class="panel-body">
 					<div class="row text-control">
 						<div class="col-sm-24 col-md-12 borderOnePx">
-							<form:form action="${pageContext.request.contextPath}/saveNotes" method="post" modelAttribute="notes"  id="myForm" >
+							
 							<div class="margin-10 form-content">
 							<div class="col-md-8">
 								<form:hidden path="id"/>
@@ -35,15 +36,14 @@
 							</div>
 							<div class="row margin-10">
 								<div class="" style="text-align: center;">
-									<button id="btnSubmit" type="submit" class="btn btn-primary add-row">Save</button>
+									<button id="btnSubmit" type="submit" class="btn btn-primary add-row" onclick="saveNotes();">Save</button>
 									<button id="btnSubmit" type="button" class="btn btn-primary add-row" onclick="listNotes();">Cancel</button>
 									<%-- <a href="${pageContext.request.contextPath}/notesList" data-toggle="tab" class="btn btn-warning">Cancel</a> --%>
 								</div>									
 							</div>
-							</form:form>
 						</div>
 						<div class="col-sm-24 col-md-12 borderOnePx">
-							<div class="margin-10 form-content">
+							<div class="margin-5">
 								<table class="table table-bordered tb-color darken">								
 									<!--Table head-->
 									<thead>
@@ -64,10 +64,10 @@
 								               <td>${notes.title}</td>
 								               <td>${notes.content}</td>
 								               <td>
-								               <button type="button" class="btn btn-default btn-sm" onclick="editNotes('${notes.id}')">
+								               <button type="button" class="" onclick="editNotes('${notes.id}')">
 										          <span class="glyphicon glyphicon-pencil"></span>
 										        </button>
-										        <button type="button" class="btn btn-default btn-sm" onclick="deleteNotes('${notes.id}')">
+										        <button type="button" class="" onclick="deleteNotes('${notes.id}')">
 										          <span class="glyphicon glyphicon glyphicon-remove"></span>
 										        </button>
 								              </td>
@@ -84,7 +84,7 @@
 		<input type="hidden" id="selectedId" name="selectedId" value="${selectedId}">
 	</div>
 </div>
-
+</form:form>
 </div>
 <script type="text/javascript">
 
@@ -99,6 +99,14 @@ $( document ).ready(function() {
 		    });
     }
 });
+
+function saveNotes() {
+	document.getElementById("selectedId").value = 0;
+	document.getElementById("myForm").action = "/saveNotes";
+	//document.getElementById("myForm").method = "get";
+	document.getElementById("myForm").submit();
+	
+}
 function listNotes() {
 	document.getElementById("selectedId").value = 0;
 	document.getElementById("myForm").action = "/notes";
@@ -118,13 +126,9 @@ function editNotes(selectedId) {
 	document.getElementById("myForm").submit();
 }
 
-function addNotes() {
-	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/notes";
-	document.getElementById("myForm").submit();
-}
 
-function deleteNotes(id) {
+
+function deleteNotes(selectedId) {
 	swal({
 		  title: "Are you sure?",
 		  text: "Once deleted, you will not be able to recover this!",
