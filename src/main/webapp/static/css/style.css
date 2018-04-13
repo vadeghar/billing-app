@@ -316,6 +316,15 @@ tr.group,tr.group:hover {
 	font-size: 12px;
 }
 
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 5px;
+}
+
+table tr{
+   height: 5px;
+}
 .text-control {
 	font-weight: normal;
 	border-radius: 0;

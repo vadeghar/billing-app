@@ -20,8 +20,9 @@ public class NotesController {
 	@RequestMapping(value = "notesList", method = RequestMethod.POST)
 	public String getAllNotes(Model model) {
 		model.addAttribute("notesList", notesService.findAll());
+		model.addAttribute("notes", new Notes());
 		model.addAttribute("selectedId","");
-	    return "notesList";
+	    return "notes";
 	}
 	
 	@RequestMapping(value = "saveNotes", method = RequestMethod.POST)
