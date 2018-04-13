@@ -44,9 +44,9 @@
            
                  <tiles:insertAttribute name="menu" />
 				<div class="container">
-					<div class="entries_wrapper">
-					<div class="tabs-wrapper" id="tabsData2">
-						<div class="tab-content acount-info">
+					<div class="">
+					<div class="" id="tabsData2">
+						<div class="tab-content">
 							<tiles:insertAttribute name="body" />
 						</div>
 						</div>

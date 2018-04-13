@@ -196,11 +196,14 @@ a:hover, a:focus {
 	display: block;
 }
 .panel-body {
-	padding: 15px 20px;
+	padding: 10px 15px;
 	background-color: #ffffff;
 }
 .panel-wrapper { 
 	color: #555;
+}
+.col-md-12 {
+	width: 49%;
 }
 .panel-wrapper label {
 	font-weight: normal !important;
@@ -307,7 +310,13 @@ tr.group,tr.group:hover {
 .account-search label.checkbox-inline {
 	line-height: 22px;
 }
-.account-search .form-control {
+.form-control {
+	font-weight: normal;
+	border-radius: 0;
+	font-size: 12px;
+}
+
+.text-control {
 	font-weight: normal;
 	border-radius: 0;
 	font-size: 12px;
@@ -498,7 +507,7 @@ legend.scheduler-border {
 }
 
 .form-content {
-	min-height: 200px;
+	min-height: 100px;
 }
 .no-content {
 	position: relative;
@@ -649,4 +658,5 @@ legend.scheduler-border {
 
 .borderOnePx {
 	border: solid 1px gainsboro;
+	margin: 5px;
 }
