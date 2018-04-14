@@ -21,4 +21,16 @@ public class MainController {
         model.addAttribute("email", "...");
         return "contactusPage";
     }
+    
+    @RequestMapping(value = { "/error" }, method = RequestMethod.POST)
+    public String error(Model model) {
+        model.addAttribute("message", "Error");
+        return "error";
+    }
+    
+    @RequestMapping(value = { "/error" }, method = RequestMethod.GET)
+    public String error1(Model model) {
+        model.addAttribute("message", "Error");
+        return "error";
+    }
 }

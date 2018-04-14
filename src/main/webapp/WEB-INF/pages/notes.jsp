@@ -7,7 +7,6 @@
 <input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="Refresh" onclick="listNotes()" >
 		
 <div role="tabpanel" class="" id="">
-	<!-- Tab #4 Content Start -->
 	<div class="">
 		
 			<div class="panel panel-primary">
