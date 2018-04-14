@@ -36,6 +36,44 @@
         <put-attribute name="title" value="Notes" />  
         <put-attribute name="body" value="/WEB-INF/pages/notes-list.jsp" />  
     </definition> 
+    
+    <definition name="vendor" extends="base.definition">  
+        <put-attribute name="title" value="Vendor" />  
+        <put-attribute name="body" value="/WEB-INF/pages/vendor.jsp" />  
+    </definition>
+    
+    <definition name="vendorList" extends="base.definition">  
+        <put-attribute name="title" value="Vendor List" />  
+        <put-attribute name="body" value="/WEB-INF/pages/vendor-list.jsp" />  
+    </definition> 
  
-  
+   <definition name="stock" extends="base.definition">  
+        <put-attribute name="title" value="Stock" />  
+        <put-attribute name="body" value="/WEB-INF/pages/stock.jsp" />  
+    </definition>
+    
+     <definition name="purchase" extends="base.definition">  
+        <put-attribute name="title" value="Purchase" />  
+        <put-attribute name="body" value="/WEB-INF/pages/purchase.jsp" />  
+    </definition>
+    
+     <definition name="product" extends="base.definition">  
+        <put-attribute name="title" value="Product" />  
+        <put-attribute name="body" value="/WEB-INF/pages/product.jsp" />  
+    </definition>
+    
+     <definition name="user" extends="base.definition">  
+        <put-attribute name="title" value="User" />  
+        <put-attribute name="body" value="/WEB-INF/pages/user.jsp" />  
+    </definition>
+    
+     <definition name="brand" extends="base.definition">  
+        <put-attribute name="title" value="Brand" />  
+        <put-attribute name="body" value="/WEB-INF/pages/brand.jsp" />  
+    </definition>
+    
+    
+    
+    
+    
 </tiles-definitions> 

@@ -1,14 +1,9 @@
 package com.mytest.billapp.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,46 +17,61 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
-	@GetMapping("/productList")
+	@RequestMapping(value = "productList", method = RequestMethod.POST)
 	public String getAllProduct(Model model) {
 		model.addAttribute("productList", productService.findAll());
-	    return "productList";
-	}
-	
-	//@PostMapping("/saveProduct")
-	@RequestMapping(value = "saveProduct", method = RequestMethod.POST)
-	public String saveProduct(@ModelAttribute Product product, Model model) {
-		System.out.println("DFDFD");
-		model.addAttribute("product", productService.save(product));
+		model.addAttribute("product", new Product());
+		model.addAttribute("selectedId","");
 	    return "product";
 	}
 	
-	@GetMapping("/product/{id}")
-	public String getProductById(@PathVariable(value = "id") Long id, Model model) {
-		if(id == null || id.intValue() == 0)
+	@RequestMapping(value = "saveProduct", method = RequestMethod.POST)
+	public String saveProduct(@ModelAttribute Product product, Model model) {
+		try {
+			productService.save(product);
 			model.addAttribute("product", new Product());
-		model.addAttribute("product", productService.findById(id));
-	    /*return noteService.findById(noteId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));*/
+			model.addAttribute("productList", productService.findAll());
+			model.addAttribute("message", "Succesfully Saved.");
+			model.addAttribute("selectedId","");
+		} catch (Exception e) {
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			e.printStackTrace();
+			return "product";
+		}
+	    return "product";
+	}
+	
+	
+	@RequestMapping(value = "product", method = RequestMethod.POST)
+	public String addProduct(@ModelAttribute("selectedId") Long selectedId,  Model model) {
+		if(selectedId == null || selectedId.intValue() == 0)
+			model.addAttribute("product", new Product());
+		try {
+			model.addAttribute("product", productService.findById(selectedId));
+			model.addAttribute("productList", productService.findAll());
+			model.addAttribute("selectedId","");
+			model.addAttribute("message", "");
+		} catch (Exception e) {
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			e.printStackTrace();
+			return "product";
+		}
 		return "product";
 	}
 	
-	@PutMapping("/product/update/{id}")
-	public String updateProduct(@PathVariable(value = "id") Long id,  @Valid @ModelAttribute Product product, Model model) {
-
-	    Product product1 = productService.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
-	    //product1.setTitle(product.getTitle());
-	    //product1.setContent(product.getContent());
-	    model.addAttribute("product",productService.save(product1));
-	    return "product";
-	}
 	
-	@GetMapping("/product/delete/{id}")
-	public String deleteProduct(@PathVariable(value = "id") Long id, Model model) {
-	    Product product = productService.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
-	    productService.delete(product);
-	    return getAllProduct(model);
+	@RequestMapping(value = "deleteProduct", method = RequestMethod.POST)
+	public String deleteProduct(@ModelAttribute("selectedId") Long selectedId, Model model) {
+	    try {
+			Product product = productService.findById(selectedId)
+			        .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
+			productService.delete(product);
+			model.addAttribute("productList", productService.findAll());
+		} catch (ResourceNotFoundException e) {
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			e.printStackTrace();
+			return getAllProduct(model);
+		}
+	    return addProduct(0l, model);
 	}
 }

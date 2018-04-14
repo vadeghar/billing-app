@@ -29,8 +29,12 @@
 			<p><a class="navbar-brand" href="#" onclick="navigate('')">Home</a></p>
 		</div> -->
 		<div style="">
-			<a class="navbar-brand" href='#' onclick="navigate('notesList')">Notes</a>
-			<a class="navbar-brand" href='#' onclick="navigate('contactus')">Contact Us</a>
+			<a class="menu" href='#' onclick="navigate('vendorList')">Vendor</a> |
+			<a class="menu" href='#' onclick="navigate('brandList')">Brand</a> |
+			<a class="menu" href='#' onclick="navigate('productList')">Product</a> |
+			<a class="menu" href='#' onclick="navigate('purchaseList')">Purchase</a> |
+			<a class="menu" href='#' onclick="navigate('notesList')">Notes</a> |
+			<a class="menu" href='#' onclick="navigate('contactus')">Contact Us</a>
 		</div>
 	</div>
 </div>

@@ -20,6 +20,12 @@ a:hover, a:focus {
 .margin-top-20 { margin-top: 2.0em; }
 .margin-top-30 { margin-top: 3.0em; }
 
+.margin-bottom-5 { margin-bottom: 5px; }
+.margin-bottom-10 { margin-bottom: 1.0em; }
+.margin-bottom-15 { margin-bottom: 1.5em; }
+.margin-bottom-20 { margin-bottom: 2.0em; }
+.margin-bottom-30 { margin-bottom: 3.0em; }
+
 /*** Text Properties ***/
 .text-normal{ font-weight: normal; }
 .text-bold{ font-weight: bold; }
@@ -131,7 +137,7 @@ a:hover, a:focus {
 .tab-content {
 	position: relative;
 	padding: 10px;
-	border: 1px solid #DDDDDD;
+	border-top: 1px solid #DDDDDD;
 	background-color: #ffffff;
 	border-width: 0 1px 1px;
 	margin-top: -1px;
@@ -512,11 +518,18 @@ legend.scheduler-border {
 	height: 380px;
 }
 .tab-content {
-	min-height: 500px;
+	min-height: 100px;
 }
 
 .form-content {
 	min-height: 100px;
+}
+
+.menu {
+	color: #1ab394;
+	text-decoration: none;
+	font-size: 13px;
+	font-weight: bold;
 }
 .no-content {
 	position: relative;
@@ -668,4 +681,9 @@ legend.scheduler-border {
 .borderOnePx {
 	border: solid 1px gainsboro;
 	margin: 5px;
+}
+
+
+.border-bottom5 {
+    border-bottom: 5px solid #c7c7c7;
 }

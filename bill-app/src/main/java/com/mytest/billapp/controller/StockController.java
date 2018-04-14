@@ -1,14 +1,9 @@
 package com.mytest.billapp.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -22,46 +17,61 @@ public class StockController {
 	@Autowired
 	StockService stockService;
 	
-	@GetMapping("/stockList")
+	@RequestMapping(value = "stockList", method = RequestMethod.POST)
 	public String getAllStock(Model model) {
 		model.addAttribute("stockList", stockService.findAll());
-	    return "stockList";
-	}
-	
-	//@PostMapping("/saveStock")
-	@RequestMapping(value = "saveStock", method = RequestMethod.POST)
-	public String saveStock(@ModelAttribute Stock stock, Model model) {
-		System.out.println("DFDFD");
-		model.addAttribute("stock", stockService.save(stock));
+		model.addAttribute("stock", new Stock());
+		model.addAttribute("selectedId","");
 	    return "stock";
 	}
 	
-	@GetMapping("/stock/{id}")
-	public String getStockById(@PathVariable(value = "id") Long id, Model model) {
-		if(id == null || id.intValue() == 0)
+	@RequestMapping(value = "saveStock", method = RequestMethod.POST)
+	public String saveStock(@ModelAttribute Stock stock, Model model) {
+		try {
+			stockService.save(stock);
 			model.addAttribute("stock", new Stock());
-		model.addAttribute("stock", stockService.findById(id));
-	    /*return noteService.findById(noteId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));*/
+			model.addAttribute("stockList", stockService.findAll());
+			model.addAttribute("message", "Succesfully Saved.");
+			model.addAttribute("selectedId","");
+		} catch (Exception e) {
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			e.printStackTrace();
+			return "stock";
+		}
+	    return "stock";
+	}
+	
+	
+	@RequestMapping(value = "stock", method = RequestMethod.POST)
+	public String addStock(@ModelAttribute("selectedId") Long selectedId,  Model model) {
+		if(selectedId == null || selectedId.intValue() == 0)
+			model.addAttribute("stock", new Stock());
+		try {
+			model.addAttribute("stock", stockService.findById(selectedId));
+			model.addAttribute("stockList", stockService.findAll());
+			model.addAttribute("selectedId","");
+			model.addAttribute("message", "");
+		} catch (Exception e) {
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			e.printStackTrace();
+			return "stock";
+		}
 		return "stock";
 	}
 	
-	@PutMapping("/stock/update/{id}")
-	public String updateStock(@PathVariable(value = "id") Long id,  @Valid @ModelAttribute Stock stock, Model model) {
-
-	    Stock stock1 = stockService.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
-	    //stock1.setTitle(stock.getTitle());
-	    //stock1.setContent(stock.getContent());
-	    model.addAttribute("stock",stockService.save(stock1));
-	    return "stock";
-	}
 	
-	@GetMapping("/stock/delete/{id}")
-	public String deleteStock(@PathVariable(value = "id") Long id, Model model) {
-	    Stock stock = stockService.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", id));
-	    stockService.delete(stock);
-	    return getAllStock(model);
+	@RequestMapping(value = "deleteStock", method = RequestMethod.POST)
+	public String deleteStock(@ModelAttribute("selectedId") Long selectedId, Model model) {
+	    try {
+			Stock stock = stockService.findById(selectedId)
+			        .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
+			stockService.delete(stock);
+			model.addAttribute("stockList", stockService.findAll());
+		} catch (ResourceNotFoundException e) {
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			e.printStackTrace();
+			return getAllStock(model);
+		}
+	    return addStock(0l, model);
 	}
 }
