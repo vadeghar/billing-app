@@ -22,7 +22,7 @@ public class PurchaseController {
 		model.addAttribute("purchaseList", purchaseService.findAll());
 		model.addAttribute("purchase", new Purchase());
 		model.addAttribute("selectedId","");
-	    return "purchase";
+	    return "purchaseList";
 	}
 	
 	@RequestMapping(value = "savePurchase", method = RequestMethod.POST)

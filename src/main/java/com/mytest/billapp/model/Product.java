@@ -2,6 +2,7 @@ package com.mytest.billapp.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -29,16 +30,18 @@ public class Product extends BEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@ManyToOne
-	@JoinColumn(name = "BRAND_ID", foreignKey=@ForeignKey(name="BRAND_ID_FK"))
-	private Brand brand;
+	/*@ManyToOne(optional=true, cascade=CascadeType.ALL)
+	@JoinColumn(name = "BRAND_ID", foreignKey=@ForeignKey(name="BRAND_ID_FK"),  nullable = true)
+	private Brand brand;*/
+	@Column(name="BRAND_ID")
+	private Long brandId;
 	
     @Column
     private String name;
     
     @Transient
-    private String brandName;
-
+    public String brandName;
+    
 	public Long getId() {
 		return id;
 	}
@@ -47,20 +50,19 @@ public class Product extends BEntity implements Serializable {
 		this.id = id;
 	}
 
-	public Brand getBrand() {
+	
+	/*public Brand getBrand() {
 		return brand;
 	}
 
 	public void setBrand(Brand brand) {
 		this.brand = brand;
-	}
+	}*/
+	
+	
 
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getBrandName() {
@@ -70,5 +72,18 @@ public class Product extends BEntity implements Serializable {
 	public void setBrandName(String brandName) {
 		this.brandName = brandName;
 	}
-    
+
+	public Long getBrandId() {
+		return brandId;
+	}
+
+	public void setBrandId(Long brandId) {
+		this.brandId = brandId;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	
 }

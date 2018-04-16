@@ -28,9 +28,9 @@ public class Brand extends BEntity implements Serializable {
     @Column
     private String name;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "brand")
+    /*@OneToMany(fetch = FetchType.EAGER, mappedBy = "brand")
     private Set<Product> productSet;
-
+*/
 	public long getId() {
 		return id;
 	}
@@ -47,13 +47,13 @@ public class Brand extends BEntity implements Serializable {
 		this.name = name;
 	}
 
-	public Set<Product> getProductSet() {
+	/*public Set<Product> getProductSet() {
 		return productSet;
 	}
 
 	public void setProductSet(Set<Product> productSet) {
 		this.productSet = productSet;
-	}
+	}*/
 
 	public String toString() {
 		return name;

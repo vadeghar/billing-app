@@ -572,6 +572,10 @@ legend.scheduler-border {
 	margin: 0 auto;
 	display: table;
 }
+.statusSelect {
+	width: 160px !important;
+}
+
 #statusSelect {
 	width: 140px;
 }

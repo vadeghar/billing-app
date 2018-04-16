@@ -1,12 +1,3 @@
-<!-- Placed at the end of the document so the pages load faster --> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
-<script type="text/javascript" src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/moment.js" type="text/javascript" ></script> 
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script> 
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/ie10-viewport-bug-workaround.js"></script>
-
-
 
 
 <footer class="footer">
