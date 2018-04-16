@@ -11,6 +11,7 @@
 <meta name="author" content="">
 <link rel="icon" href="favicon.png">
 <title><tiles:getAsString name="title" /></title>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- Bootstrap core CSS -->
 <link href="${pageContext.request.contextPath}/static/css/bootstrap.css" rel="stylesheet">
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
