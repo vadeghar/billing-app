@@ -7,15 +7,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.mytest.billapp.dto.PurchaseDTO;
 import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Purchase;
 import com.mytest.billapp.service.PurchaseService;
+import com.mytest.billapp.service.VendorService;
 
 @Controller
 public class PurchaseController {
 	
 	@Autowired
 	PurchaseService purchaseService;
+	
+	@Autowired
+	VendorService vendorService;
 	
 	@RequestMapping(value = "purchaseList", method = RequestMethod.POST)
 	public String getAllPurchase(Model model) {
@@ -44,11 +49,14 @@ public class PurchaseController {
 	
 	@RequestMapping(value = "purchase", method = RequestMethod.POST)
 	public String addPurchase(@ModelAttribute("selectedId") Long selectedId,  Model model) {
-		if(selectedId == null || selectedId.intValue() == 0)
-			model.addAttribute("purchase", new Purchase());
+		
 		try {
-			model.addAttribute("purchase", purchaseService.findById(selectedId));
+			if(selectedId == null || selectedId.intValue() == 0)
+				model.addAttribute("purchase", new PurchaseDTO());
+			PurchaseDTO purchaseDTO = purchaseService.findById(selectedId);
+			model.addAttribute("purchase", purchaseDTO);
 			model.addAttribute("purchaseList", purchaseService.findAll());
+			model.addAttribute("vendorList", vendorService.findAll());
 			model.addAttribute("selectedId","");
 			model.addAttribute("message", "");
 		} catch (Exception e) {
@@ -63,9 +71,9 @@ public class PurchaseController {
 	@RequestMapping(value = "deletePurchase", method = RequestMethod.POST)
 	public String deletePurchase(@ModelAttribute("selectedId") Long selectedId, Model model) {
 	    try {
-			Purchase purchase = purchaseService.findById(selectedId)
+			/*Purchase purchase = purchaseService.findById(selectedId)
 			        .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
-			purchaseService.delete(purchase);
+			purchaseService.delete(purchase);*/
 			model.addAttribute("purchaseList", purchaseService.findAll());
 		} catch (ResourceNotFoundException e) {
 			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());

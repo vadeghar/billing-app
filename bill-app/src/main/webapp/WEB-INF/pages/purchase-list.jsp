@@ -61,3 +61,11 @@
 <!-- Tab #5 Content End -->	
 </div>
 </form:form>
+
+<script type="text/javascript">
+function editPurhcase(id) {
+	document.getElementById("selectedId").value = id;
+	document.getElementById("myForm").action = "/purchase";
+	document.getElementById("myForm").submit();
+}
+</script>

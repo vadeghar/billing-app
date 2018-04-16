@@ -22,13 +22,13 @@ public class MainController {
         return "contactusPage";
     }
     
-    @RequestMapping(value = { "/error" }, method = RequestMethod.POST)
+    @RequestMapping(value = { "error" }, method = RequestMethod.POST)
     public String error(Model model) {
         model.addAttribute("message", "Error");
         return "error";
     }
     
-    @RequestMapping(value = { "/error" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "error" }, method = RequestMethod.GET)
     public String error1(Model model) {
         model.addAttribute("message", "Error");
         return "error";

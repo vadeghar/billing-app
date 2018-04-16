@@ -1,10 +1,10 @@
 package com.mytest.billapp.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 
+import com.mytest.billapp.dto.PurchaseDTO;
 import com.mytest.billapp.model.Purchase;
 
 public interface PurchaseService {
@@ -18,10 +18,10 @@ public interface PurchaseService {
 	public void deleteAll(List<Purchase> entities);
 	public void deleteInBatch(List<Purchase> entities);
 	public void deleteAll();
-	public Purchase getOne(Long id);
-	public Optional<Purchase> findById(Long id);
+	public PurchaseDTO getOne(Long id);
+	public PurchaseDTO findById(Long id);
 	public boolean existsById(Long id);
-	public List<Purchase> findAll();
+	public List<PurchaseDTO> findAll();
 	public List<Purchase> findAll(Sort sort);
 	public long count();
 
