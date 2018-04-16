@@ -19,70 +19,37 @@
 						<div class="col-sm-24 col-md-12 borderOnePx">
 							
 							<div class="margin-10 form-content">
-							<div class="col-md-8 margin-bottom-15">
+							<div class="col-md-8">
 								<form:hidden path="id"/>
 								<div class="form-group">
-									<label for="title" class="rightAlign">Name: <span class="require">*</span></label>
-									<form:input path="name" class="form-control"/>
+									<label for="title" class="rightAlign">Brand: </label>
+									<form:select  path="brandId" class="statusSelect form-control " >
+									<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
+										<c:if test="${not empty brandList}">
+											<c:forEach var="brand" items="${brandList}">
+												<c:choose>
+													<c:when test="${brandId == brand.id}">
+														<form:option value="${brand.id}" ><c:out value="${brand.name}"/> </form:option>
+													</c:when>
+													<c:otherwise>
+														<form:option value="${brand.id}"><c:out value="${brand.name}"/> </form:option>
+													</c:otherwise>
+												</c:choose>
+												
+											</c:forEach>
+										</c:if>
+									</form:select>
+									<button type="button" class="" onclick="showAddBrand()" title="Add new brand">
+							          <span class="glyphicon glyphicon-plus"></span>
+							        </button>
 								</div>
 							</div>
-							<div class="col-md-8 margin-bottom-15">	
+							<div class="col-md-8">	
 								<div class="form-group">
-									<label for="content"  class="rightAlign">Mobile: <span class="require">*</span></label>
-									<form:input path="mobile" class="form-control" cols="25"/>
+									<label for="content"  class="rightAlign">Product Name: <span class="require">*</span></label>
+									<form:input path="name" class="form-control" cols="25"/>
 								</div>
 							</div>	
-							
-							<div class="col-md-8 margin-bottom-15">	
-								<div class="form-group">
-									<label for="content"  class="rightAlign">TIN No: </label>
-									<form:input path="tinNo" class="form-control" cols="25"/>
-								</div>
-							</div>
-							
-							<div class="col-md-8 margin-bottom-15">	
-								<div class="form-group">
-									<label for="content"  class="rightAlign">GST No: </label>
-									<form:input path="gstNo" class="form-control" cols="25"/>
-								</div>
-							</div>
-							
-							<div class="col-md-8 margin-bottom-15">	
-								<div class="form-group">
-									<label for="content"  class="rightAlign">Company: </label>
-									<form:input path="company" class="form-control" cols="25"/>
-								</div>
-							</div>
-							
-							<div class="col-md-8 margin-bottom-15">	
-								<div class="form-group">
-									<label for="content"  class="rightAlign">Email: <span class="require">*</span></label>
-									<form:input path="email" class="form-control" cols="25"/>
-								</div>
-							</div>
-							
-							<div class="col-md-8 margin-bottom-15">	
-								<div class="form-group">
-									<label for="content"  class="rightAlign">Phone: </label>
-									<form:input path="phone" class="form-control" cols="25"/>
-								</div>
-							</div>
-							
-							<div class="col-md-8 margin-bottom-15">	
-								<div class="form-group">
-									<label for="content"  class="rightAlign">FAX: </label>
-									<form:input path="fax" class="form-control" cols="25"/>
-								</div>
-							</div>
-							
-							<div class="col-md-8 margin-bottom-15">	
-								<div class="form-group">
-									<label for="content"  class="rightAlign">Website: </label>
-									<form:input path="website" class="form-control" cols="25"/>
-								</div>
-							</div>
-							
-							
 							</div>
 							<div class="row margin-10">
 								<div class="" style="text-align: center;">
@@ -101,9 +68,9 @@
 										<thead>
 											<tr class="text-white">
 												<th>ID</th>
+									            <th>Brand</th>
 									            <th>Name</th>
-									            <th>Mobile</th>
-									 			<th>Email</th>
+									 			<th>Action</th>
 											</tr>
 										</thead>
 										<!--Table head-->
@@ -113,9 +80,8 @@
 											<c:forEach var="product" items="${productList}">
 									           <tr>
 									               <td>${product.id}</td>
+									               <td>${product.brandName}</td>
 									               <td>${product.name}</td>
-									               <td>${product.mobile}</td>
-									               <td>${product.email}</td>
 									               <td>
 									               <button type="button" class="" onclick="editProduct('${product.id}')">
 											          <span class="glyphicon glyphicon-pencil"></span>
@@ -144,6 +110,8 @@
 				</div>
 			</div>
 		<input type="hidden" id="selectedId" name="selectedId" value="${selectedId}">
+		<input type="hidden" id="newBrnadName" name="newBrnadName" value="${newBrnadName}">
+		
 	</div>
 </div>
 </form:form>
@@ -214,5 +182,51 @@ function deleteProduct(selectedId) {
 	
 }
 
+function showAddBrand() {
+	/* 
+	swal("Add new Brand:", {
+		  content: "input",
+		})
+		.then((value) => {
+			document.getElementById("newBrnadName").value = value;
+			document.getElementById("myForm").action = "/saveBrandInProduct";
+			document.getElementById("myForm").submit();
+		});
+	 */
+	
+	
+	swal("Add new Brand:",{
+		  content: "input",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((value) => {
+		  if (value) {
+			    document.getElementById("newBrnadName").value = value;
+				document.getElementById("myForm").action = "/saveBrandInProduct";
+				document.getElementById("myForm").submit();
+		  } else {
+		    	//swal("Your imaginary file is safe!");
+		  }
+		});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
 
 </script>

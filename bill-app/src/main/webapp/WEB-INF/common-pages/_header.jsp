@@ -30,7 +30,6 @@
 		</div> -->
 		<div style="">
 			<a class="menu" href='#' onclick="navigate('vendorList')">Vendor</a> |
-			<a class="menu" href='#' onclick="navigate('brandList')">Brand</a> |
 			<a class="menu" href='#' onclick="navigate('productList')">Product</a> |
 			<a class="menu" href='#' onclick="navigate('purchaseList')">Purchase</a> |
 			<a class="menu" href='#' onclick="navigate('notesList')">Notes</a> |
