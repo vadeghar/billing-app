@@ -24,5 +24,7 @@ public interface ProductService {
 	public List<Product> findAll();
 	public List<Product> findAll(Sort sort);
 	public long count();
+	public List<Product> getProductSizeList(Long productId);
+	public List<Product> getProductList();
 
 }

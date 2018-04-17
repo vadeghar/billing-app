@@ -76,6 +76,13 @@
 								<div class="form-group">
 									<label for="purchaseItemDTO.productId"  class="rightAlign">Product: </label>
 									<form:input path="purchaseItemDTO.productId" class="form-control" cols="25"/>
+									<form:select path="purchaseItemDTO.productId" class="form-control statusSelect">
+										<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
+										<c:forEach var="productType" items="${productTypeList}">
+											<form:option value="${productType.id}"> <c:out value="${productType.name}"></c:out> </form:option>
+										</c:forEach>
+									</form:select>
+									
 								</div>
 							</div>
 							<div class="col-md-8 margin-bottom-15">	
@@ -325,6 +332,38 @@ $( document ).ready(function() {
 	
 	
 });
+
+$("#vendorId").on('change', function() {
+	var vendorId = $("#vendorId").val();
+	if(vendorId != 0) {
+		$.ajax({url: "/ajax/vendor/"+vendorId, 
+			success: 
+				function(result){
+					$("#vendorMobile").val(result.mobile);
+					$("#vendorGst").val(result.gstNo);
+	    		}
+		});
+	}else {
+		$("#vendorMobile").val('');
+		$("#vendorGst").val('');
+	}
+});
+
+
+$("#purchaseItemDTO\\.productId").on('change', function() {
+	var productId = $("#purchaseItemDTO\\productId").val();
+	if(productId != 0) {
+		$.ajax({url: "/ajax/product/"+productId, 
+			success: 
+				function(result){
+					alert(result);
+	    		}
+		});
+	}else {
+		
+	}
+});
+
 
 
 function calculateSalePrice(){
