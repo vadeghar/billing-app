@@ -256,11 +256,7 @@ function listPurchase() {
 	document.getElementById("myForm").submit();
 }
 
-</script>
-<%-- <form:hidden path="id" /> --%>
 
-
-<script type="text/javascript">
 
 function editPurchase(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
@@ -310,18 +306,44 @@ $( document ).ready(function() {
 	$("#purchaseItemDTO\\.pricePerUnit").on('change keyup', function() {
 		if($(this).val() != '' && $("#purchaseItemDTO\\.quantity").val() != '') {
 			$("#purchaseItemDTO\\.total").val($(this).val() * $("#purchaseItemDTO\\.quantity").val());
+			calculateSalePrice();
 			$("#purchaseItemDTO\\.total").prop("disabled", true);
 		}
 	});
 	
-	$("#purchaseItemDTO\\.marginType").on('change', function() {
-		var radioValue = $("input[name='purchaseItemDTO.marginType']:checked").val();
-		alert(radioValue);
-	})
 	
-	$.each($("input[name='purchaseItemDTO\\.marginType']:checked"), function(){            
-       alert($(this).val());
-    });
+	$("input[name=purchaseItemDTO\\.marginType]").click(function(e) { 
+        if($("input[name=purchaseItemDTO\\.marginType]:checked").val() != "") {  
+             $("#purchaseItemDTO\\.margin").removeAttr("disabled");  
+             calculateSalePrice();
+        } 
+	});
+	
+	$("#purchaseItemDTO\\.margin").on('change keyup', function() {
+		calculateSalePrice();
+	});
+	
 	
 });
+
+
+function calculateSalePrice(){
+	if($.isNumeric($("#purchaseItemDTO\\.margin").val())
+			&& $.isNumeric($("#purchaseItemDTO\\.pricePerUnit").val())
+			&& $("input[name=purchaseItemDTO\\.marginType]:checked").val() != "") {
+		
+		var ppu = parseFloat($("#purchaseItemDTO\\.pricePerUnit").val());
+		var marg = parseFloat($("#purchaseItemDTO\\.margin").val());
+		var margType = $("input[name=purchaseItemDTO\\.marginType]:checked").val();
+		if(margType == '%'){
+			$("#purchaseItemDTO\\.salePrice").val((ppu + (ppu * marg / 100)).toFixed());
+		}else {
+			$("#purchaseItemDTO\\.salePrice").val( (ppu + marg).toFixed());
+		}
+		$("#purchaseItemDTO\\.salePrice").prop("disabled", true);
+	}else {
+		$("#purchaseItemDTO\\.salePrice").val('');
+		$("#purchaseItemDTO\\.salePrice").prop("disabled", false);
+	}
+}
 </script>
