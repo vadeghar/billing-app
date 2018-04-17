@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mytest.billapp.dto.PurchaseDTO;
 import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Purchase;
+import com.mytest.billapp.service.ProductService;
 import com.mytest.billapp.service.PurchaseService;
 import com.mytest.billapp.service.VendorService;
 
@@ -21,6 +22,9 @@ public class PurchaseController {
 	
 	@Autowired
 	VendorService vendorService;
+	
+	@Autowired
+	ProductService productService;
 	
 	@RequestMapping(value = "purchaseList", method = RequestMethod.POST)
 	public String getAllPurchase(Model model) {
@@ -36,6 +40,8 @@ public class PurchaseController {
 			purchaseService.save(purchase);
 			model.addAttribute("purchase", new Purchase());
 			model.addAttribute("purchaseList", purchaseService.findAll());
+			model.addAttribute("vendorList", vendorService.findAll());
+			model.addAttribute("productTypeList", productService.getProductList());
 			model.addAttribute("message", "Succesfully Saved.");
 			model.addAttribute("selectedId","");
 		} catch (Exception e) {
@@ -56,6 +62,7 @@ public class PurchaseController {
 			PurchaseDTO purchaseDTO = purchaseService.findById(selectedId);
 			model.addAttribute("purchase", purchaseDTO);
 			model.addAttribute("purchaseList", purchaseService.findAll());
+			model.addAttribute("productTypeList", productService.getProductList());
 			model.addAttribute("vendorList", vendorService.findAll());
 			model.addAttribute("selectedId","");
 			model.addAttribute("message", "");
@@ -74,6 +81,8 @@ public class PurchaseController {
 			/*Purchase purchase = purchaseService.findById(selectedId)
 			        .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
 			purchaseService.delete(purchase);*/
+	    	model.addAttribute("vendorList", vendorService.findAll());
+	    	model.addAttribute("productTypeList", productService.getProductList());
 			model.addAttribute("purchaseList", purchaseService.findAll());
 		} catch (ResourceNotFoundException e) {
 			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());

@@ -4,7 +4,7 @@
 <form:form action="${pageContext.request.contextPath}/purchase" method="post" modelAttribute="purchase"  id="myForm" >
 
 <div role="tabpanel" class="" id="">	
-<a href="#" onclick="editPurhcase(0);" class="btn glyphicon glyphicon-plus"> New Purchase</a>
+<a href="#" id="newPurchase" class="btn glyphicon glyphicon-plus"> New Purchase</a>
 <!-- Tab #5 Content Start -->
 <!--Table-->
 <c:choose>
@@ -63,9 +63,11 @@
 </form:form>
 
 <script type="text/javascript">
-function editPurhcase(id) {
-	document.getElementById("selectedId").value = id;
+$("#newPurchase").click(function(){
+	$("#selectedId").val(0);
 	document.getElementById("myForm").action = "/purchase";
 	document.getElementById("myForm").submit();
-}
+});
+
+
 </script>

@@ -26,6 +26,14 @@ public class Product extends BEntity implements Serializable {
 	public static final	String[] TEXT_FIELDS = {"brand.name", "name"};
 	public static final	String[] NON_TEXT_FIELDS = {"id"};
 	
+	public Product() {}
+	
+	public Product(Long id, String name, Long brandId) {
+		this.id = id;
+		this.name=name;
+		this.brandId = brandId;
+	}
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
