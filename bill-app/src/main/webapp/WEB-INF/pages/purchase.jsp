@@ -75,7 +75,6 @@
 							<div class="col-md-8 margin-bottom-15">	
 								<div class="form-group">
 									<label for="purchaseItemDTO.productId"  class="rightAlign">Product: </label>
-									<form:input path="purchaseItemDTO.productId" class="form-control" cols="25"/>
 									<form:select path="purchaseItemDTO.productId" class="form-control statusSelect">
 										<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
 										<c:forEach var="productType" items="${productTypeList}">
@@ -88,7 +87,10 @@
 							<div class="col-md-8 margin-bottom-15">	
 								<div class="form-group">
 									<label for="purchaseItemDTO.size"  class="rightAlign">Size: </label>
-									<form:input path="purchaseItemDTO.size" class="form-control" cols="25"/>
+									<%-- <form:input path="purchaseItemDTO.size" class="form-control" cols="25"/> --%>
+									<form:select path="purchaseItemDTO.size" class="form-control statusSelect">
+										<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
+									</form:select>
 								</div>
 							</div>
 							<div class="col-md-8 margin-bottom-15">	
@@ -315,6 +317,7 @@ $( document ).ready(function() {
 			$("#purchaseItemDTO\\.total").val($(this).val() * $("#purchaseItemDTO\\.quantity").val());
 			calculateSalePrice();
 			$("#purchaseItemDTO\\.total").prop("disabled", true);
+			generateItemCode();
 		}
 	});
 	
@@ -351,20 +354,55 @@ $("#vendorId").on('change', function() {
 
 
 $("#purchaseItemDTO\\.productId").on('change', function() {
-	var productId = $("#purchaseItemDTO\\productId").val();
+	var productId = $('#purchaseItemDTO\\.productId').find(":selected").val(); // $("#purchaseItemDTO\\productId option:selected").val();
 	if(productId != 0) {
-		$.ajax({url: "/ajax/product/"+productId, 
+		$.ajax({
+			url: "/ajax/product/"+productId, 
 			success: 
 				function(result){
-					alert(result);
+					var len = result.length
+					var $size = $('#purchaseItemDTO\\.size');
+					$size.empty();
+					for( var i = 0; i<len; i++){
+						var id = result[i].id;
+	                    var name = result[i].name;
+	                    $size.append("<option value='"+id+"'>"+name+"</option>");
+					}
+					generateItemCode();
 	    		}
 		});
 	}else {
 		
 	}
 });
-
-
+$("#purchaseItemDTO\\.margin").on('change', function() {
+	generateItemCode();
+});
+$("#purchaseItemDTO\\.size").on('change', function() {
+	generateItemCode();
+});
+function generateItemCode() {
+	var prod = $('#purchaseItemDTO\\.productId').find(":selected").text();
+	var sz = $('#purchaseItemDTO\\.size').find(":selected").val();
+	var sp = $("#purchaseItemDTO\\.salePrice").val();
+	if(prod != '' && sz != '' && sp != '') {
+		var itemCode =  prod.charAt(1); //prod.substring(1, prod.length);
+		if(sz == 1)
+			itemCode = itemCode + 'A';
+		else if(sz == 2)
+			itemCode = itemCode + 'B';
+		else if(sz == 3)
+			itemCode = itemCode + 'C';
+		else if(sz == 4)
+			itemCode = itemCode + 'D';
+		else if(sz == 5)
+			itemCode = itemCode + 'E';
+		else 
+			itemCode = itemCode + 'F';
+		itemCode = itemCode + ((parseInt(sp)/10).toFixed());
+		$("#purchaseItemDTO\\.itemCode").val(itemCode);
+	}
+}
 
 function calculateSalePrice(){
 	if($.isNumeric($("#purchaseItemDTO\\.margin").val())

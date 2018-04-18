@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mytest.billapp.dto.PurchaseDTO;
+import com.mytest.billapp.dto.PurchaseItemDTO;
 import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Purchase;
 import com.mytest.billapp.service.ProductService;
@@ -35,10 +36,13 @@ public class PurchaseController {
 	}
 	
 	@RequestMapping(value = "savePurchase", method = RequestMethod.POST)
-	public String savePurchase(@ModelAttribute Purchase purchase, Model model) {
+	public String savePurchase(@ModelAttribute PurchaseDTO purchaseDTO, Model model) {
 		try {
-			purchaseService.save(purchase);
-			model.addAttribute("purchase", new Purchase());
+			PurchaseDTO dto = purchaseService.save(purchaseDTO);
+			purchaseDTO = new PurchaseDTO();
+			purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
+			purchaseDTO.getPurchaseItemDTO().setSrNo(dto.getPurchaseItems().size()+1+"");
+			model.addAttribute("purchase", purchaseDTO);
 			model.addAttribute("purchaseList", purchaseService.findAll());
 			model.addAttribute("vendorList", vendorService.findAll());
 			model.addAttribute("productTypeList", productService.getProductList());
@@ -57,10 +61,17 @@ public class PurchaseController {
 	public String addPurchase(@ModelAttribute("selectedId") Long selectedId,  Model model) {
 		
 		try {
-			if(selectedId == null || selectedId.intValue() == 0)
-				model.addAttribute("purchase", new PurchaseDTO());
-			PurchaseDTO purchaseDTO = purchaseService.findById(selectedId);
-			model.addAttribute("purchase", purchaseDTO);
+			PurchaseDTO purchaseDTO = null;
+			if(selectedId == null || selectedId.intValue() == 0){
+				purchaseDTO = new PurchaseDTO();
+				purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
+				purchaseDTO.getPurchaseItemDTO().setSrNo("1");
+				model.addAttribute("purchase", purchaseDTO);
+			}else {
+				purchaseDTO = purchaseService.findById(selectedId);
+				model.addAttribute("purchase", purchaseDTO);
+				
+			}
 			model.addAttribute("purchaseList", purchaseService.findAll());
 			model.addAttribute("productTypeList", productService.getProductList());
 			model.addAttribute("vendorList", vendorService.findAll());

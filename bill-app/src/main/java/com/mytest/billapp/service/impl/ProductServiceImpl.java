@@ -93,7 +93,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	public List<Product> getProductSizeList(Long productId) {
-		return productSizeList.stream().filter( p -> p.getBrandId() == productId).collect(Collectors.toList());
+		return productSizeList.stream().filter( p -> p.getBrandId().longValue() == productId.longValue()).collect(Collectors.toList());
 	}
 	
 	private static List<Product> productSizeList = new ArrayList<>();

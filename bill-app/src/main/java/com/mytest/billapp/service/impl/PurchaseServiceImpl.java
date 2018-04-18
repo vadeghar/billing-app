@@ -2,8 +2,10 @@ package com.mytest.billapp.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -13,7 +15,9 @@ import org.springframework.util.CollectionUtils;
 import com.mytest.billapp.dto.PurchaseDTO;
 import com.mytest.billapp.dto.PurchaseItemDTO;
 import com.mytest.billapp.model.Purchase;
+import com.mytest.billapp.model.PurchaseItem;
 import com.mytest.billapp.repsitory.PurchaseRepository;
+import com.mytest.billapp.repsitory.VendorRepository;
 import com.mytest.billapp.service.PurchaseService;
 
 @Service
@@ -24,8 +28,55 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Autowired
 	PurchaseRepository purchaseRepository; 
 	
-	public Purchase save(Purchase entity) {
-		return purchaseRepository.save(entity);
+	@Autowired
+	VendorRepository vendorRepository;
+	
+	public PurchaseDTO save(PurchaseDTO entity) {
+		try {
+			Set<PurchaseItem> purchaseItemSet = new HashSet<PurchaseItem>();
+			PurchaseItemDTO purchaseItemDTO = entity.getPurchaseItemDTO();
+			PurchaseItem purchaseItem = new PurchaseItem();
+			Purchase purchase = null;
+			purchaseItem.setId(purchaseItemDTO.getId());
+			purchaseItem.setItemCode(purchaseItemDTO.getItemCode());
+			purchaseItem.setMargin(purchaseItemDTO.getMargin());
+			purchaseItem.setMarginType(purchaseItemDTO.getMarginType());
+			//purchaseItem.setModel(purchaseItemDTO.getModel());
+			purchaseItem.setPricePerPc(purchaseItemDTO.getPricePerUnit());
+			purchaseItem.setProductTypeText(purchaseItemDTO.getProductId().toString());
+			purchaseItem.setQuantity(purchaseItemDTO.getQuantity());
+			purchaseItem.setSize(purchaseItemDTO.getSize());
+			purchaseItem.setSrNo(purchaseItemDTO.getSrNo());
+			purchaseItem.setTotalPrice(purchaseItemDTO.getTotal());
+			
+			purchaseItemSet.add(purchaseItem);
+			if(entity.getId() != null && entity.getId().longValue() > 0) {
+				purchase = purchaseRepository.findById(entity.getId()).get();
+			}else {
+				purchase = new Purchase();
+			}
+			purchase.setBillDate(entity.getBillDate() != null ? sdf.parse(entity.getBillDate()) : null);
+			purchase.setBillNo(entity.getBillNo());
+			purchase.setBillTotal(entity.getBillTotal());
+			purchase.setDiscount(entity.getDiscount());
+			purchase.setDiscountType(entity.getDiscountType());
+			//purchase.setGst(entity.getGst());
+			purchase.setNetTotal(entity.getNetTotal());
+			purchase.setVendor(vendorRepository.getOne(entity.getVendorId()));
+			purchase.setPurchaseItemSet(purchaseItemSet);
+			
+			
+			Purchase p =purchaseRepository.save(purchase);
+			
+			return findById(p.getId());
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//return purchaseRepository.save(entity);
+		
+		return null;
 	}
 	
 	public List<Purchase> saveAll(List<Purchase> entities) {
@@ -110,7 +161,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 			purchaseDTO.setDiscountType(p.getDiscountType());
 			purchaseDTO.setEntryDate(sdf.format(p.getEntryDate()));
 			purchaseDTO.setNetTotal(p.getNetTotal());
-			purchaseDTO.setVendorId(p.getVendor().getId());
+			purchaseDTO.setVendorId(p.getVendor() != null ? p.getVendor().getId() : 0);
 			
 			if(p.getPurchaseItemSet().size() > 0) {
 				p.getPurchaseItemSet().stream().forEach(pi -> {
