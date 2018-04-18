@@ -9,7 +9,7 @@ import com.mytest.billapp.model.Purchase;
 
 public interface PurchaseService {
 	
-	public Purchase save(Purchase entity);
+	public PurchaseDTO save(PurchaseDTO entity);
 	public List<Purchase> saveAll(List<Purchase> entities);
 	public Purchase saveAndFlush(Purchase entity);
 	public void flush();

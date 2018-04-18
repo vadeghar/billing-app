@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "VENDOR")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"},  allowGetters = true)
 @NamedQuery(name="Vendor.findAll", query="SELECT v FROM Vendor v")
 public class Vendor extends BEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -55,7 +54,7 @@ public class Vendor extends BEntity implements Serializable {
 	private String website;
 	private String zip;
 	
-	@Column(nullable = false, updatable = false)
+	/*@Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
@@ -63,7 +62,7 @@ public class Vendor extends BEntity implements Serializable {
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
-    private Date updatedAt;
+    private Date updatedAt;*/
 	
 	public Long getId() {
 		return id;
