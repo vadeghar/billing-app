@@ -29,7 +29,7 @@ public class PurchaseController {
 	
 	@RequestMapping(value = "purchaseList", method = RequestMethod.POST)
 	public String getAllPurchase(Model model) {
-		model.addAttribute("purchaseList", purchaseService.findAll());
+		model.addAttribute("PurchaseList", purchaseService.findAll());
 		model.addAttribute("purchase", new Purchase());
 		model.addAttribute("selectedId","");
 	    return "purchaseList";
