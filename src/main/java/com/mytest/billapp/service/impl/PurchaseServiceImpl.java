@@ -16,6 +16,7 @@ import com.mytest.billapp.dto.PurchaseDTO;
 import com.mytest.billapp.dto.PurchaseItemDTO;
 import com.mytest.billapp.model.Purchase;
 import com.mytest.billapp.model.PurchaseItem;
+import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.PurchaseRepository;
 import com.mytest.billapp.repsitory.VendorRepository;
 import com.mytest.billapp.service.PurchaseService;
@@ -23,7 +24,7 @@ import com.mytest.billapp.service.PurchaseService;
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
 	
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
 	@Autowired
 	PurchaseRepository purchaseRepository; 
@@ -161,6 +162,14 @@ public class PurchaseServiceImpl implements PurchaseService {
 			purchaseDTO.setDiscountType(p.getDiscountType());
 			purchaseDTO.setEntryDate(sdf.format(p.getEntryDate()));
 			purchaseDTO.setNetTotal(p.getNetTotal());
+			Vendor v = p.getVendor();
+			if(v != null)
+			{
+				purchaseDTO.setVendorCity(v.getCity());
+				purchaseDTO.setVendorGst(v.getGstNo());
+				purchaseDTO.setVendorMobile(v.getMobile());
+				purchaseDTO.setVendorName(v.getName());
+			}
 			purchaseDTO.setVendorId(p.getVendor() != null ? p.getVendor().getId() : 0);
 			
 			if(p.getPurchaseItemSet().size() > 0) {

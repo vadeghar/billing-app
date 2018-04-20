@@ -8,7 +8,7 @@
 <!-- Tab #5 Content Start -->
 <!--Table-->
 <c:choose>
-<c:when test="${not empty productList}">
+<c:when test="${not empty PurchaseList}">
 	<table class="table table-bordered tb-color darken">								
 		<!--Table head-->
 		<thead>
@@ -29,17 +29,22 @@
 		
 		<!--Table body-->
 		<tbody>
-			<c:forEach var="purchase" items="${purchaseList}">
+			<c:forEach var="purchase" items="${PurchaseList}">
 	           <tr>
 	               <td>${purchase.id}</td>
 	              <td>${purchase.billDate}</td>
 	               <td>${purchase.billNo}</td>
-	               <td>${purchase.vendor.name}</td>
+	               <td>${purchase.vendorName}</td>
 	               <td>${purchase.billTotal}</td>
 	               <td>${purchase.discount}</td>
 	               <td>${purchase.netTotal}</td>
-	               <td><a href='${pageContext.request.contextPath}/purchase/${purchase.id}'>Edit</a>
-	                   <a href='${pageContext.request.contextPath}/purchase/delete/${purchase.id}'>Delete</a>
+	               <td>
+		                <button type="button" class="" onclick="editPurchase('${purchase.id}')">
+				          <span class="glyphicon glyphicon-pencil"></span>
+				        </button>
+				        <button type="button" class="" onclick="deletePurchase('${purchase.id}')">
+				          <span class="glyphicon glyphicon glyphicon-remove"></span>
+				        </button>
 	              </td>
 	           </tr>
 	         </c:forEach>
@@ -70,4 +75,35 @@ $("#newPurchase").click(function(){
 });
 
 
+function editPurchase(selectedId) {
+	document.getElementById("selectedId").value = selectedId;
+	document.getElementById("myForm").action = "/purchase";
+	document.getElementById("myForm").submit();
+}
+
+
+
+function deletePurchase(selectedId) {
+	swal({
+		  title: "Are you sure?",
+		  text: "Once deleted, you will not be able to recover this!",
+		  icon: "warning",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+		  if (willDelete) {
+			document.getElementById("selectedId").value = selectedId;
+			document.getElementById("myForm").action = "/deletePurchase";
+			document.getElementById("myForm").submit();
+		  } else {
+		    
+		  }
+		});
+	/* document.getElementById("id").value = id;
+	document.getElementById("myForm").action = "/deletePurchase";
+	if(confirm("Are you sure want to delete?"))
+		document.getElementById("myForm").submit(); */
+	
+}
 </script>
