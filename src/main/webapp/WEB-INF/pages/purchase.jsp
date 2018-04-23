@@ -78,7 +78,8 @@
 									<form:select path="purchaseItemDTO.productId" class="form-control statusSelect">
 										<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
 										<c:forEach var="productType" items="${productTypeList}">
-											<form:option value="${productType.id}"> <c:out value="${productType.name}"></c:out> </form:option>
+											<c:out value="${productType.key}"/>
+											<form:option value='<c:out value="${productType.key}"/>'> <c:out value="${productType.value}"></c:out> </form:option>
 										</c:forEach>
 									</form:select>
 									
@@ -363,11 +364,17 @@ $("#purchaseItemDTO\\.productId").on('change', function() {
 					var len = result.length
 					var $size = $('#purchaseItemDTO\\.size');
 					$size.empty();
-					for( var i = 0; i<len; i++){
+					
+					$.each( result, function(index,value){
+						 console.log("Index = " + index + " value = " + value); 
+						 $size.append("<option value='"+index+"'>"+value+"</option>");
+						})
+						
+					/* for( var i = 0; i<len; i++){
 						var id = result[i].id;
 	                    var name = result[i].name;
 	                    $size.append("<option value='"+id+"'>"+name+"</option>");
-					}
+					} */
 					generateItemCode();
 	    		}
 		});

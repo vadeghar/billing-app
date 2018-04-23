@@ -179,7 +179,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 					dto.setItemCode(pi.getItemCode());
 					dto.setMargin(pi.getMargin());
 					dto.setPricePerUnit(pi.getPricePerPc());
-					dto.setProductId(pi.getProduct().getId());
+					//dto.setProductId(pi.getProductTypeText());
 					dto.setQuantity(pi.getQuantity());
 					Double salePrice = 0.0;
 					if(pi.getMarginType().equals("%")){

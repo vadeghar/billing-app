@@ -1,6 +1,7 @@
 package com.mytest.billapp.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
@@ -24,7 +25,8 @@ public interface ProductService {
 	public List<Product> findAll();
 	public List<Product> findAll(Sort sort);
 	public long count();
-	public List<Product> getProductSizeList(Long productId);
+	public Map<Integer, String> getProductSizeList(Long productId);
 	public List<Product> getProductList();
+	public Map<Integer, String> getProductTypes();
 
 }
