@@ -2,9 +2,26 @@ package com.mytest.billapp.dto;
 
 public class PurchaseItemDTO {
 	
+	
+	public PurchaseItemDTO(){}
+	
+	
+	public PurchaseItemDTO(PurchaseItemDTO dto) {
+		this.id = dto.getId();
+		this.srNo = dto.getSrNo();
+		this.productId = dto.getProductId();
+		this.size = dto.getSize();
+		this.quantity = dto.getQuantity();
+		this.pricePerUnit = dto.getPricePerUnit();
+		this.total = dto.getTotal();
+		this.marginType = dto.getMarginType();
+		this.margin = dto.getMargin();
+		this.salePrice = dto.getSalePrice();
+		this.itemCode = dto.getItemCode();
+	}
 	private Long id;
 	private String srNo;
-	private Long productId;
+	private Integer productId;
 	/*private String productType;
 	private String model;*/
 	private String size;
@@ -28,10 +45,10 @@ public class PurchaseItemDTO {
 	public void setSrNo(String srNo) {
 		this.srNo = srNo;
 	}
-	public Long getProductId() {
+	public Integer getProductId() {
 		return productId;
 	}
-	public void setProductId(Long productId) {
+	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
 	public String getSize() {

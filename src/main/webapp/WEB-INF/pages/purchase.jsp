@@ -79,7 +79,7 @@
 										<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
 										<c:forEach var="productType" items="${productTypeList}">
 											<c:out value="${productType.key}"/>
-											<form:option value='<c:out value="${productType.key}"/>'> <c:out value="${productType.value}"></c:out> </form:option>
+											<form:option value="${productType.key}"> <c:out value="${productType.value}"></c:out> </form:option>
 										</c:forEach>
 									</form:select>
 									
@@ -153,7 +153,7 @@
 							</div>
 							<div class="row margin-10">
 								<div class="" style="text-align: center;">
-									<button id="btnSubmit" type="submit" class="btn btn-primary add-row" onclick="savePurchase();">Save</button>
+									<button id="btnSubmit" type="submit" class="btn btn-primary add-row" onclick="addPurchaseItem();">Add to List</button>
 									<button id="btnSubmit" type="button" class="btn btn-primary add-row" onclick="listPurchase();">Cancel</button>
 									<%-- <a href="${pageContext.request.contextPath}/purchaseList" data-toggle="tab" class="btn btn-warning">Cancel</a> --%>
 								</div>									
@@ -167,8 +167,7 @@
 										<!--Table head-->
 										<thead>
 											<tr class="text-white">
-												<th>ID</th>
-									            <th>Sr. No</th>
+												<th>Sr. No</th>
 									            <th>productId</th>
 									 			<th>size</th>
 									 			<th>quantity</th>
@@ -252,9 +251,9 @@ $( document ).ready(function() {
     }
 });
 
-function savePurchase() {
+function addPurchaseItem() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/savePurchase";
+	document.getElementById("myForm").action = "/addPurchaseItem";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 	

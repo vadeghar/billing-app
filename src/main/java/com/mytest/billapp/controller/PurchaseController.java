@@ -1,8 +1,11 @@
 package com.mytest.billapp.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,9 +38,44 @@ public class PurchaseController {
 	    return "purchaseList";
 	}
 	
+	
+	
+	@RequestMapping(value = "addPurchaseItem", method = RequestMethod.POST)
+	public String addPurchaseItem(@ModelAttribute PurchaseDTO purchaseDTO, Model model) {
+		PurchaseItemDTO purchaseItemDTO = new PurchaseItemDTO(purchaseDTO.getPurchaseItemDTO());
+		if(CollectionUtils.isEmpty(purchaseDTO.getPurchaseItems()))
+			purchaseDTO.setPurchaseItems(new ArrayList<PurchaseItemDTO>());
+		purchaseDTO.getPurchaseItems().add(purchaseItemDTO);
+		purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
+		model.addAttribute("purchase", purchaseDTO);
+		addDataToModel(model);
+		return "purchase";
+	}
+	
+	
+	private void addDataToModel(Model model) {
+		model.addAttribute("purchaseList", purchaseService.findAll());
+		model.addAttribute("productTypeList", productService.getProductTypes());
+		model.addAttribute("vendorList", vendorService.findAll());
+		model.addAttribute("selectedId","");
+		model.addAttribute("message", "");
+	}
+
+
+
 	@RequestMapping(value = "savePurchase", method = RequestMethod.POST)
 	public String savePurchase(@ModelAttribute PurchaseDTO purchaseDTO, Model model) {
 		try {
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			PurchaseDTO dto = purchaseService.save(purchaseDTO);
 			purchaseDTO = new PurchaseDTO();
 			purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
@@ -73,7 +111,7 @@ public class PurchaseController {
 				
 			}
 			model.addAttribute("purchaseList", purchaseService.findAll());
-			model.addAttribute("productTypeList", productService.getProductList());
+			model.addAttribute("productTypeList", productService.getProductTypes());
 			model.addAttribute("vendorList", vendorService.findAll());
 			model.addAttribute("selectedId","");
 			model.addAttribute("message", "");
