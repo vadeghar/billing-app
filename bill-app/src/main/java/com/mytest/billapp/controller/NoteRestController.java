@@ -1,6 +1,7 @@
 package com.mytest.billapp.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -57,7 +58,7 @@ public class NoteRestController {
 	}
 	
 	@GetMapping("/product/{id}")
-	public List<Product> getProductSizeListById(@PathVariable(value = "id") Long productId) {
+	public Map<Integer, String> getProductSizeListById(@PathVariable(value = "id") Long productId) {
 	    try {
 			return productService.getProductSizeList(productId);
 		} catch (Exception e) {

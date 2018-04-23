@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PurchaseDTO {
 	
-	private Long id = 1l;
+	private Long id;
 	private Long vendorId;
 	private String vendorName;
 	private String vendorGst;

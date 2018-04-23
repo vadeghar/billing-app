@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import com.mytest.billapp.model.Product;
 import com.mytest.billapp.repsitory.ProductRepository;
 import com.mytest.billapp.service.ProductService;
+import com.mytest.billapp.utils.ProductSizeEnum;
+import com.mytest.billapp.utils.ProductTypeEnum;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -92,8 +94,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	
-	public List<Product> getProductSizeList(Long productId) {
-		return productSizeList.stream().filter( p -> p.getBrandId().longValue() == productId.longValue()).collect(Collectors.toList());
+	public Map<Integer, String> getProductTypes() {
+		return ProductTypeEnum.getAllProductTypes();
+	}
+	
+	
+	public Map<Integer, String> getProductSizeList(Long productId) {
+		return ProductSizeEnum.getSizesByProductType(ProductTypeEnum.getById(productId));
+		//return productSizeList.stream().filter( p -> p.getBrandId().longValue() == productId.longValue()).collect(Collectors.toList());
 	}
 	
 	private static List<Product> productSizeList = new ArrayList<>();
