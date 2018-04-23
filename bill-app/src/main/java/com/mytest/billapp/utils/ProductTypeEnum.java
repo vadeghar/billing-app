@@ -7,13 +7,14 @@ public enum ProductTypeEnum {
 	
 	JEANS(1,"JEANS","Jeans"),
 	TSHIRT(2,"T-SHIRT","T Shirt"),
-	SHIRT(2,"SHIRT","Shirt"),
+	SHIRT(3,"SHIRT","Shirt"),
 	CASUAL_SHIRT(4,"CASUAL SHIRT","Casual Shirt"),
 	CASUAL_PANT(5,"CASUAL PANT","Casual Pant"),
-	UNKNOWN(0,"0","0");
+	UNKNOWN(0,"Other","Other");
 	
 
 	private ProductTypeEnum(Integer id, String code, String description) {
+		this.id = id;
 		this.code = code;
 		this.description = description;
 	}
@@ -37,7 +38,8 @@ public enum ProductTypeEnum {
 	@SuppressWarnings("unlikely-arg-type")
 	public static ProductTypeEnum getById(Long id) {
 	    for(ProductTypeEnum e : values()) {
-	        if(e.getId().equals(id)) return e;
+	        if(e.getId().intValue() == id.intValue()) 
+	        	return e;
 	    }
 	    return UNKNOWN;
 	}
