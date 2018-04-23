@@ -48,6 +48,7 @@ public class PurchaseController {
 		purchaseDTO.getPurchaseItems().add(purchaseItemDTO);
 		purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
 		model.addAttribute("purchase", purchaseDTO);
+		model.addAttribute("purchaseItems", purchaseDTO.getPurchaseItems());
 		addDataToModel(model);
 		return "purchase";
 	}
