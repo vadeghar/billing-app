@@ -57,7 +57,7 @@ public enum ProductSizeEnum {
 	@SuppressWarnings("unlikely-arg-type")
 	public static ProductSizeEnum getById(Long id) {
 	    for(ProductSizeEnum e : values()) {
-	        if(e.getId().equals(id)) return e;
+	        if(e.getId().longValue() == id.longValue()) return e;
 	    }
 	    return null;
 	}

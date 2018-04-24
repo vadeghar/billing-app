@@ -34,14 +34,14 @@
 							<div class="col-md-8 margin-bottom-15">	
 								<div class="form-group">
 									<label for="vendorMobile"  class="rightAlign">Mobile: </label>
-									<form:input path="vendorMobile" class="form-control" cols="25" disabled="true"/>
+									<form:input path="vendorMobile" class="form-control" cols="25" readonly="true"/>
 								</div>
 							</div>	
 							
 							<div class="col-md-8 margin-bottom-15">	
 								<div class="form-group">
 									<label for="vendorGst"  class="rightAlign">GST No: </label>
-									<form:input path="vendorGst" class="form-control" cols="25" disabled="true"/>
+									<form:input path="vendorGst" class="form-control" cols="25" readonly="true"/>
 								</div>
 							</div>
 							
@@ -122,7 +122,7 @@
 							<div class="col-md-8 margin-bottom-15">	
 								<div class="form-group">
 									<label for="purchaseItemDTO.margin"  class="rightAlign">Margin: </label>
-									<form:input path="purchaseItemDTO.margin" class="form-control" cols="25" disabled="true"/>
+									<form:input path="purchaseItemDTO.margin" class="form-control" cols="25" readonly="true"/>
 								</div>
 							</div>
 							<div class="col-md-8 margin-bottom-15">	
@@ -168,15 +168,14 @@
 										<thead>
 											<tr class="text-white">
 												<th>Sr. No</th>
-									            <th>productId</th>
-									 			<th>size</th>
-									 			<th>quantity</th>
-									 			<th>pricePerUnit</th>
-									 			<th>total</th>
-									 			<th>marginType</th>
-									 			<th>margin</th>
-									 			<th>salePrice</th>
-									 			<th>itemCode</th>
+									            <th>Product</th>
+									 			<th>Size</th>
+									 			<th>Qty</th>
+									 			<th>Price/Pc</th>
+									 			<th>Total</th>
+									 			<th>Margin</th>
+									 			<th>Sale Price/Pc</th>
+									 			<th>CODE</th>
 									 			<th></th>
 											</tr>
 										</thead>
@@ -186,23 +185,17 @@
 										<tbody>
 											<c:forEach var="purchaseItem" items="${purchaseItems}">
 									           <tr>
-									               <td>${purchaseItem.id}</td>
 									               <td>${purchaseItem.srNo}</td>
-									               <td>${purchaseItem.productId}</td>
-									               <td>${purchaseItem.size}</td>
+									               <td>${purchaseItem.productType}</td>
+									               <td>${purchaseItem.sizeName}</td>
 									               
 									               <td>${purchaseItem.quantity}</td>
 									               <td>${purchaseItem.pricePerUnit}</td>
 									               <td>${purchaseItem.total}</td>
-									               <td>${purchaseItem.marginType}</td>
-									               
+									               <td>${purchaseItem.margin} ${purchaseItem.marginType}</td>
 									                <td>${purchaseItem.salePrice}</td>
 									               <td>${purchaseItem.itemCode}</td>
-									               
 									               <td>
-									               <button type="button" class="" onclick="editPurchase('${purchase.id}')">
-											          <span class="glyphicon glyphicon-pencil"></span>
-											        </button>
 											        <button type="button" class="" onclick="deletePurchase('${purchase.id}')">
 											          <span class="glyphicon glyphicon glyphicon-remove"></span>
 											        </button>
@@ -309,14 +302,14 @@ $( document ).ready(function() {
 	$("#purchaseItemDTO\\.quantity").on('change keyup', function() {
 		if($(this).val() != '' && $("#purchaseItemDTO\\.pricePerUnit").val() != '') {
 			$("#purchaseItemDTO\\.total").val($(this).val() * $("#purchaseItemDTO\\.pricePerUnit").val());
-			$("#purchaseItemDTO\\.total").prop("disabled", true);
+			$("#purchaseItemDTO\\.total").prop("readonly", true);
 		}
 	});
 	$("#purchaseItemDTO\\.pricePerUnit").on('change keyup', function() {
 		if($(this).val() != '' && $("#purchaseItemDTO\\.quantity").val() != '') {
 			$("#purchaseItemDTO\\.total").val($(this).val() * $("#purchaseItemDTO\\.quantity").val());
 			calculateSalePrice();
-			$("#purchaseItemDTO\\.total").prop("disabled", true);
+			$("#purchaseItemDTO\\.total").prop("readonly", true);
 			generateItemCode();
 		}
 	});
@@ -324,7 +317,7 @@ $( document ).ready(function() {
 	
 	$("input[name=purchaseItemDTO\\.marginType]").click(function(e) { 
         if($("input[name=purchaseItemDTO\\.marginType]:checked").val() != "") {  
-             $("#purchaseItemDTO\\.margin").removeAttr("disabled");  
+             $("#purchaseItemDTO\\.margin").removeAttr("readonly");  
              calculateSalePrice();
         } 
 	});
@@ -423,10 +416,10 @@ function calculateSalePrice(){
 		}else {
 			$("#purchaseItemDTO\\.salePrice").val( (ppu + marg).toFixed());
 		}
-		$("#purchaseItemDTO\\.salePrice").prop("disabled", true);
+		$("#purchaseItemDTO\\.salePrice").prop("readonly", true);
 	}else {
 		$("#purchaseItemDTO\\.salePrice").val('');
-		$("#purchaseItemDTO\\.salePrice").prop("disabled", false);
+		$("#purchaseItemDTO\\.salePrice").prop("readonly", false);
 	}
 }
 </script>
