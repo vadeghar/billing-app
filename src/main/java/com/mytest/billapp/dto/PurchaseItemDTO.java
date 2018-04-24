@@ -1,5 +1,8 @@
 package com.mytest.billapp.dto;
 
+import com.mytest.billapp.utils.ProductSizeEnum;
+import com.mytest.billapp.utils.ProductTypeEnum;
+
 public class PurchaseItemDTO {
 	
 	
@@ -18,13 +21,18 @@ public class PurchaseItemDTO {
 		this.margin = dto.getMargin();
 		this.salePrice = dto.getSalePrice();
 		this.itemCode = dto.getItemCode();
+		this.productType = ProductTypeEnum.getById(dto.getProductId().longValue()).code;
+		if(dto.getSize() != null)
+			this.sizeName = ProductSizeEnum.getById(Long.parseLong(dto.getSize())).getSize();
 	}
 	private Long id;
 	private String srNo;
 	private Integer productId;
+	private String productType;
 	/*private String productType;
 	private String model;*/
 	private String size;
+	private String sizeName;
 	private Integer quantity;
 	private Double pricePerUnit;
 	private Double total;
@@ -98,6 +106,26 @@ public class PurchaseItemDTO {
 	}
 	public void setItemCode(String itemCode) {
 		this.itemCode = itemCode;
+	}
+
+
+	public String getProductType() {
+		return productType;
+	}
+
+
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+
+	public String getSizeName() {
+		return sizeName;
+	}
+
+
+	public void setSizeName(String sizeName) {
+		this.sizeName = sizeName;
 	}
 	
 	

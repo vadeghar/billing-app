@@ -1,6 +1,7 @@
 package com.mytest.billapp.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,8 @@ public class PurchaseController {
 	@Autowired
 	ProductService productService;
 	
+	private List<PurchaseItemDTO> purchaseItems;
+	
 	@RequestMapping(value = "purchaseList", method = RequestMethod.POST)
 	public String getAllPurchase(Model model) {
 		model.addAttribute("PurchaseList", purchaseService.findAll());
@@ -43,12 +46,14 @@ public class PurchaseController {
 	@RequestMapping(value = "addPurchaseItem", method = RequestMethod.POST)
 	public String addPurchaseItem(@ModelAttribute PurchaseDTO purchaseDTO, Model model) {
 		PurchaseItemDTO purchaseItemDTO = new PurchaseItemDTO(purchaseDTO.getPurchaseItemDTO());
-		if(CollectionUtils.isEmpty(purchaseDTO.getPurchaseItems()))
-			purchaseDTO.setPurchaseItems(new ArrayList<PurchaseItemDTO>());
-		purchaseDTO.getPurchaseItems().add(purchaseItemDTO);
+		if(CollectionUtils.isEmpty(purchaseItems))
+			purchaseItems = new ArrayList<PurchaseItemDTO>();
+		purchaseItems.add(purchaseItemDTO);
+		PurchaseItemDTO nextPurchaseItemDTO = new PurchaseItemDTO();
+		nextPurchaseItemDTO.setSrNo((purchaseItems.size()+1)+"");
 		purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
 		model.addAttribute("purchase", purchaseDTO);
-		model.addAttribute("purchaseItems", purchaseDTO.getPurchaseItems());
+		model.addAttribute("purchaseItems", purchaseItems);
 		addDataToModel(model);
 		return "purchase";
 	}
