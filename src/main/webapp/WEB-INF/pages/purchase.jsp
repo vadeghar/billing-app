@@ -159,7 +159,7 @@
 								</div>									
 							</div>
 						</div>
-						<div class="col-sm-24 col-md-12 borderOnePx">
+						<div class="col-sm-24 col-md-12 borderOnePx" style="height: 320px; overflow: auto;">
 							<div class="margin-5">
 								<c:choose>
 									<c:when test="${not empty purchaseItems}">
@@ -220,6 +220,35 @@
 									</c:otherwise>
 								</c:choose>
 							
+							</div>
+						</div>
+						<div class="col-sm-24 col-md-12 borderOnePx" >
+							<div class="margin-5">
+								<div class="col-md-8 margin-bottom-15">	
+									<div class="form-group">
+										<label for="billTotal"  class="rightAlign">Bill Total: </label>
+										<form:input path="billTotal" class="form-control" cols="25"/>
+									</div>
+								</div>
+								<div class="col-md-8 margin-bottom-15">	
+									<div class="form-group">
+										<label for="discountType"  class="rightAlign">Discount Type: </label>
+										<form:radiobutton path="discountType" value="%" /> Percentage (%)
+										<form:radiobutton path="discountType" value="RS" /> Rupees (Rs)
+									</div>
+								</div>
+								<div class="col-md-8 margin-bottom-15">	
+									<div class="form-group">
+										<label for="discount"  class="rightAlign">Discount(Rs): </label>
+										<form:input path="discount" class="form-control" cols="25"/>
+									</div>
+								</div>
+								<div class="col-md-8 margin-bottom-15">	
+									<div class="form-group">
+										<label for="netTotal"  class="rightAlign">Paid Total: </label>
+										<form:input path="netTotal" class="form-control" cols="25"/>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
