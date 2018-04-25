@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,7 +52,8 @@ public class PurchaseController {
 		purchaseItems.add(purchaseItemDTO);
 		PurchaseItemDTO nextPurchaseItemDTO = new PurchaseItemDTO();
 		nextPurchaseItemDTO.setSrNo((purchaseItems.size()+1)+"");
-		purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
+		purchaseDTO.setPurchaseItemDTO(nextPurchaseItemDTO);
+		setTotals(purchaseDTO, purchaseItems);
 		model.addAttribute("purchase", purchaseDTO);
 		model.addAttribute("purchaseItems", purchaseItems);
 		addDataToModel(model);
@@ -59,6 +61,27 @@ public class PurchaseController {
 	}
 	
 	
+	private void setTotals(PurchaseDTO purchaseDTO, List<PurchaseItemDTO> purchaseItems) {
+		Double total = new Double(0.0);
+		Double discount = new Double(0.0);
+		for(PurchaseItemDTO purchaseItemDTO : purchaseItems) {
+			total = total + purchaseItemDTO.getTotal();
+		}
+		purchaseDTO.setBillTotal(total);
+		if(!StringUtils.isEmpty(purchaseDTO.getDiscountType())){
+			if(purchaseDTO.getDiscountType().equals("%")){
+				discount = total - (total * purchaseDTO.getDiscount() / 100);
+			}else {
+				discount = total - purchaseDTO.getDiscount();
+			}
+			purchaseDTO.setDiscount(discount);
+			purchaseDTO.setNetTotal(total - discount);
+		}
+		
+	}
+
+
+
 	private void addDataToModel(Model model) {
 		model.addAttribute("purchaseList", purchaseService.findAll());
 		model.addAttribute("productTypeList", productService.getProductTypes());
