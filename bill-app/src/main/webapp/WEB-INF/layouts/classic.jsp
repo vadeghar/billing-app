@@ -6,74 +6,70 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="icon" href="favicon.png">
-<title><tiles:getAsString name="title" /></title>
+
+<title>Home - Dashboard</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="${pageContext.request.contextPath}/assets/css/custom.css" rel="stylesheet">
+
+<!-- Responsive CSS -->
+<link href="${pageContext.request.contextPath}/assets/css/responsive.css" rel="stylesheet">
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- Bootstrap core CSS -->
-<link href="${pageContext.request.contextPath}/static/css/bootstrap.css" rel="stylesheet">
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<link href="${pageContext.request.contextPath}/static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-<!-- Custom styles for this template -->
-<link href="${pageContext.request.contextPath}/static/css/style.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/static/css/sweetalert.css" rel="stylesheet">
+<!-- Custom Fonts -->
+<link href="${pageContext.request.contextPath}/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900" rel="stylesheet">
 
+<link href="https://fonts.googleapis.com/css?family=Crete+Round" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
-<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-<!-- Placed at the end of the document so the pages load faster --> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
-<script type="text/javascript" src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/moment.js" type="text/javascript" ></script> 
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script> 
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/ie10-viewport-bug-workaround.js"></script>
-
-<%-- <script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script> --%>
-<script src="http://www.chartjs.org/dist/2.7.1/Chart.bundle.js"></script>
-<script src="http://www.chartjs.org/samples/latest/utils.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/sweetalert.min.js"></script>
-
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- Fav Icon -->
+<link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/favicon.png" />
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-
-
-
-<!-- <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet"> -->
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-
-
-
-
+<!-- jQuery -->
+<script src="${pageContext.request.contextPath}/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/sweetalert.min.js"></script>
 
 </head>
 
 
-<body>
-    
-                <tiles:insertAttribute name="header" />
-           
-                 <tiles:insertAttribute name="menu" />
-				<div class="container">
-					<div class="">
-					<div class="" id="tabsData2">
-						<div class="tab-content">
-							<tiles:insertAttribute name="body" />
-						</div>
-						</div>
-					</div>
+<body id="page-top" class="index">
+
+	<tiles:insertAttribute name="header" />
+
+	<tiles:insertAttribute name="menu" />
+	<!-- Content Section -->
+	<section class="content-wrapper">
+		<div class="fluid-container">
+			<div class="content-post">
+				<div class="col-lg-12 div-outline">
+					<tiles:insertAttribute name="body" />
 				</div>
+			</div>
+		</div>
+	</section>
+	<!--/ Content Section -->
 	<tiles:insertAttribute name="footer" />
-            
+	
+	<!-- Bootstrap Core JavaScript -->
+	<script src="${pageContext.request.contextPath}/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+	<!-- Plugin JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+	<!-- Custom JavaScript -->
+	<script src="${pageContext.request.contextPath}/assets/js/custom.js"></script>
 </body>
 </html>
