@@ -1,6 +1,257 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<form:form action="${pageContext.request.contextPath}/savePurchase" method="post" modelAttribute="purchase"  id="myForm" >
+<div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
+ <div class="col-lg-6">
+ 	<div class="column-section mright20">
+      <form class="form-horizontal">
+		<div class="form-column">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="Vendor" class="control-label">Vendor:</label>
+					<form:select path="vendorId" class="form-control">
+						<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
+						<c:forEach var="vendor" items="${vendorList}">
+							<form:option value="${vendor.id}"> <c:out value="${vendor.name}"></c:out> </form:option>
+						</c:forEach>
+					</form:select>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="vendorMobile" class="control-label">Mobile:</label>
+					<form:input type="name" class="form-control" path="vendorMobile" placeholder="+91-900012346" readonly="true"/>
+				</div>
+			</div>									
+			<div class="col-sm-4 nomargin">
+				<div class="form-group">
+					<label for="vendorGst" class="control-label">GST No:</label>
+					<form:input path="vendorGst" class="form-control" placeholder="8548877942" readonly="true"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-column">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="billDate"  class="control-label">Bill Date: <span class="require">*</span></label>
+					<form:input path="billDate" class="form-control" placeholder="24/04/2018"/>
+				</div>
+			</div>									
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="billNo"  class="control-label">Bill No: </label>
+					<form:input path="billNo" class="form-control" placeholder="98989"/>
+				</div>
+			</div>
+			<div class="col-sm-4 nomargin">
+				<div class="form-group">
+					<label for="purchaseItemDTO.srNo"  class="control-label">SR No: </label>
+					<form:input path="purchaseItemDTO.srNo" class="form-control" placeholder="..."/>
+				</div>
+			</div>
+		</div>
+		<div class="form-column">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="purchaseItemDTO.productId"  class="control-label">Product: </label>
+					<form:select path="purchaseItemDTO.productId" class="form-control">
+						<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
+						<c:forEach var="productType" items="${productTypeList}">
+							<c:out value="${productType.key}"/>
+							<form:option value="${productType.key}"> <c:out value="${productType.value}"></c:out> </form:option>
+						</c:forEach>
+					</form:select>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="purchaseItemDTO.size"  class="control-label">Size: </label>
+					<%-- <form:input path="purchaseItemDTO.size" class="form-control" cols="25"/> --%>
+					<form:select path="purchaseItemDTO.size" class="form-control">
+						<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
+					</form:select>
+				</div>
+			</div>
+			<div class="col-sm-4 nomargin">
+				<div class="form-group">
+					<label for="purchaseItemDTO.quantity"  class="control-label">Quantity: </label>
+					<form:input path="purchaseItemDTO.quantity" class="form-control" placeholder="..."/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-column">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="purchaseItemDTO.pricePerUnit"  class="control-label">Price/Unit: </label>
+					<form:input path="purchaseItemDTO.pricePerUnit" class="form-control" placeholder="..."/>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="purchaseItemDTO.total"  class="control-label">Total: </label>
+					<form:input path="purchaseItemDTO.total" class="form-control" placeholder="..."/>
+				</div>
+			</div>
+			<div class="col-sm-4 nomargin">
+				<div class="form-group form-group-required">
+					<label for="purchaseItemDTO.marginType"  class="control-label">Margin Type: </label>
+					<label class="radio-inline">
+					  <form:radiobutton path="purchaseItemDTO.marginType" value="%" /> Percentage (%)  
+					</label>
+					<label class="radio-inline">
+					  <form:radiobutton path="purchaseItemDTO.marginType" value="RS" /> Indian Rupees (INR) 
+					</label>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-column">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="purchaseItemDTO.salePrice"  class="control-label">Sale Price: </label>
+					<form:input path="purchaseItemDTO.salePrice" class="form-control" placeholder="..."/>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label for="purchaseItemDTO.itemCode"  class="control-label">Item Code: </label>
+					<form:input path="purchaseItemDTO.itemCode" class="form-control" placeholder="..."/>
+				</div>
+			</div>
+			<div class="col-sm-4 nomargin">
+				<div class="form-group">
+					<label for="purchaseItemDTO.margin"  class="control-label">Margin: </label>
+					<form:input path="purchaseItemDTO.margin" class="form-control" placeholder="..." readonly="true"/>
+				</div>
+			</div>
+		</div>
+		<div class="form-column">
+			<div class="col-sm-12">
+				<div class="form-group pull-right">
+					<button type="button" class="btn btn-primary" onclick="addPurchaseItem();">Add to list</button>
+					<button type="button" class="btn btn-danger" onclick="listPurchase();">Cancel</button>
+				</div>
+			</div>
+		</div>
+		
+	</form>
+</div>
+ 
+ </div>
+ <div class="col-lg-6">
+ 	<div class="column-section section-scroll marbottom20">
+ 		<c:choose>
+			<c:when test="${not empty purchaseItems}">
+		        <table class="table table-bordered tb-color darken uh-table">
+		            <thead>
+		                <tr class="text-white">
+		                    <th>SR.NO</th>
+		                    <th>PRODUCT</th>
+		                    <th>SIZE</th>
+		                    <th>QTY</th>
+		                    <th>PRICE/PC</th>
+		                    <th>TOTAL</th>
+		                    <th>MARGIN</th>
+		                    <th>SALE PRICE/PC</th>
+		                    <th>CODE</th>										
+		                </tr>								
+		            </thead>
+		            <tbody>
+		            	<c:forEach var="purchaseItem" items="${purchaseItems}">
+				           <tr>
+				               <td>${purchaseItem.srNo}</td>
+				               <td>${purchaseItem.productType}</td>
+				               <td>${purchaseItem.sizeName}</td>
+				               
+				               <td>${purchaseItem.quantity}</td>
+				               <td>${purchaseItem.pricePerUnit}</td>
+				               <td>${purchaseItem.total}</td>
+				               <td>${purchaseItem.margin} ${purchaseItem.marginType}</td>
+				                <td>${purchaseItem.salePrice}</td>
+				               <td>${purchaseItem.itemCode}</td>
+				               <td>
+						        <button type="button" class="" onclick="deletePurchase('${purchase.id}')">
+						          <span class="glyphicon glyphicon glyphicon-remove"></span>
+						        </button>
+				              </td>
+				           </tr>
+				         </c:forEach>
+		            </tbody>
+		         </table>
+		       </c:when>
+		       <c:otherwise>
+					<table class="table table-bordered tb-color darken uh-table">
+						<tbody>
+							<tr style="width: 100%; text-align: center; color: red;"> <td> No Data Found </td> </tr>
+						</tbody>
+					</table>
+				</c:otherwise>
+		     </c:choose>
+    	</div>
+    	
+    	<div class="column-section total_section">
+			<form class="form-horizontal">
+				<div class="form-column">
+					<div class="col-sm-6">
+						<div class="form-column">
+							<div class="form-group">
+								<label for="Total" class="control-label">Total:</label>
+								<input type="name" class="form-control" id="Total" placeholder="...">
+							</div>							
+						</div>
+					</div>	
+					<div class="col-sm-6 nomargin">
+						<div class="form-group form-group-required">
+							<label for="inputName" class="control-label">Discount:</label><br/>
+							<label class="radio-inline">
+							  <input type="radio" id="inlineCheckbox1" value="Percentage" checked="" name="marginType"> %  
+							</label>
+							<label class="radio-inline mleft">
+							  <input type="radio" id="inlineCheckbox2" value="INR" name="marginType"> INR 
+							</label>
+							<label class="input-inline mleft">
+							  <input type="name" class="form-control" id="Total" placeholder="...">
+							</label>					
+						</div>
+					</div>
+				</div>
+				<div class="form-column">
+					<div class="col-sm-6">
+						<div class="form-group">
+						<label for="NetTotal" class="control-label">Net total:</label>
+						<input type="name" class="form-control" id="NetTotal" placeholder="...">
+						</div>
+					</div>
+				</div>							
+			</form>	
+		</div>
+ </div>
+<input type="hidden" id="selectedId" name="selectedId" value="${selectedId}">
+</form:form>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%-- 
 <div class="form-inline margin-top-30">
 <form:form action="${pageContext.request.contextPath}/savePurchase" method="post" modelAttribute="purchase"  id="myForm" >
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
@@ -88,7 +339,7 @@
 							<div class="col-md-8 margin-bottom-15">	
 								<div class="form-group">
 									<label for="purchaseItemDTO.size"  class="rightAlign">Size: </label>
-									<%-- <form:input path="purchaseItemDTO.size" class="form-control" cols="25"/> --%>
+									<form:input path="purchaseItemDTO.size" class="form-control" cols="25"/>
 									<form:select path="purchaseItemDTO.size" class="form-control statusSelect">
 										<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
 									</form:select>
@@ -155,11 +406,11 @@
 								<div class="" style="text-align: center;">
 									<button id="btnSubmit" type="submit" class="btn btn-primary add-row" onclick="addPurchaseItem();">Add to List</button>
 									<button id="btnSubmit" type="button" class="btn btn-primary add-row" onclick="listPurchase();">Cancel</button>
-									<%-- <a href="${pageContext.request.contextPath}/purchaseList" data-toggle="tab" class="btn btn-warning">Cancel</a> --%>
+									<a href="${pageContext.request.contextPath}/purchaseList" data-toggle="tab" class="btn btn-warning">Cancel</a>
 								</div>									
 							</div>
 						</div>
-						<div class="col-sm-24 col-md-12 borderOnePx" style="height: 320px; overflow: auto;">
+						<div class="col-sm-24 col-md-12 borderOnePx">
 							<div class="margin-5">
 								<c:choose>
 									<c:when test="${not empty purchaseItems}">
@@ -222,35 +473,6 @@
 							
 							</div>
 						</div>
-						<div class="col-sm-24 col-md-12 borderOnePx" >
-							<div class="margin-5">
-								<div class="col-md-8 margin-bottom-15">	
-									<div class="form-group">
-										<label for="billTotal"  class="rightAlign">Bill Total: </label>
-										<form:input path="billTotal" class="form-control" cols="25"/>
-									</div>
-								</div>
-								<div class="col-md-8 margin-bottom-15">	
-									<div class="form-group">
-										<label for="discountType"  class="rightAlign">Discount Type: </label>
-										<form:radiobutton path="discountType" value="%" /> Percentage (%)
-										<form:radiobutton path="discountType" value="RS" /> Rupees (Rs)
-									</div>
-								</div>
-								<div class="col-md-8 margin-bottom-15">	
-									<div class="form-group">
-										<label for="discount"  class="rightAlign">Discount(Rs): </label>
-										<form:input path="discount" class="form-control" cols="25"/>
-									</div>
-								</div>
-								<div class="col-md-8 margin-bottom-15">	
-									<div class="form-group">
-										<label for="netTotal"  class="rightAlign">Paid Total: </label>
-										<form:input path="netTotal" class="form-control" cols="25"/>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -258,7 +480,7 @@
 	</div>
 </div>
 </form:form>
-</div>
+</div> --%>
 <script type="text/javascript">
 
 $( document ).ready(function() {
