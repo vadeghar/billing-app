@@ -24,6 +24,7 @@ import com.mytest.billapp.repsitory.VendorRepository;
 import com.mytest.billapp.service.PurchaseService;
 import com.mytest.billapp.utils.ProductSizeEnum;
 import com.mytest.billapp.utils.ProductTypeEnum;
+import com.mytest.billapp.utils.Utils;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -181,11 +182,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 			purchaseDTO.setId(p.getId());
 			purchaseDTO.setBillDate(sdf.format(p.getBillDate()));
 			purchaseDTO.setBillNo(p.getBillNo());
-			purchaseDTO.setBillTotal(p.getBillTotal());
-			purchaseDTO.setDiscount(p.getDiscount());
+			purchaseDTO.setBillTotal(Utils.formatDecimals(p.getBillTotal()));
+			purchaseDTO.setDiscount(Utils.formatDecimals(p.getDiscount()));
 			purchaseDTO.setDiscountType(p.getDiscountType());
 			purchaseDTO.setEntryDate(sdf.format(p.getEntryDate()));
-			purchaseDTO.setNetTotal(p.getNetTotal());
+			purchaseDTO.setNetTotal(Utils.formatDecimals(p.getNetTotal()));
 			Vendor v = p.getVendor();
 			if(v != null)
 			{

@@ -1,5 +1,6 @@
 package com.mytest.billapp.controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import com.mytest.billapp.model.Purchase;
 import com.mytest.billapp.service.ProductService;
 import com.mytest.billapp.service.PurchaseService;
 import com.mytest.billapp.service.VendorService;
+import com.mytest.billapp.utils.Utils;
 
 @Controller
 public class PurchaseController {
@@ -67,7 +69,7 @@ public class PurchaseController {
 		for(PurchaseItemDTO purchaseItemDTO : purchaseItems) {
 			total = total + purchaseItemDTO.getTotal();
 		}
-		purchaseDTO.setBillTotal(total);
+		purchaseDTO.setBillTotal(Utils.formatDecimals(total));
 		if(purchaseDTO.getId() > 0) {
 			purchaseDTO.setDiscount(discount);
 			purchaseDTO.setNetTotal(discount);
@@ -78,8 +80,8 @@ public class PurchaseController {
 				}else {
 					discount = total - purchaseDTO.getDiscount();
 				}
-				purchaseDTO.setDiscount(discount);
-				purchaseDTO.setNetTotal(total - discount);
+				purchaseDTO.setDiscount(Utils.formatDecimals(discount));
+				purchaseDTO.setNetTotal(Utils.formatDecimals(total - discount));
 			}
 		}
 	}
