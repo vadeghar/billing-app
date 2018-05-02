@@ -4,11 +4,12 @@
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
  <div class="col-lg-6">
  	<div class="column-section mright20">
-      <form class="form-horizontal">
+      <div class="form-horizontal">
 		<div class="form-column">
 			<div class="col-sm-4">
 				<div class="form-group">
 					<label for="Vendor" class="control-label">Vendor:</label>
+					<form:hidden path="id"/>
 					<form:select path="vendorId" class="form-control">
 						<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
 						<c:forEach var="vendor" items="${vendorList}">
@@ -137,7 +138,7 @@
 			</div>
 		</div>
 		
-	</form>
+	</div>
 </div>
  
  </div>
@@ -193,7 +194,7 @@
     	</div>
     	
     	<div class="column-section total_section">
-			<form class="form-horizontal">
+			<div class="form-horizontal">
 				<div class="form-column">
 					<div class="col-sm-6">
 						<div class="form-column">
@@ -237,7 +238,7 @@
 						</div>
 					</div>
 				</div>						
-			</form>	
+			</div>	
 		</div>
  </div>
 <input type="hidden" id="selectedId" name="selectedId" value="${selectedId}">
@@ -434,5 +435,27 @@ function calculateSalePrice(){
 		$("#purchaseItemDTO\\.salePrice").val('');
 		$("#purchaseItemDTO\\.salePrice").prop("readonly", false);
 	}
+}
+
+$("#discount").blur(function() {
+	if($.isNumeric($("#billTotal").val()) && $.isNumeric($("#discount").val())) {
+		var discountType = $("input[name=discountType]:checked").val();
+		var discount = parseFloat($("#discount").val());
+		var billTotal = parseFloat($("#billTotal").val());
+		if(discountType == '%'){
+			$("#netTotal").val((billTotal - (billTotal * discount / 100)).toFixed());
+		}else {
+			$("#netTotal").val((billTotal - discount).toFixed());
+		}
+		//$("#netTotal").val(billTotal-parseFloat($("#discount").val()));
+		$("#discount").prop("readonly", true);
+	}
+});
+
+function savePurchase() {
+	document.getElementById("selectedId").value = 0;
+	document.getElementById("myForm").action = "/savePurchase";
+	//document.getElementById("myForm").method = "get";
+	document.getElementById("myForm").submit();
 }
 </script>

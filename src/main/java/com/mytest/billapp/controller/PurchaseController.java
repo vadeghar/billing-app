@@ -68,16 +68,20 @@ public class PurchaseController {
 			total = total + purchaseItemDTO.getTotal();
 		}
 		purchaseDTO.setBillTotal(total);
-		if(!StringUtils.isEmpty(purchaseDTO.getDiscountType())){
-			if(purchaseDTO.getDiscountType().equals("%")){
-				discount = total - (total * purchaseDTO.getDiscount() / 100);
-			}else {
-				discount = total - purchaseDTO.getDiscount();
-			}
+		if(purchaseDTO.getId() > 0) {
 			purchaseDTO.setDiscount(discount);
-			purchaseDTO.setNetTotal(total - discount);
+			purchaseDTO.setNetTotal(discount);
+		}else {
+			if(!StringUtils.isEmpty(purchaseDTO.getDiscountType())){
+				if(purchaseDTO.getDiscountType().equals("%")){
+					discount = total - (total * purchaseDTO.getDiscount() / 100);
+				}else {
+					discount = total - purchaseDTO.getDiscount();
+				}
+				purchaseDTO.setDiscount(discount);
+				purchaseDTO.setNetTotal(total - discount);
+			}
 		}
-		
 	}
 
 
@@ -95,32 +99,27 @@ public class PurchaseController {
 	@RequestMapping(value = "savePurchase", method = RequestMethod.POST)
 	public String savePurchase(@ModelAttribute PurchaseDTO purchaseDTO, Model model) {
 		try {
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			PurchaseDTO dto = purchaseService.save(purchaseDTO);
-			purchaseDTO = new PurchaseDTO();
-			purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
-			purchaseDTO.getPurchaseItemDTO().setSrNo(dto.getPurchaseItems().size()+1+"");
-			model.addAttribute("purchase", purchaseDTO);
-			model.addAttribute("purchaseList", purchaseService.findAll());
-			model.addAttribute("vendorList", vendorService.findAll());
-			model.addAttribute("productTypeList", productService.getProductList());
-			model.addAttribute("message", "Succesfully Saved.");
-			model.addAttribute("selectedId","");
+			if(purchaseItems == null || purchaseItems.size() == 0)
+			{
+				model.addAttribute("message", "No items found to save this purchase");
+			}else {
+				purchaseDTO.setPurchaseItems(purchaseItems);
+				PurchaseDTO dto = purchaseService.save(purchaseDTO);
+				purchaseDTO = new PurchaseDTO();
+				purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
+				purchaseItems = new ArrayList<PurchaseItemDTO>();
+				model.addAttribute("PurchaseList", purchaseService.findAll());
+				//model.addAttribute("purchase", new Purchase());
+				model.addAttribute("selectedId","");
+				model.addAttribute("message", "Succesfully Saved.");
+				model.addAttribute("selectedId","");
+			}
 		} catch (Exception e) {
 			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
 			e.printStackTrace();
-			return "purchase";
+			return "purchaseList";
 		}
-	    return "purchase";
+	    return "purchaseList";
 	}
 	
 	
@@ -139,7 +138,8 @@ public class PurchaseController {
 				model.addAttribute("purchase", purchaseDTO);
 				
 			}
-			model.addAttribute("purchaseList", purchaseService.findAll());
+			purchaseItems = new ArrayList<>(purchaseDTO.getPurchaseItems());
+			model.addAttribute("purchaseItems", purchaseItems);
 			model.addAttribute("productTypeList", productService.getProductTypes());
 			model.addAttribute("vendorList", vendorService.findAll());
 			model.addAttribute("selectedId","");
