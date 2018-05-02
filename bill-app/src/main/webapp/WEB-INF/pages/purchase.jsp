@@ -36,7 +36,7 @@
 			<div class="col-sm-4">
 				<div class="form-group">
 					<label for="billDate"  class="control-label">Bill Date: <span class="require">*</span></label>
-					<form:input path="billDate" class="form-control" placeholder="24/04/2018"/>
+					<form:input path="billDate" class="form-control" placeholder="dd/MM/yyyy"/>
 				</div>
 			</div>									
 			<div class="col-sm-4">
@@ -99,10 +99,10 @@
 				<div class="form-group form-group-required">
 					<label for="purchaseItemDTO.marginType"  class="control-label">Margin Type: </label>
 					<label class="radio-inline">
-					  <form:radiobutton path="purchaseItemDTO.marginType" value="%" /> Percentage (%)  
+					  <form:radiobutton path="purchaseItemDTO.marginType" value="%" /> % (Percentage)
 					</label>
 					<label class="radio-inline">
-					  <form:radiobutton path="purchaseItemDTO.marginType" value="RS" /> Indian Rupees (INR) 
+					  <form:radiobutton path="purchaseItemDTO.marginType" value="RS" />INR (Rupees)
 					</label>
 				</div>
 			</div>
@@ -146,10 +146,10 @@
  	<div class="column-section section-scroll marbottom20">
  		<c:choose>
 			<c:when test="${not empty purchaseItems}">
-		        <table class="table table-bordered tb-color darken uh-table">
+		        <table class="table table-bordered tb-color darken uh-table price-list">
 		            <thead>
 		                <tr class="text-white">
-		                    <th>SR.NO</th>
+		                    <th>#</th>
 		                    <th>PRODUCT</th>
 		                    <th>SIZE</th>
 		                    <th>QTY</th>
@@ -174,8 +174,8 @@
 				                <td>${purchaseItem.salePrice}</td>
 				               <td>${purchaseItem.itemCode}</td>
 				               <td>
-						        <button type="button" class="" onclick="deletePurchase('${purchase.id}')">
-						          <span class="glyphicon glyphicon glyphicon-remove"></span>
+						        <button type="button" class="btn btn-danger btn-xs delete" onclick="deletePurchase('${purchase.id}')">
+						          <span class="glyphicon glyphicon-trash"></span>
 						        </button>
 				              </td>
 				           </tr>
@@ -196,15 +196,15 @@
     	<div class="column-section total_section">
 			<div class="form-horizontal">
 				<div class="form-column">
-					<div class="col-sm-6">
+					<div class="col-sm-3">
 						<div class="form-column">
 							<div class="form-group">
 								<label for="billTotal"  class="control-label">Bill Total: </label>
-								<form:input path="billTotal" class="form-control" placeholder="..."/>
+								<form:input path="billTotal" class="control-label text-block" placeholder=""/>
 							</div>							
 						</div>
 					</div>	
-					<div class="col-sm-6 nomargin">
+					<div class="col-sm-3">
 						<div class="form-group form-group-required">
 							<label for="discountType" class="control-label">Discount:</label><br/>
 							<label class="radio-inline">
@@ -215,8 +215,21 @@
 							</label>
 						</div>
 					</div>
+					
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="discount"  class="control-label">Discount(Rs): </label>	
+							<form:input path="discount" class="control-label text-block" placeholder=""/>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="netTotal"  class="control-label">Net Total: </label>
+							<form:input path="netTotal" class="control-label text-block" placeholder="..."/>
+						</div>
+					</div>
 				</div>
-				<div class="form-column">
+				<%-- <div class="form-column">
 					<div class="col-sm-6">
 						<div class="form-group">
 							<label for="discount"  class="input-inline mleft">Discount(Rs): </label>	
@@ -229,7 +242,7 @@
 							<form:input path="netTotal" class="form-control" placeholder="..."/>
 						</div>
 					</div>
-				</div>	
+				</div>	 --%>
 				<div class="form-column">
 					<div class="col-sm-12">
 						<div class="form-group pull-right">
@@ -247,6 +260,14 @@
 <script type="text/javascript">
 
 $( document ).ready(function() {
+	
+	$('#billDate').datepicker({
+		autoclose: true
+	});	
+
+	
+	
+	
     var msg = document.getElementById("message").innerHTML;
     if(msg != '') {
     	var iconType = 'success';
@@ -305,12 +326,12 @@ function deletePurchase(selectedId) {
 		document.getElementById("myForm").submit(); */
 	
 }
-$( function() {
+/* $( function() {
     $("#billDate").datepicker({
     	 maxDate: 0,
     	 dateFormat: 'dd/mm/yy'
     });
-});
+}); */
   
 $( document ).ready(function() {
 	$("#purchaseItemDTO\\.quantity").on('change keyup', function() {

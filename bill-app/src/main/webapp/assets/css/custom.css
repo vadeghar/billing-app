@@ -189,7 +189,30 @@ header .intro-text .skills {
    color: #a94442 !important;
    background-color: #dfe1e8;	
 }
-
+.dropdown-caret {
+    cursor: pointer;
+    display: inline-block !important;
+    padding-left: 0 !important;
+    margin-left: -4px;
+    color: #ffb720;
+}
+.dropdown-menu {
+    text-align: left;
+    min-width: 220px;
+    left: -2px;
+    border-radius: 0;
+    box-shadow: none;
+}
+.dropdown-menu li {
+	border-bottom: 1px solid #515561;
+}
+.dropdown-caret  {
+	display: none !important;
+}
+.dropdown-link {
+    display: inline-block !important;
+    padding-right: 4px !important;
+}
 section {
   padding: 50px 0;
 }
@@ -331,6 +354,9 @@ section.success {
 }
 
 /* Button CSS */
+.btn {
+	border-radius: 0;
+}
 .btn.active.focus, 
 .btn.active:focus, 
 .btn.focus, 
@@ -359,7 +385,7 @@ section.success {
   color: white;
   background-color: #2C3E50;
   border-color: #2C3E50;
-  font-weight: 700;
+  font-weight: normal;
 }
 .btn-primary:hover,
 .btn-primary:focus,
@@ -442,23 +468,20 @@ fieldset[disabled] .btn-success.active {
 
 /* Sroll to top */
 .scrollToTop {
-    position: fixed;
-	overflow: hidden;
-	text-align: center;
-	z-index: 99999999;
+position: fixed;
+    overflow: hidden;
+    text-align: center;
+    z-index: 99999999;
     background-color: #d94340;
-	color: #eeeeee;
-	width: 50px;
-	height: 48px;
-	line-height: 48px;
+    color: #eeeeee;
+    width: 40px;
+    height: 38px;
+    line-height: 36px;
     right: 20px;
     bottom: 70px;
-	padding-top: 2px;
-	cursor: pointer;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-	border-bottom-left-radius: 10px;
+    padding-top: 2px;
+    padding-left: 2px;
+    cursor: pointer;
 	-webkit-transition: all 0.5s ease-in-out;
 	-moz-transition: all 0.5s ease-in-out;
 	-ms-transition: all 0.5s ease-in-out;
@@ -715,9 +738,19 @@ footer .footer-below {
 }
 .form-column {
 	overflow: hidden;
-	margin-bottom: 10px;
+	margin-bottom: 0;
 }
-
+.right-column .form-group {
+    top: 15px;
+    position: relative;
+    margin-right: 15px;
+}
+.section-scroll {
+    padding: 10px;	
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 275px;
+}
 /*** Table CSS***/
 .table-bordered {
     border: 1px solid #657598;
@@ -749,4 +782,28 @@ footer .footer-below {
 }
 .xlarge {
 	width: 160% !important;
+}
+.table>tbody>tr>td, 
+.table>tbody>tr>th, 
+.table>tfoot>tr>td, 
+.table>tfoot>tr>th, 
+.table>thead>tr>td, 
+.table>thead>tr>th {
+	padding: 6px;
+}
+.btn-wrapper {
+	margin-bottom: 0;
+}
+.text-block {
+    display: block;
+    border: none;
+    text-align: left !important;
+    font-weight: normal;
+    background-color: #f6f6f6;
+    padding: 0px 0 0 6px;
+    line-height: 23px;
+    margin-bottom: 0 !important;
+}
+.price-list .btn {
+	font-size: 10px;
 }
