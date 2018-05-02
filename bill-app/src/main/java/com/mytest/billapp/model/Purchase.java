@@ -2,6 +2,7 @@ package com.mytest.billapp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -69,7 +70,7 @@ public class Purchase  extends BEntity implements Serializable {
 	private Vendor vendor;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "purchase")
-    private Set<PurchaseItem> purchaseItemSet;
+    private Set<PurchaseItem> purchaseItemSet = new HashSet<PurchaseItem>();
 
 	public Long getId() {
 		return id;
@@ -157,5 +158,10 @@ public class Purchase  extends BEntity implements Serializable {
 
 	public void setPurchaseItemSet(Set<PurchaseItem> purchaseItemSet) {
 		this.purchaseItemSet = purchaseItemSet;
+	}
+	
+	public void addPurhcaseItem(PurchaseItem purhcaseItem) {
+		purhcaseItem.setPurchase(this);
+		this.purchaseItemSet.add(purhcaseItem);
 	}
 }

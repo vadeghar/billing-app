@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <form:form action="${pageContext.request.contextPath}/purchase" method="post" modelAttribute="purchase"  id="myForm" >
-
+<div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
 <div role="tabpanel" class="" id="">	
 <a href="#" id="newPurchase" class="btn glyphicon glyphicon-plus"> New Purchase</a>
 <!-- Tab #5 Content Start -->
@@ -68,6 +68,22 @@
 </form:form>
 
 <script type="text/javascript">
+
+
+$( document ).ready(function() {
+    var msg = document.getElementById("message").innerHTML;
+    if(msg != '') {
+    	var iconType = 'success';
+    	if(msg.indexOf('Error') != -1)
+    		iconType = "warning";
+    	swal(msg, {
+		      icon: iconType,
+		    });
+    }
+});
+
+
+
 $("#newPurchase").click(function(){
 	$("#selectedId").val(0);
 	document.getElementById("myForm").action = "/purchase";
@@ -76,7 +92,7 @@ $("#newPurchase").click(function(){
 
 
 function editPurchase(selectedId) {
-	document.getElementById("selectedId").value = selectedId;
+	$("#selectedId").val(selectedId);
 	document.getElementById("myForm").action = "/purchase";
 	document.getElementById("myForm").submit();
 }
@@ -93,7 +109,7 @@ function deletePurchase(selectedId) {
 		})
 		.then((willDelete) => {
 		  if (willDelete) {
-			document.getElementById("selectedId").value = selectedId;
+			  $("#selectedId").val(selectedId);
 			document.getElementById("myForm").action = "/deletePurchase";
 			document.getElementById("myForm").submit();
 		  } else {
