@@ -97,7 +97,7 @@
 			</div>
 			<div class="col-sm-4 nomargin">
 				<div class="form-group form-group-required">
-					<label for="purchaseItemDTO.marginType"  class="control-label">Margin Type: </label>
+					<label for="purchaseItemDTO.marginType"  class="control-label">Margin Type: </label><br/>
 					<label class="radio-inline">
 					  <form:radiobutton path="purchaseItemDTO.marginType" value="%" /> % (Percentage)
 					</label>
@@ -109,7 +109,7 @@
 		</div>
 		
 		<div class="form-column">
-			<div class="col-sm-4 nomargin">
+			<div class="col-sm-4">
 				<div class="form-group">
 					<label for="purchaseItemDTO.margin"  class="control-label">Margin: </label>
 					<form:input path="purchaseItemDTO.margin" class="form-control" placeholder="..." readonly="true"/>
