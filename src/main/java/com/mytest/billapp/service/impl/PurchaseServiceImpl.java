@@ -92,10 +92,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 			for(PurchaseItem purchaseItem : set) {
 				totalOfAllItems = totalOfAllItems + purchaseItem.getTotalPrice();
 			}
-			if(entity.getDiscountType().equals("%"))
-				discount = totalOfAllItems * (entity.getDiscount() / 100);
-			else
-				discount = totalOfAllItems - entity.getDiscount();
+			if(entity.getDiscountType() != null ) {
+				if(entity.getDiscountType().equals("%"))
+					discount = totalOfAllItems * (entity.getDiscount() / 100);
+				else
+					discount = totalOfAllItems - entity.getDiscount();
+			}
 		}
 		
 		
