@@ -21,13 +21,13 @@
 			<div class="col-sm-4">
 				<div class="form-group">
 					<label for="vendorMobile" class="control-label">Mobile:</label>
-					<form:input type="name" class="form-control" path="vendorMobile" placeholder="+91-900012346" readonly="true"/>
+					<form:input type="name" class="form-control" path="vendorMobile" placeholder="" readonly="true" autocomplete="off"/>
 				</div>
 			</div>									
 			<div class="col-sm-4 nomargin">
 				<div class="form-group">
 					<label for="vendorGst" class="control-label">GST No:</label>
-					<form:input path="vendorGst" class="form-control" placeholder="8548877942" readonly="true"/>
+					<form:input path="vendorGst" class="form-control" placeholder="" readonly="true"/>
 				</div>
 			</div>
 		</div>
@@ -36,19 +36,19 @@
 			<div class="col-sm-4">
 				<div class="form-group">
 					<label for="billDate"  class="control-label">Bill Date: <span class="require">*</span></label>
-					<form:input path="billDate" class="form-control" placeholder="dd/MM/yyyy"/>
+					<form:input path="billDate" class="form-control" placeholder="dd/MM/yyyy" autocomplete="off"/>
 				</div>
 			</div>									
 			<div class="col-sm-4">
 				<div class="form-group">
 					<label for="billNo"  class="control-label">Bill No: </label>
-					<form:input path="billNo" class="form-control" placeholder="98989"/>
+					<form:input path="billNo" class="form-control" placeholder="" autocomplete="off"/>
 				</div>
 			</div>
 			<div class="col-sm-4 nomargin">
 				<div class="form-group">
 					<label for="purchaseItemDTO.srNo"  class="control-label">SR No: </label>
-					<form:input path="purchaseItemDTO.srNo" class="form-control" placeholder="..."/>
+					<form:input path="purchaseItemDTO.srNo" class="form-control" placeholder="" autocomplete="off"/>
 				</div>
 			</div>
 		</div>
@@ -77,7 +77,7 @@
 			<div class="col-sm-4 nomargin">
 				<div class="form-group">
 					<label for="purchaseItemDTO.quantity"  class="control-label">Quantity: </label>
-					<form:input path="purchaseItemDTO.quantity" class="form-control" placeholder="..."/>
+					<form:input path="purchaseItemDTO.quantity" class="form-control" placeholder="" autocomplete="off"/>
 				</div>
 			</div>
 		</div>
@@ -86,13 +86,13 @@
 			<div class="col-sm-4">
 				<div class="form-group">
 					<label for="purchaseItemDTO.pricePerUnit"  class="control-label">Price/Unit: </label>
-					<form:input path="purchaseItemDTO.pricePerUnit" class="form-control" placeholder="..."/>
+					<form:input path="purchaseItemDTO.pricePerUnit" class="form-control" placeholder="" autocomplete="off"/>
 				</div>
 			</div>
 			<div class="col-sm-4">
 				<div class="form-group">
 					<label for="purchaseItemDTO.total"  class="control-label">Total: </label>
-					<form:input path="purchaseItemDTO.total" class="form-control" placeholder="..."/>
+					<form:input path="purchaseItemDTO.total" class="form-control" placeholder="" autocomplete="off"/>
 				</div>
 			</div>
 			<div class="col-sm-4 nomargin">
@@ -112,19 +112,19 @@
 			<div class="col-sm-4">
 				<div class="form-group">
 					<label for="purchaseItemDTO.margin"  class="control-label">Margin: </label>
-					<form:input path="purchaseItemDTO.margin" class="form-control" placeholder="..." readonly="true"/>
+					<form:input path="purchaseItemDTO.margin" class="form-control" placeholder="" readonly="true" autocomplete="off"/>
 				</div>
 			</div>
 			<div class="col-sm-4">
 				<div class="form-group">
 					<label for="purchaseItemDTO.salePrice"  class="control-label">Sale Price: </label>
-					<form:input path="purchaseItemDTO.salePrice" class="form-control" placeholder="..."/>
+					<form:input path="purchaseItemDTO.salePrice" class="form-control" placeholder="" autocomplete="off"/>
 				</div>
 			</div>
 			<div class="col-sm-4">
 				<div class="form-group">
 					<label for="purchaseItemDTO.itemCode"  class="control-label">Item Code: </label>
-					<form:input path="purchaseItemDTO.itemCode" class="form-control" placeholder="..."/>
+					<form:input path="purchaseItemDTO.itemCode" class="form-control" placeholder="" autocomplete="off"/>
 				</div>
 			</div>
 			
@@ -174,9 +174,11 @@
 				                <td>${purchaseItem.salePrice}</td>
 				               <td>${purchaseItem.itemCode}</td>
 				               <td>
-						        <button type="button" class="btn btn-danger btn-xs delete" onclick="deletePurchase('${purchase.id}')">
-						          <span class="glyphicon glyphicon-trash"></span>
-						        </button>
+				               <c:if test="${purchase.id ne 0}">
+							        <button type="button" class="btn btn-danger btn-xs delete" onclick="deletePurchase('${purchase.id}')">
+							          <span class="glyphicon glyphicon-trash"></span>
+							        </button>
+						        </c:if>
 				              </td>
 				           </tr>
 				         </c:forEach>
@@ -219,13 +221,13 @@
 					<div class="col-sm-3">
 						<div class="form-group">
 							<label for="discount"  class="control-label">Discount(Rs): </label>	
-							<form:input path="discount" class="control-label text-block" placeholder=""/>
+							<form:input path="discount" class="control-label text-block" placeholder="" autocomplete="off"/>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="form-group">
 							<label for="netTotal"  class="control-label">Net Total: </label>
-							<form:input path="netTotal" class="control-label text-block" placeholder="..."/>
+							<form:input path="netTotal" class="control-label text-block" placeholder="" autocomplete="off"/>
 						</div>
 					</div>
 				</div>
