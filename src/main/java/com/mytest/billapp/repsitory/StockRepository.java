@@ -7,5 +7,7 @@ import com.mytest.billapp.model.Stock;
 
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Long> {
+	
+	public Stock findByItemCode(String itemCode);
 
 }

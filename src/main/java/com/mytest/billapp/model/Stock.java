@@ -50,7 +50,7 @@ public class Stock extends BEntity implements Serializable {
 	
 	@Column(name = "ITEM_CODE")
 	private String itemCode;
-	/*
+	
 	@Column(name = "ITEM_ADDED_TS", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
@@ -60,7 +60,7 @@ public class Stock extends BEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
-*/
+
 	public long getId() {
 		return id;
 	}
@@ -108,5 +108,22 @@ public class Stock extends BEntity implements Serializable {
 	public void setItemCode(String itemCode) {
 		this.itemCode = itemCode;
 	}
+
+	public Date getAddedAt() {
+		return addedAt;
+	}
+
+	public void setAddedAt(Date addedAt) {
+		this.addedAt = addedAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+	
 
 }

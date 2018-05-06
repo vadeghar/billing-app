@@ -19,6 +19,7 @@ public class PurchaseDTO {
 	private Double billTotal;
 	private String discountType;
 	private Double discount;
+	private Double discountedAmount;
 	private Double netTotal;
 	
 	private PurchaseItemDTO purchaseItemDTO;
@@ -142,6 +143,14 @@ public class PurchaseDTO {
 
 	public void setPurchaseItemDTO(PurchaseItemDTO purchaseItemDTO) {
 		this.purchaseItemDTO = purchaseItemDTO;
+	}
+
+	public Double getDiscountedAmount() {
+		return discountedAmount;
+	}
+
+	public void setDiscountedAmount(Double discountedAmount) {
+		this.discountedAmount = discountedAmount;
 	}
 	
 }

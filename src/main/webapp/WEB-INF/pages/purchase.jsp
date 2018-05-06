@@ -163,19 +163,19 @@
 		            <tbody>
 		            	<c:forEach var="purchaseItem" items="${purchaseItems}">
 				           <tr>
-				               <td>${purchaseItem.srNo}</td>
+				               <td>${purchaseItem.id}</td>
 				               <td>${purchaseItem.productType}</td>
 				               <td>${purchaseItem.sizeName}</td>
 				               
 				               <td>${purchaseItem.quantity}</td>
 				               <td>${purchaseItem.pricePerUnit}</td>
 				               <td>${purchaseItem.total}</td>
-				               <td>${purchaseItem.margin} ${purchaseItem.marginType}</td>
+				               <td>${purchaseItem.margin} ( ${purchaseItem.marginType} )</td>
 				                <td>${purchaseItem.salePrice}</td>
 				               <td>${purchaseItem.itemCode}</td>
 				               <td>
 				               <c:if test="${purchase.id ne 0}">
-							        <button type="button" class="btn btn-danger btn-xs delete" onclick="deletePurchase('${purchase.id}')">
+							        <button type="button" class="btn btn-danger btn-xs delete" onclick="deletePurchaseItem('${id}','${purchaseItem.id}','${purchaseItem.itemCode}')">
 							          <span class="glyphicon glyphicon-trash"></span>
 							        </button>
 						        </c:if>
@@ -220,7 +220,7 @@
 					
 					<div class="col-sm-3">
 						<div class="form-group">
-							<label for="discount"  class="control-label">Discount(Rs): </label>	
+							<label for="discount"  class="control-label">Discount(% / Rs): </label>	
 							<form:input path="discount" class="control-label text-block" placeholder="" autocomplete="off"/>
 						</div>
 					</div>
@@ -305,7 +305,19 @@ function editPurchase(selectedId) {
 
 
 
-function deletePurchase(selectedId) {
+function deletePurchaseItem(purchaseId, purchaseItemId, itemCode) {
+	if(purchaseId == '') {
+		
+		purchaseId = $('[name="id"]').val();
+	}
+	alert("ID:"+purchaseId);
+	if(confirm("Are you sure?")) {
+		document.getElementById("selectedId").value =purchaseId+"#"+purchaseItemId+"#"+itemCode;
+		document.getElementById("myForm").action = "/deletePurchaseItem";
+		document.getElementById("myForm").submit();
+	}
+	
+	/* 
 	swal({
 		  title: "Are you sure?",
 		  text: "Once deleted, you will not be able to recover this!",
@@ -315,25 +327,18 @@ function deletePurchase(selectedId) {
 		})
 		.then((willDelete) => {
 		  if (willDelete) {
-			document.getElementById("selectedId").value = selectedId;
-			document.getElementById("myForm").action = "/deletePurchase";
+			document.getElementById("selectedId").value = purchaseItemId+"|"+itemCode;
+			document.getElementById("myForm").action = "/deletePurchaseItem";
 			document.getElementById("myForm").submit();
 		  } else {
 		    
 		  }
-		});
-	/* document.getElementById("id").value = id;
-	document.getElementById("myForm").action = "/deletePurchase";
-	if(confirm("Are you sure want to delete?"))
-		document.getElementById("myForm").submit(); */
-	
+		}); */
 }
-/* $( function() {
-    $("#billDate").datepicker({
-    	 maxDate: 0,
-    	 dateFormat: 'dd/mm/yy'
-    });
-}); */
+
+
+
+
   
 $( document ).ready(function() {
 	$("#purchaseItemDTO\\.quantity").on('change keyup', function() {
@@ -473,6 +478,12 @@ $("#discount").blur(function() {
 		//$("#netTotal").val(billTotal-parseFloat($("#discount").val()));
 		$("#discount").prop("readonly", true);
 	}
+});
+
+$('[name="discountType"]').click(function() {
+	var billTotal = parseFloat($("#billTotal").val());
+	$("#netTotal").val(billTotal);
+	$("#discount").val('');
 });
 
 function savePurchase() {
