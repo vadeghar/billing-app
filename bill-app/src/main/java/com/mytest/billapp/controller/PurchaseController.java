@@ -70,7 +70,7 @@ public class PurchaseController {
 			total = total + purchaseItemDTO.getTotal();
 		}
 		purchaseDTO.setBillTotal(Utils.formatDecimals(total));
-		if(purchaseDTO.getId() > 0) {
+		if(purchaseDTO.getId() != null && purchaseDTO.getId() > 0) {
 			purchaseDTO.setDiscount(discount);
 			purchaseDTO.setNetTotal(discount);
 		}else {
@@ -125,21 +125,26 @@ public class PurchaseController {
 	}
 	
 	
+
+
+	private PurchaseDTO getPurchaseDTOById(Long purchaseID) {
+		PurchaseDTO purchaseDTO = null;
+		if(purchaseID == null || purchaseID.longValue() == 0) {
+			purchaseDTO = new PurchaseDTO();
+			purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
+			purchaseDTO.getPurchaseItemDTO().setSrNo("1");
+		}else {
+			purchaseDTO = purchaseService.findById(purchaseID);
+		}
+		
+		return purchaseDTO;
+	}
 	@RequestMapping(value = "purchase", method = RequestMethod.POST)
 	public String addPurchase(@ModelAttribute("selectedId") Long selectedId,  Model model) {
 		
 		try {
-			PurchaseDTO purchaseDTO = null;
-			if(selectedId == null || selectedId.intValue() == 0){
-				purchaseDTO = new PurchaseDTO();
-				purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
-				purchaseDTO.getPurchaseItemDTO().setSrNo("1");
-				model.addAttribute("purchase", purchaseDTO);
-			}else {
-				purchaseDTO = purchaseService.findById(selectedId);
-				model.addAttribute("purchase", purchaseDTO);
-				
-			}
+			PurchaseDTO purchaseDTO = getPurchaseDTOById(selectedId);
+			model.addAttribute("purchase", purchaseDTO);
 			purchaseItems = new ArrayList<>(purchaseDTO.getPurchaseItems());
 			model.addAttribute("purchaseItems", purchaseItems);
 			model.addAttribute("productTypeList", productService.getProductTypes());
@@ -171,4 +176,38 @@ public class PurchaseController {
 		}
 	    return addPurchase(0l, model);
 	}
+	
+	@RequestMapping(value = "deletePurchaseItem", method = RequestMethod.POST)
+	public String deletePurchaseItem(@ModelAttribute("selectedId") String selectedId, Model model) {
+	    try {
+	    	Long purchaseItemId = 0l;
+	    	String itemCode = "";
+	    	Long purhcaseId = 0l;
+	    	if(selectedId != null && selectedId.contains("#")) {
+	    		String[] vals = selectedId.split("#");
+	    		purhcaseId = Long.parseLong(vals[0]);
+	    		purchaseItemId = Long.parseLong(vals[1]);
+	    		itemCode = vals[2];
+	    	}
+	    	List<PurchaseItemDTO> purchaseItemsTemp = new ArrayList<PurchaseItemDTO>();
+	    	//if(purchaseItemId == 0) {
+	    		for(PurchaseItemDTO purchaseItemDTO : purchaseItems) {
+	    			if(purchaseItemDTO.getItemCode().equals(itemCode))
+	    				continue;
+	    			purchaseItemsTemp.add(purchaseItemDTO);
+	    		}
+	    		purchaseItems = new ArrayList<PurchaseItemDTO>(purchaseItemsTemp);
+	    	//}
+	    	model.addAttribute("purchaseItems", purchaseItems);
+	    	model.addAttribute("purchase", getPurchaseDTOById(purhcaseId));
+	    	addDataToModel(model);
+		} catch (ResourceNotFoundException e) {
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			e.printStackTrace();
+			return "purchase";
+		}
+	    return "purchase";
+	}
+	
+	
 }

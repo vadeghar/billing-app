@@ -62,6 +62,9 @@ public class Purchase  extends BEntity implements Serializable {
 	@Column(name="DISCOUNT")
 	private Double discount;
 	
+	@Column(name="DISCOUNTED_AMOUNT")
+	private Double discountedAmount;
+	
 	@Column(name="NET_TOTAL")
 	private Double netTotal;
 	
@@ -160,6 +163,14 @@ public class Purchase  extends BEntity implements Serializable {
 		this.purchaseItemSet = purchaseItemSet;
 	}
 	
+	public Double getDiscountedAmount() {
+		return discountedAmount;
+	}
+
+	public void setDiscountedAmount(Double discountedAmount) {
+		this.discountedAmount = discountedAmount;
+	}
+
 	public void addPurhcaseItem(PurchaseItem purhcaseItem) {
 		purhcaseItem.setPurchase(this);
 		this.purchaseItemSet.add(purhcaseItem);
