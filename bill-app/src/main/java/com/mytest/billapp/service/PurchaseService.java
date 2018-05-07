@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 
 import com.mytest.billapp.dto.PurchaseDTO;
+import com.mytest.billapp.dto.PurchaseItemDTO;
 import com.mytest.billapp.model.Purchase;
 
 public interface PurchaseService {
@@ -24,5 +25,6 @@ public interface PurchaseService {
 	public List<PurchaseDTO> findAll();
 	public List<Purchase> findAll(Sort sort);
 	public long count();
+	public void updateSrockDetails(List<PurchaseItemDTO> newItemsAdded, List<PurchaseItemDTO> deletedItemsAdded);
 
 }

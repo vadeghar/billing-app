@@ -24,6 +24,7 @@ public class PurchaseDTO {
 	
 	private PurchaseItemDTO purchaseItemDTO;
 	List<PurchaseItemDTO> purchaseItems = new ArrayList<>();
+	List<PurchaseItemDTO> deletedPurchaseItems = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -151,6 +152,14 @@ public class PurchaseDTO {
 
 	public void setDiscountedAmount(Double discountedAmount) {
 		this.discountedAmount = discountedAmount;
+	}
+
+	public List<PurchaseItemDTO> getDeletedPurchaseItems() {
+		return deletedPurchaseItems;
+	}
+
+	public void setDeletedPurchaseItems(List<PurchaseItemDTO> deletedPurchaseItems) {
+		this.deletedPurchaseItems = deletedPurchaseItems;
 	}
 	
 }

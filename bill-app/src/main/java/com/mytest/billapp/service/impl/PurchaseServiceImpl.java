@@ -65,7 +65,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 			
 			Purchase p =purchaseRepository.save(purchase);
 			PurchaseDTO dbPurchaseDTO = findById(p.getId());
-			updateSrockDetails(newItemsAdded);
+			updateSrockDetails(newItemsAdded, entity.getDeletedPurchaseItems());
 			return dbPurchaseDTO;
 			
 		} catch (Exception e) {
@@ -76,7 +76,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return null;
 	}
 	
-	private void updateSrockDetails(List<PurchaseItemDTO> newItemsAdded) {
+	public void updateSrockDetails(List<PurchaseItemDTO> newItemsAdded, List<PurchaseItemDTO> deletedItemsAdded) {
 		if(!CollectionUtils.isEmpty(newItemsAdded)) {
 			for(PurchaseItemDTO purchaseItemDto : newItemsAdded) {
 				Stock stock = stockRepository.findByItemCode(purchaseItemDto.getItemCode());
@@ -88,6 +88,19 @@ public class PurchaseServiceImpl implements PurchaseService {
 				stock.setQuantity(updatedQty);
 				stock.setSalePricePerPc(purchaseItemDto.getSalePrice());
 				stockRepository.save(stock);
+			}
+		}
+		
+		if(!CollectionUtils.isEmpty(deletedItemsAdded)) {
+			for(PurchaseItemDTO purchaseItemDto : deletedItemsAdded) {
+				if(purchaseItemDto.getId() != null) {
+					Stock stock = stockRepository.findByItemCode(purchaseItemDto.getItemCode());
+					Integer oldQty = stock.getQuantity();
+					Integer updatedQty = oldQty != null ? oldQty -  purchaseItemDto.getQuantity() : purchaseItemDto.getQuantity();
+					stock.setQuantity((updatedQty < 0) ? 0 : updatedQty);
+					stock.setSalePricePerPc(purchaseItemDto.getSalePrice());
+					stockRepository.save(stock);
+				}
 			}
 		}
 	}
