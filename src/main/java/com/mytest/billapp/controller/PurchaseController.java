@@ -35,6 +35,7 @@ public class PurchaseController {
 	ProductService productService;
 	
 	private List<PurchaseItemDTO> purchaseItems;
+	private List<PurchaseItemDTO> deletedPurchaseItems;
 	
 	@RequestMapping(value = "purchaseList", method = RequestMethod.POST)
 	public String getAllPurchase(Model model) {
@@ -106,6 +107,7 @@ public class PurchaseController {
 				model.addAttribute("message", "No items found to save this purchase");
 			}else {
 				purchaseDTO.setPurchaseItems(purchaseItems);
+				purchaseDTO.setDeletedPurchaseItems(deletedPurchaseItems);
 				PurchaseDTO dto = purchaseService.save(purchaseDTO);
 				purchaseDTO = new PurchaseDTO();
 				purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
@@ -192,11 +194,16 @@ public class PurchaseController {
 	    	List<PurchaseItemDTO> purchaseItemsTemp = new ArrayList<PurchaseItemDTO>();
 	    	//if(purchaseItemId == 0) {
 	    		for(PurchaseItemDTO purchaseItemDTO : purchaseItems) {
-	    			if(purchaseItemDTO.getItemCode().equals(itemCode))
+	    			if(purchaseItemDTO.getItemCode().equals(itemCode)) {
+	    				if(deletedPurchaseItems == null) 
+	    					deletedPurchaseItems = new ArrayList<>();
+	    				deletedPurchaseItems.add(purchaseItemDTO);
 	    				continue;
+	    			}
 	    			purchaseItemsTemp.add(purchaseItemDTO);
 	    		}
 	    		purchaseItems = new ArrayList<PurchaseItemDTO>(purchaseItemsTemp);
+	    		purchaseService.updateSrockDetails(null, deletedPurchaseItems);
 	    	//}
 	    	model.addAttribute("purchaseItems", purchaseItems);
 	    	model.addAttribute("purchase", getPurchaseDTOById(purhcaseId));
@@ -208,6 +215,15 @@ public class PurchaseController {
 		}
 	    return "purchase";
 	}
+
+	public List<PurchaseItemDTO> getDeletedPurchaseItems() {
+		return deletedPurchaseItems;
+	}
+
+	public void setDeletedPurchaseItems(List<PurchaseItemDTO> deletedPurchaseItems) {
+		this.deletedPurchaseItems = deletedPurchaseItems;
+	}
+	
 	
 	
 }
