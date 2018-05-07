@@ -42,6 +42,8 @@
 						</ul>
 					</li>
 					<li><a href="#" onclick="navigate('purchaseList')">Purchase</a> </li>
+					<li><a href="#" onclick="navigate('salList')">Sales Invoice</a> </li>
+					<li><a href="#" onclick="navigate('repList')">Reports</a> </li>
 					<li><a href="#" onclick="navigate('notesList')">Notes</a></li>
 					<li><a href="#" onclick="navigate('contactus')">Contact Us</a> </li>
 				</ul>
