@@ -1,7 +1,5 @@
-Contact Us: o7planning.org
+<b>Contact Us:</b>
 <br>
-Address: ${address}
+<b>Name:</b> ${name}
 <br>
-Phone: ${phone}
-<br>
-Email: ${email}
+<b>Address:</b> ${address}
