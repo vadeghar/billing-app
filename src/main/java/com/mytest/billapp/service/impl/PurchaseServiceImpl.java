@@ -2,6 +2,7 @@ package com.mytest.billapp.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -10,14 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
-import com.mysql.jdbc.StringUtils;
 import com.mytest.billapp.dto.PurchaseDTO;
 import com.mytest.billapp.dto.PurchaseItemDTO;
 import com.mytest.billapp.model.Purchase;
 import com.mytest.billapp.model.PurchaseItem;
 import com.mytest.billapp.model.Stock;
 import com.mytest.billapp.model.Vendor;
+import com.mytest.billapp.repsitory.PurchaseItemRepository;
 import com.mytest.billapp.repsitory.PurchaseRepository;
 import com.mytest.billapp.repsitory.StockRepository;
 import com.mytest.billapp.repsitory.VendorRepository;
@@ -35,6 +37,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 	PurchaseRepository purchaseRepository; 
 	
 	@Autowired
+	PurchaseItemRepository purchaseItemRepository; 
+	
+	@Autowired
 	VendorRepository vendorRepository;
 	
 	@Autowired
@@ -49,23 +54,21 @@ public class PurchaseServiceImpl implements PurchaseService {
 			}else {
 				purchase = new Purchase();
 			}
-			if(!CollectionUtils.isEmpty(entity.getPurchaseItems())) {
-				for(PurchaseItemDTO itemDTO : entity.getPurchaseItems()) {
-					if(itemDTO.getId() == null || itemDTO.getId().longValue() == 0)
-						newItemsAdded.add(itemDTO);
-					updatePurchaseItem(purchase, itemDTO);
-				}
-			}
 			purchase.setBillDate(entity.getBillDate() != null ? sdf.parse(entity.getBillDate()) : null);
 			purchase.setBillNo(entity.getBillNo());
 			purchase.setDiscountType(entity.getDiscountType());
 			purchase.setVendor(vendorRepository.getOne(entity.getVendorId()));
 			//purchase.setPurchaseItemSet(purchaseItemSet);
-			setTotalAdnDiscount(purchase, entity);
 			
-			Purchase p =purchaseRepository.save(purchase);
+			
+			Purchase p = purchaseRepository.save(purchase);
+			if(!CollectionUtils.isEmpty(entity.getPurchaseItems())) {
+				saveAllPurchaseItem(entity.getPurchaseItems(), p.getId());
+			}
+			setTotalAdnDiscount(p, entity);
+			purchaseRepository.save(purchase);
 			PurchaseDTO dbPurchaseDTO = findById(p.getId());
-			updateSrockDetails(newItemsAdded, entity.getDeletedPurchaseItems());
+			updateSrockDetails(newItemsAdded);
 			return dbPurchaseDTO;
 			
 		} catch (Exception e) {
@@ -76,7 +79,32 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return null;
 	}
 	
-	public void updateSrockDetails(List<PurchaseItemDTO> newItemsAdded, List<PurchaseItemDTO> deletedItemsAdded) {
+	private void saveAllPurchaseItem(List<PurchaseItemDTO> purchaseItems, Long purchaseId) {
+		List<PurchaseItem> purchaseItemList = new ArrayList<PurchaseItem>();
+		purchaseItems.stream().forEach(purchaseItemDTO -> {
+			PurchaseItem purchaseItem = null;
+			if(purchaseItemDTO.getId() == null || purchaseItemDTO.getId().longValue() == 0) 
+				purchaseItem = new PurchaseItem();
+			else 
+				purchaseItem = purchaseItemRepository.getOne(purchaseItemDTO.getId());
+			
+			purchaseItem.setItemCode(purchaseItemDTO.getItemCode());
+			purchaseItem.setMargin(purchaseItemDTO.getMargin());
+			purchaseItem.setMarginType(purchaseItemDTO.getMarginType());
+			purchaseItem.setPurchaseId(purchaseId);
+			//purchaseItem.setModel(purchaseItemDTO.getModel());
+			purchaseItem.setPricePerPc(purchaseItemDTO.getPricePerUnit());
+			purchaseItem.setProductTypeText(purchaseItemDTO.getProductId().toString());
+			purchaseItem.setQuantity(purchaseItemDTO.getQuantity());
+			purchaseItem.setSize(purchaseItemDTO.getSize());
+			purchaseItem.setSrNo(purchaseItemDTO.getSrNo());
+			purchaseItem.setTotalPrice(purchaseItemDTO.getTotal());
+			purchaseItemList.add(purchaseItem);
+		});
+		purchaseItemRepository.saveAll(purchaseItemList);
+	}
+
+	private void updateSrockDetails(List<PurchaseItemDTO> newItemsAdded) {
 		if(!CollectionUtils.isEmpty(newItemsAdded)) {
 			for(PurchaseItemDTO purchaseItemDto : newItemsAdded) {
 				Stock stock = stockRepository.findByItemCode(purchaseItemDto.getItemCode());
@@ -91,7 +119,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 			}
 		}
 		
-		if(!CollectionUtils.isEmpty(deletedItemsAdded)) {
+		/*if(!CollectionUtils.isEmpty(deletedItemsAdded)) {
 			for(PurchaseItemDTO purchaseItemDto : deletedItemsAdded) {
 				if(purchaseItemDto.getId() != null) {
 					Stock stock = stockRepository.findByItemCode(purchaseItemDto.getItemCode());
@@ -102,52 +130,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 					stockRepository.save(stock);
 				}
 			}
-		}
-	}
-
-	
-	private void updatePurchaseItem(Purchase purchase, PurchaseItemDTO itemDTO) {
-		if(itemDTO.getId() != null && itemDTO.getId() > 0) {
-			// Existing Purchase Item
-			if(purchase.getPurchaseItemSet() != null) {
-				for(PurchaseItem dbPurchaseItem : purchase.getPurchaseItemSet()) {
-					if(dbPurchaseItem.getId().longValue() == itemDTO.getId().longValue()) {
-						dbPurchaseItem.setId(itemDTO.getId());
-						dbPurchaseItem.setItemCode(itemDTO.getItemCode());
-						dbPurchaseItem.setMargin(itemDTO.getMargin());
-						dbPurchaseItem.setMarginType(itemDTO.getMarginType());
-						//dbPurchaseItem.setModel(itemDTO.getModel());
-						dbPurchaseItem.setPricePerPc(itemDTO.getPricePerUnit());
-						dbPurchaseItem.setProductTypeText(itemDTO.getProductId().toString());
-						dbPurchaseItem.setQuantity(itemDTO.getQuantity());
-						dbPurchaseItem.setSize(itemDTO.getSize());
-						dbPurchaseItem.setSrNo(itemDTO.getSrNo());
-						dbPurchaseItem.setTotalPrice(itemDTO.getTotal());
-						//purchase.addPurhcaseItem(purchaseItem);
-					}
-				}
-			}
-			
-		} else {
-			// New Purchase Item
-			PurchaseItem purchaseItem = new PurchaseItem();
-			purchaseItem.setId(itemDTO.getId());
-			purchaseItem.setItemCode(itemDTO.getItemCode());
-			purchaseItem.setMargin(itemDTO.getMargin());
-			purchaseItem.setMarginType(itemDTO.getMarginType());
-			//purchaseItem.setModel(itemDTO.getModel());
-			purchaseItem.setPricePerPc(itemDTO.getPricePerUnit());
-			purchaseItem.setProductTypeText(itemDTO.getProductId().toString());
-			purchaseItem.setQuantity(itemDTO.getQuantity());
-			purchaseItem.setSize(itemDTO.getSize());
-			purchaseItem.setSrNo(itemDTO.getSrNo());
-			purchaseItem.setTotalPrice(itemDTO.getTotal());
-			purchase.addPurhcaseItem(purchaseItem);
-		}
+		}*/
 	}
 
 	private void setTotalAdnDiscount(Purchase purchase, PurchaseDTO entity) {
-		Set<PurchaseItem> set = purchase.getPurchaseItemSet();
+		List<PurchaseItem> set = purchaseItemRepository.findByPurchaseId(purchase.getId()); // purchase.getPurchaseItemSet();
 		Double totalOfAllItems = new Double(0);
 		Double discountedAmount = new Double(0);
 		if(set != null && set.size() > 0){
@@ -262,8 +249,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 			}
 			purchaseDTO.setVendorId(p.getVendor() != null ? p.getVendor().getId() : 0);
 			
-			if(p.getPurchaseItemSet().size() > 0) {
-				p.getPurchaseItemSet().stream().forEach(pi -> {
+			List<PurchaseItem> purchaseItemList = purchaseItemRepository.findByPurchaseId(purchaseDTO.getId());
+			
+			if(!CollectionUtils.isEmpty(purchaseItemList)) {
+				purchaseItemList.stream().forEach(pi -> {
 					PurchaseItemDTO dto = new PurchaseItemDTO();
 					dto.setId(pi.getId());
 					dto.setItemCode(pi.getItemCode());
@@ -281,7 +270,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 					}else {
 						salePrice = dto.getPricePerUnit() + dto.getMargin();
 					}
-					if(!StringUtils.isNullOrEmpty(pi.getSize())){
+					if(!StringUtils.isEmpty(pi.getSize())){
 						dto.setSize(pi.getSize());
 						dto.setSizeName(ProductSizeEnum.getById(Long.parseLong(pi.getSize())).getSize());
 					}
@@ -295,6 +284,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 			
 		}
 		return purchaseDTO;
+	}
+
+	@Override
+	public void updateSrockDetails(List<PurchaseItemDTO> newItemsAdded, List<PurchaseItemDTO> deletedItemsAdded) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

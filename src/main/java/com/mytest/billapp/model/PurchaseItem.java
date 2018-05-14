@@ -30,9 +30,8 @@ public class PurchaseItem  extends BEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@ManyToOne
-	@JoinColumn(name = "PURCHASE_ID")
-	private Purchase purchase;
+	@Column(name = "PURCHASE_ID")
+	private Long purchaseId;
 	
 	@ManyToOne
 	@JoinColumn(name = "PRODUCT_TYPE_ID")
@@ -76,12 +75,12 @@ public class PurchaseItem  extends BEntity implements Serializable {
 		this.id = id;
 	}
 
-	public Purchase getPurchase() {
-		return purchase;
+	public Long getPurchaseId() {
+		return purchaseId;
 	}
 
-	public void setPurchase(Purchase purchase) {
-		this.purchase = purchase;
+	public void setPurchaseId(Long purchaseId) {
+		this.purchaseId = purchaseId;
 	}
 
 	public Product getProduct() {

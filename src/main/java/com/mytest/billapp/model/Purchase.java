@@ -72,9 +72,6 @@ public class Purchase  extends BEntity implements Serializable {
 	@JoinColumn(name = "VENDOR_ID")
 	private Vendor vendor;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "purchase")
-    private Set<PurchaseItem> purchaseItemSet = new HashSet<PurchaseItem>();
-
 	public Long getId() {
 		return id;
 	}
@@ -155,24 +152,11 @@ public class Purchase  extends BEntity implements Serializable {
 		this.vendor = vendor;
 	}
 
-	public Set<PurchaseItem> getPurchaseItemSet() {
-		return purchaseItemSet;
-	}
-
-	public void setPurchaseItemSet(Set<PurchaseItem> purchaseItemSet) {
-		this.purchaseItemSet = purchaseItemSet;
-	}
-	
 	public Double getDiscountedAmount() {
 		return discountedAmount;
 	}
 
 	public void setDiscountedAmount(Double discountedAmount) {
 		this.discountedAmount = discountedAmount;
-	}
-
-	public void addPurhcaseItem(PurchaseItem purhcaseItem) {
-		purhcaseItem.setPurchase(this);
-		this.purchaseItemSet.add(purhcaseItem);
 	}
 }
