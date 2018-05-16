@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import com.mytest.billapp.dto.PurchaseItemDTO;
 import com.mytest.billapp.model.Stock;
 import com.mytest.billapp.repsitory.StockRepository;
 import com.mytest.billapp.service.StockService;
@@ -76,6 +78,46 @@ public class StockServiceImpl implements StockService {
 	
 	public Stock saveAndFlush(Stock entity) {
 		return stockRepository.saveAndFlush(entity);
+	}
+
+	@Override
+	public void addToSrock(List<PurchaseItemDTO> purchaseItems ) {
+		if(CollectionUtils.isEmpty(purchaseItems)) return;
+		for(PurchaseItemDTO purchaseItemDTO : purchaseItems) {
+			if(purchaseItemDTO.getItemCode() == null) continue;
+			stockRepository.removeByItemCode(purchaseItemDTO.getItemCode());
+			//if(stock == null) {
+			Stock stock = new Stock();
+			stock.setItemCode(purchaseItemDTO.getItemCode());
+			stock.setQuantity(purchaseItemDTO.getQuantity());
+			stock.setSalePricePerPc(purchaseItemDTO.getSalePrice());
+			/*} else {
+				Integer existingQty = stock.getQuantity();
+				Integer updatedQty = existingQty + purchaseItemDTO.getQuantity();
+				stock.setQuantity(updatedQty);
+			}*/
+			stockRepository.save(stock);
+		}
+	}
+	
+	@Override
+	public void removeFromSrock(List<PurchaseItemDTO> purchaseItems ) {
+		if(CollectionUtils.isEmpty(purchaseItems)) return;
+		for(PurchaseItemDTO purchaseItemDTO : purchaseItems) {
+			if(purchaseItemDTO.getItemCode() == null) continue;
+			Stock stock = stockRepository.findByItemCode(purchaseItemDTO.getItemCode());
+			if(stock == null) {
+				stock = new Stock();
+				stock.setItemCode(purchaseItemDTO.getItemCode());
+				stock.setQuantity(purchaseItemDTO.getQuantity());
+				stock.setSalePricePerPc(purchaseItemDTO.getSalePrice());
+			} else {
+				Integer existingQty = stock.getQuantity();
+				Integer updatedQty = existingQty - purchaseItemDTO.getQuantity();
+				stock.setQuantity(updatedQty);
+			}
+			stockRepository.save(stock);
+		}
 	}
 	
 }

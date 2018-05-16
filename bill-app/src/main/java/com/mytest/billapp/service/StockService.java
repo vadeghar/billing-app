@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 
+import com.mytest.billapp.dto.PurchaseItemDTO;
 import com.mytest.billapp.model.Stock;
 
 public interface StockService {
@@ -24,5 +25,7 @@ public interface StockService {
 	public List<Stock> findAll();
 	public List<Stock> findAll(Sort sort);
 	public long count();
+	public void addToSrock(List<PurchaseItemDTO> deletedPurchaseItems);
+	public void removeFromSrock(List<PurchaseItemDTO> deletedPurchaseItems);
 
 }

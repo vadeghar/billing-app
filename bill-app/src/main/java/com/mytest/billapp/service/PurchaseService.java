@@ -25,6 +25,6 @@ public interface PurchaseService {
 	public List<PurchaseDTO> findAll();
 	public List<Purchase> findAll(Sort sort);
 	public long count();
-	public void updateSrockDetails(List<PurchaseItemDTO> newItemsAdded, List<PurchaseItemDTO> deletedItemsAdded);
+	public void deletePurchaseItems(List<PurchaseItemDTO> deletedPurchaseItems);
 
 }
