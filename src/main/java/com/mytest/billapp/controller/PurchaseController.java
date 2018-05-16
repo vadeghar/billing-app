@@ -18,6 +18,7 @@ import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Purchase;
 import com.mytest.billapp.service.ProductService;
 import com.mytest.billapp.service.PurchaseService;
+import com.mytest.billapp.service.StockService;
 import com.mytest.billapp.service.VendorService;
 import com.mytest.billapp.utils.Utils;
 
@@ -32,6 +33,9 @@ public class PurchaseController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	StockService stockService;
 	
 	private List<PurchaseItemDTO> purchaseItems;
 	private List<PurchaseItemDTO> deletedPurchaseItems;
@@ -106,8 +110,8 @@ public class PurchaseController {
 				model.addAttribute("message", "No items found to save this purchase");
 			}else {
 				purchaseDTO.setPurchaseItems(purchaseItems);
-				purchaseDTO.setDeletedPurchaseItems(deletedPurchaseItems);
 				PurchaseDTO dto = purchaseService.save(purchaseDTO);
+				stockService.addToSrock(purchaseItems);
 				purchaseDTO = new PurchaseDTO();
 				purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
 				purchaseItems = new ArrayList<PurchaseItemDTO>();
@@ -202,8 +206,10 @@ public class PurchaseController {
 	    			purchaseItemsTemp.add(purchaseItemDTO);
 	    		}
 	    		purchaseItems = new ArrayList<PurchaseItemDTO>(purchaseItemsTemp);
-	    		purchaseService.updateSrockDetails(null, deletedPurchaseItems);
+	    		purchaseService.deletePurchaseItems(deletedPurchaseItems);
+	    		stockService.removeFromSrock(deletedPurchaseItems);
 	    	//}
+	    	deletedPurchaseItems = new ArrayList<>();
 	    	model.addAttribute("purchaseItems", purchaseItems);
 	    	model.addAttribute("purchase", getPurchaseDTOById(purhcaseId));
 	    	addDataToModel(model);

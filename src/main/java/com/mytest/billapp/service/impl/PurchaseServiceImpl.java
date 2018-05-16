@@ -2,10 +2,8 @@ package com.mytest.billapp.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -21,9 +19,9 @@ import com.mytest.billapp.model.Stock;
 import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.PurchaseItemRepository;
 import com.mytest.billapp.repsitory.PurchaseRepository;
-import com.mytest.billapp.repsitory.StockRepository;
 import com.mytest.billapp.repsitory.VendorRepository;
 import com.mytest.billapp.service.PurchaseService;
+import com.mytest.billapp.service.StockService;
 import com.mytest.billapp.utils.ProductSizeEnum;
 import com.mytest.billapp.utils.ProductTypeEnum;
 import com.mytest.billapp.utils.Utils;
@@ -42,13 +40,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Autowired
 	VendorRepository vendorRepository;
 	
-	@Autowired
-	StockRepository stockRepository;
-	
 	public PurchaseDTO save(PurchaseDTO entity) {
 		try {
 			Purchase purchase = null;
-			List<PurchaseItemDTO> newItemsAdded = new ArrayList<PurchaseItemDTO>();
 			if(entity.getId() != null && entity.getId().longValue() > 0) {
 				purchase = purchaseRepository.findById(entity.getId()).get();
 			}else {
@@ -68,7 +62,6 @@ public class PurchaseServiceImpl implements PurchaseService {
 			setTotalAdnDiscount(p, entity);
 			purchaseRepository.save(purchase);
 			PurchaseDTO dbPurchaseDTO = findById(p.getId());
-			updateSrockDetails(newItemsAdded);
 			return dbPurchaseDTO;
 			
 		} catch (Exception e) {
@@ -104,34 +97,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		purchaseItemRepository.saveAll(purchaseItemList);
 	}
 
-	private void updateSrockDetails(List<PurchaseItemDTO> newItemsAdded) {
-		if(!CollectionUtils.isEmpty(newItemsAdded)) {
-			for(PurchaseItemDTO purchaseItemDto : newItemsAdded) {
-				Stock stock = stockRepository.findByItemCode(purchaseItemDto.getItemCode());
-				if(stock == null)
-					stock = new Stock();
-				stock.setItemCode(purchaseItemDto.getItemCode());
-				Integer oldQty = stock.getQuantity();
-				Integer updatedQty = oldQty != null ? oldQty +  purchaseItemDto.getQuantity() : purchaseItemDto.getQuantity();
-				stock.setQuantity(updatedQty);
-				stock.setSalePricePerPc(purchaseItemDto.getSalePrice());
-				stockRepository.save(stock);
-			}
-		}
-		
-		/*if(!CollectionUtils.isEmpty(deletedItemsAdded)) {
-			for(PurchaseItemDTO purchaseItemDto : deletedItemsAdded) {
-				if(purchaseItemDto.getId() != null) {
-					Stock stock = stockRepository.findByItemCode(purchaseItemDto.getItemCode());
-					Integer oldQty = stock.getQuantity();
-					Integer updatedQty = oldQty != null ? oldQty -  purchaseItemDto.getQuantity() : purchaseItemDto.getQuantity();
-					stock.setQuantity((updatedQty < 0) ? 0 : updatedQty);
-					stock.setSalePricePerPc(purchaseItemDto.getSalePrice());
-					stockRepository.save(stock);
-				}
-			}
-		}*/
-	}
+	
 
 	private void setTotalAdnDiscount(Purchase purchase, PurchaseDTO entity) {
 		List<PurchaseItem> set = purchaseItemRepository.findByPurchaseId(purchase.getId()); // purchase.getPurchaseItemSet();
@@ -286,9 +252,15 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return purchaseDTO;
 	}
 
+
 	@Override
-	public void updateSrockDetails(List<PurchaseItemDTO> newItemsAdded, List<PurchaseItemDTO> deletedItemsAdded) {
-		// TODO Auto-generated method stub
+	public void deletePurchaseItems(List<PurchaseItemDTO> deletedPurchaseItems) {
+		if(CollectionUtils.isEmpty(deletedPurchaseItems)) return;
+		for(PurchaseItemDTO purchaseItemDTO : deletedPurchaseItems) {
+			if(purchaseItemDTO.getId() == null || purchaseItemDTO.getId().longValue() == 0)
+				continue;
+			purchaseItemRepository.deleteById(purchaseItemDTO.getId());
+		}
 		
 	}
 	
