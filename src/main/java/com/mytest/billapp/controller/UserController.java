@@ -63,8 +63,8 @@ public class UserController {
 	@RequestMapping(value = "deleteUser", method = RequestMethod.POST)
 	public String deleteUser(@ModelAttribute("selectedId") Long selectedId, Model model) {
 	    try {
-			User user = userService.findById(selectedId)
-			        .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
+			User user = userService.findById(selectedId);
+			        //.orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
 			userService.delete(user);
 			model.addAttribute("userList", userService.findAll());
 		} catch (ResourceNotFoundException e) {

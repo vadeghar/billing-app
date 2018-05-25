@@ -22,7 +22,7 @@ public class BrandServiceImpl implements BrandService {
 	}
 	
 	public List<Brand> saveAll(List<Brand> entities) {
-		return brandRepository.saveAll(entities);
+		return brandRepository.save(entities);
 	}
 	
 	public void flush() {
@@ -30,7 +30,7 @@ public class BrandServiceImpl implements BrandService {
 	}
 	
 	public void deleteById(Long id) {
-		brandRepository.deleteById(id);
+		brandRepository.delete(id);
 	}
 	
 	public void delete(Brand entity) {
@@ -38,7 +38,7 @@ public class BrandServiceImpl implements BrandService {
 	}
 	
 	public void deleteAll(List<Brand> entities) {
-		brandRepository.deleteAll(entities);
+		brandRepository.delete(entities);
 	}
 	
 	public void deleteInBatch(List<Brand> entities) {
@@ -52,12 +52,12 @@ public class BrandServiceImpl implements BrandService {
 	public Brand getOne(Long id) {
 		return brandRepository.getOne(id);
 	}
-	public Optional<Brand> findById(Long id) {
-		return brandRepository.findById(id);
+	public Brand findById(Long id) {
+		return brandRepository.findOne(id);
 	}
 	
 	public boolean existsById(Long id) {
-		return brandRepository.existsById(id);
+		return brandRepository.exists(id);
 	}
 	
 	public List<Brand> findAll() {

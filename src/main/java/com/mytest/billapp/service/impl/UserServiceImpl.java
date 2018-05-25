@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(entity);
 	}
 	
-	public List<User> saveAll(List<User> entities) {
-		return userRepository.saveAll(entities);
+	public List<User> save(List<User> entities) {
+		return userRepository.save(entities);
 	}
 	
 	public void flush() {
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public void deleteById(Long id) {
-		userRepository.deleteById(id);
+		userRepository.delete(id);
 	}
 	
 	public void delete(User entity) {
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public void deleteAll(List<User> entities) {
-		userRepository.deleteAll(entities);
+		userRepository.delete(entities);
 	}
 	
 	public void deleteInBatch(List<User> entities) {
@@ -52,12 +52,12 @@ public class UserServiceImpl implements UserService {
 	public User getOne(Long id) {
 		return userRepository.getOne(id);
 	}
-	public Optional<User> findById(Long id) {
-		return userRepository.findById(id);
+	public User findById(Long id) {
+		return userRepository.findOne(id);
 	}
 	
 	public boolean existsById(Long id) {
-		return userRepository.existsById(id);
+		return userRepository.exists(id);
 	}
 	
 	public List<User> findAll() {
@@ -77,5 +77,11 @@ public class UserServiceImpl implements UserService {
 	public User saveAndFlush(User entity) {
 		return userRepository.saveAndFlush(entity);
 	}
-	
+
+	@Override
+	public List<User> saveAll(List<User> entities) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -44,7 +44,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		try {
 			Purchase purchase = null;
 			if(entity.getId() != null && entity.getId().longValue() > 0) {
-				purchase = purchaseRepository.findById(entity.getId()).get();
+				purchase = purchaseRepository.findOne(entity.getId());
 			}else {
 				purchase = new Purchase();
 			}
@@ -94,7 +94,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 			purchaseItem.setTotalPrice(purchaseItemDTO.getTotal());
 			purchaseItemList.add(purchaseItem);
 		});
-		purchaseItemRepository.saveAll(purchaseItemList);
+		purchaseItemRepository.save(purchaseItemList);
 	}
 
 	
@@ -123,7 +123,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 
 	public List<Purchase> saveAll(List<Purchase> entities) {
-		return purchaseRepository.saveAll(entities);
+		return purchaseRepository.save(entities);
 	}
 	
 	public void flush() {
@@ -131,7 +131,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 	
 	public void deleteById(Long id) {
-		purchaseRepository.deleteById(id);
+		purchaseRepository.delete(id);
 	}
 	
 	public void delete(Purchase entity) {
@@ -139,7 +139,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 	
 	public void deleteAll(List<Purchase> entities) {
-		purchaseRepository.deleteAll(entities);
+		purchaseRepository.delete(entities);
 	}
 	
 	public void deleteInBatch(List<Purchase> entities) {
@@ -156,8 +156,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public PurchaseDTO findById(Long id) {
 		if(id == null || id == 0) return new PurchaseDTO();
 		PurchaseDTO purchaseDTO = new PurchaseDTO();
-		Optional<Purchase> purchase = purchaseRepository.findById(id);
-		Purchase p = purchase.get();
+		Purchase purchase = purchaseRepository.findOne(id);
+		Purchase p = purchase;
 		if(purchase != null && p != null) {
 			purchaseDTO = getDTOFromModel(p);
 		}
@@ -167,7 +167,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 	
 	public boolean existsById(Long id) {
-		return purchaseRepository.existsById(id);
+		return purchaseRepository.exists(id);
 	}
 	
 	public List<PurchaseDTO> findAll() {
@@ -259,7 +259,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		for(PurchaseItemDTO purchaseItemDTO : deletedPurchaseItems) {
 			if(purchaseItemDTO.getId() == null || purchaseItemDTO.getId().longValue() == 0)
 				continue;
-			purchaseItemRepository.deleteById(purchaseItemDTO.getId());
+			purchaseItemRepository.delete(purchaseItemDTO.getId());
 		}
 		
 	}

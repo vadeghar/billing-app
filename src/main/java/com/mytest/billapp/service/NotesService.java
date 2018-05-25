@@ -19,7 +19,7 @@ public interface NotesService {
 	public void deleteInBatch(List<Notes> entities);
 	public void deleteAll();
 	public Notes getOne(Long id);
-	public Optional<Notes> findById(Long id);
+	public Notes findById(Long id);
 	public boolean existsById(Long id);
 	public List<Notes> findAll();
 	public List<Notes> findAll(Sort sort);

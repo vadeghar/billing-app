@@ -20,7 +20,7 @@ public interface StockService {
 	public void deleteInBatch(List<Stock> entities);
 	public void deleteAll();
 	public Stock getOne(Long id);
-	public Optional<Stock> findById(Long id);
+	public Stock findById(Long id);
 	public boolean existsById(Long id);
 	public List<Stock> findAll();
 	public List<Stock> findAll(Sort sort);

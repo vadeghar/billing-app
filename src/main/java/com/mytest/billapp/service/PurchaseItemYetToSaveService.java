@@ -19,7 +19,7 @@ public interface PurchaseItemYetToSaveService {
 	public void deleteInBatch(List<PurchaseItemYetToSave> entities);
 	public void deleteAll();
 	public PurchaseItemYetToSave getOne(Long id);
-	public Optional<PurchaseItemYetToSave> findById(Long id);
+	public PurchaseItemYetToSave findById(Long id);
 	public boolean existsById(Long id);
 	public List<PurchaseItemYetToSave> findAll();
 	public List<PurchaseItemYetToSave> findAll(Sort sort);

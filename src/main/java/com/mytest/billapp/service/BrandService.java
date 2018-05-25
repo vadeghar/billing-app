@@ -19,7 +19,7 @@ public interface BrandService {
 	public void deleteInBatch(List<Brand> entities);
 	public void deleteAll();
 	public Brand getOne(Long id);
-	public Optional<Brand> findById(Long id);
+	public Brand findById(Long id);
 	public boolean existsById(Long id);
 	public List<Brand> findAll();
 	public List<Brand> findAll(Sort sort);

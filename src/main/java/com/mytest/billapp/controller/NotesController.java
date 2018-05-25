@@ -63,8 +63,8 @@ public class NotesController {
 	@RequestMapping(value = "deleteNotes", method = RequestMethod.POST)
 	public String deleteNotes(@ModelAttribute("selectedId") Long selectedId, Model model) {
 	    try {
-			Notes notes = notesService.findById(selectedId)
-			        .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
+			Notes notes = notesService.findById(selectedId);
+			       // .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
 			notesService.delete(notes);
 			model.addAttribute("notesList", notesService.findAll());
 		} catch (ResourceNotFoundException e) {

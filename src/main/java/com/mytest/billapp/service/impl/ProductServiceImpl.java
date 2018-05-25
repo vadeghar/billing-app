@@ -27,8 +27,8 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.save(entity);
 	}
 	
-	public List<Product> saveAll(List<Product> entities) {
-		return productRepository.saveAll(entities);
+	public List<Product> save(List<Product> entities) {
+		return productRepository.save(entities);
 	}
 	
 	public void flush() {
@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	public void deleteById(Long id) {
-		productRepository.deleteById(id);
+		productRepository.delete(id);
 	}
 	
 	public void delete(Product entity) {
@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	public void deleteAll(List<Product> entities) {
-		productRepository.deleteAll(entities);
+		productRepository.delete(entities);
 	}
 	
 	public void deleteInBatch(List<Product> entities) {
@@ -58,12 +58,12 @@ public class ProductServiceImpl implements ProductService {
 	public Product getOne(Long id) {
 		return productRepository.getOne(id);
 	}
-	public Optional<Product> findById(Long id) {
-		return productRepository.findById(id);
+	public Product findById(Long id) {
+		return productRepository.findOne(id);
 	}
 	
 	public boolean existsById(Long id) {
-		return productRepository.existsById(id);
+		return productRepository.exists(id);
 	}
 	
 	public List<Product> findAll() {
@@ -120,6 +120,10 @@ public class ProductServiceImpl implements ProductService {
 		productSizeList.add(new Product(new Long(5), "M", new Long(3)));
 		productSizeList.add(new Product(new Long(6), "L", new Long(3)));
 		
+	}
+	@Override
+	public List<Product> saveAll(List<Product> entities) {
+		return productRepository.save(entities);
 	}
 	
 }
