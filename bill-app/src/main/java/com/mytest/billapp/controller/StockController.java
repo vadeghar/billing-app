@@ -63,8 +63,8 @@ public class StockController {
 	@RequestMapping(value = "deleteStock", method = RequestMethod.POST)
 	public String deleteStock(@ModelAttribute("selectedId") Long selectedId, Model model) {
 	    try {
-			Stock stock = stockService.findById(selectedId)
-			        .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
+			Stock stock = stockService.findById(selectedId);
+			     //   .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
 			stockService.delete(stock);
 			model.addAttribute("stockList", stockService.findAll());
 		} catch (ResourceNotFoundException e) {

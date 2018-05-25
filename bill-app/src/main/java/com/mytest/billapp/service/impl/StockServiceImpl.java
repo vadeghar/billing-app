@@ -24,7 +24,7 @@ public class StockServiceImpl implements StockService {
 	}
 	
 	public List<Stock> saveAll(List<Stock> entities) {
-		return stockRepository.saveAll(entities);
+		return stockRepository.save(entities);
 	}
 	
 	public void flush() {
@@ -32,7 +32,7 @@ public class StockServiceImpl implements StockService {
 	}
 	
 	public void deleteById(Long id) {
-		stockRepository.deleteById(id);
+		stockRepository.delete(id);
 	}
 	
 	public void delete(Stock entity) {
@@ -40,7 +40,7 @@ public class StockServiceImpl implements StockService {
 	}
 	
 	public void deleteAll(List<Stock> entities) {
-		stockRepository.deleteAll(entities);
+		stockRepository.delete(entities);
 	}
 	
 	public void deleteInBatch(List<Stock> entities) {
@@ -54,12 +54,12 @@ public class StockServiceImpl implements StockService {
 	public Stock getOne(Long id) {
 		return stockRepository.getOne(id);
 	}
-	public Optional<Stock> findById(Long id) {
-		return stockRepository.findById(id);
+	public Stock findById(Long id) {
+		return stockRepository.findOne(id);
 	}
 	
 	public boolean existsById(Long id) {
-		return stockRepository.existsById(id);
+		return stockRepository.exists(id);
 	}
 	
 	public List<Stock> findAll() {

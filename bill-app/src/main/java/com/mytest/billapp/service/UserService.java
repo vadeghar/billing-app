@@ -19,7 +19,7 @@ public interface UserService {
 	public void deleteInBatch(List<User> entities);
 	public void deleteAll();
 	public User getOne(Long id);
-	public Optional<User> findById(Long id);
+	public User findById(Long id);
 	public boolean existsById(Long id);
 	public List<User> findAll();
 	public List<User> findAll(Sort sort);

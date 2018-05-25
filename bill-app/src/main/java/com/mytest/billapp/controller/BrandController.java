@@ -63,8 +63,8 @@ public class BrandController {
 	@RequestMapping(value = "deleteBrand", method = RequestMethod.POST)
 	public String deleteBrand(@ModelAttribute("selectedId") Long selectedId, Model model) {
 	    try {
-			Brand brand = brandService.findById(selectedId)
-			        .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
+			Brand brand = brandService.findById(selectedId);
+			      //  .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
 			brandService.delete(brand);
 			model.addAttribute("brandList", brandService.findAll());
 		} catch (ResourceNotFoundException e) {

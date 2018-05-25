@@ -22,7 +22,7 @@ public class NotesServiceImpl implements NotesService {
 	}
 	
 	public List<Notes> saveAll(List<Notes> entities) {
-		return notesRepository.saveAll(entities);
+		return notesRepository.save(entities);
 	}
 	
 	public void flush() {
@@ -30,7 +30,7 @@ public class NotesServiceImpl implements NotesService {
 	}
 	
 	public void deleteById(Long id) {
-		notesRepository.deleteById(id);
+		notesRepository.delete(id);
 	}
 	
 	public void delete(Notes entity) {
@@ -38,7 +38,7 @@ public class NotesServiceImpl implements NotesService {
 	}
 	
 	public void deleteAll(List<Notes> entities) {
-		notesRepository.deleteAll(entities);
+		notesRepository.delete(entities);
 	}
 	
 	public void deleteInBatch(List<Notes> entities) {
@@ -52,12 +52,12 @@ public class NotesServiceImpl implements NotesService {
 	public Notes getOne(Long id) {
 		return notesRepository.getOne(id);
 	}
-	public Optional<Notes> findById(Long id) {
-		return notesRepository.findById(id);
+	public Notes findById(Long id) {
+		return notesRepository.findOne(id);
 	}
 	
 	public boolean existsById(Long id) {
-		return notesRepository.existsById(id);
+		return notesRepository.exists(id);
 	}
 	
 	public List<Notes> findAll() {

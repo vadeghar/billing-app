@@ -20,7 +20,7 @@ public interface ProductService {
 	public void deleteInBatch(List<Product> entities);
 	public void deleteAll();
 	public Product getOne(Long id);
-	public Optional<Product> findById(Long id);
+	public Product findById(Long id);
 	public boolean existsById(Long id);
 	public List<Product> findAll();
 	public List<Product> findAll(Sort sort);

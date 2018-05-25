@@ -50,7 +50,7 @@ public class NoteRestController {
 	@GetMapping("/vendor/{id}")
 	public Vendor getVendorById(@PathVariable(value = "id") Long noteId) {
 	    try {
-			return vendorService.findById(noteId).get();
+			return vendorService.findById(noteId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -70,15 +70,15 @@ public class NoteRestController {
 	
 	@GetMapping("/notes/{id}")
 	public Notes getNoteById(@PathVariable(value = "id") Long noteId) {
-	    return noteRepository.findById(noteId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
+	    return noteRepository.findOne(noteId);
+	            //.orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
 	}
 	
 	@PutMapping("/notes/{id}")
 	public Notes updateNote(@PathVariable(value = "id") Long noteId,  @Valid @RequestBody Notes noteDetails) {
 
-	    Notes note = noteRepository.findById(noteId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
+	    Notes note = noteRepository.findOne(noteId);
+	          //  .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
 	    note.setTitle(noteDetails.getTitle());
 	    note.setContent(noteDetails.getContent());
 	    Notes updatedNote = noteRepository.save(note);
@@ -87,8 +87,8 @@ public class NoteRestController {
 	
 	@DeleteMapping("/notes/{id}")
 	public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
-	    Notes note = noteRepository.findById(noteId)
-	            .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
+	    Notes note = noteRepository.findOne(noteId);
+	           // .orElseThrow(() -> new ResourceNotFoundException("Note", "id", noteId));
 
 	    noteRepository.delete(note);
 

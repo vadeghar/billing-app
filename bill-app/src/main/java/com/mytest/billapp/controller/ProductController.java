@@ -108,8 +108,8 @@ public class ProductController {
 	@RequestMapping(value = "deleteProduct", method = RequestMethod.POST)
 	public String deleteProduct(@ModelAttribute("selectedId") Long selectedId, Model model) {
 	    try {
-			Product product = productService.findById(selectedId)
-			        .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
+			Product product = productService.findById(selectedId);
+			       // .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
 			productService.delete(product);
 			model.addAttribute("productList", setBrandOnAllProducts(productService.findAll()));
 			model.addAttribute("brandList", brandService.findAll());

@@ -21,8 +21,8 @@ public class PurchaseItemYetToSaveImpl implements PurchaseItemYetToSaveService {
 		return purchaseItemYetToSaveRepository.save(entity);
 	}
 	
-	public List<PurchaseItemYetToSave> saveAll(List<PurchaseItemYetToSave> entities) {
-		return purchaseItemYetToSaveRepository.saveAll(entities);
+	public List<PurchaseItemYetToSave> save(List<PurchaseItemYetToSave> entities) {
+		return purchaseItemYetToSaveRepository.save(entities);
 	}
 	
 	public void flush() {
@@ -30,7 +30,7 @@ public class PurchaseItemYetToSaveImpl implements PurchaseItemYetToSaveService {
 	}
 	
 	public void deleteById(Long id) {
-		purchaseItemYetToSaveRepository.deleteById(id);
+		purchaseItemYetToSaveRepository.delete(id);
 	}
 	
 	public void delete(PurchaseItemYetToSave entity) {
@@ -38,7 +38,7 @@ public class PurchaseItemYetToSaveImpl implements PurchaseItemYetToSaveService {
 	}
 	
 	public void deleteAll(List<PurchaseItemYetToSave> entities) {
-		purchaseItemYetToSaveRepository.deleteAll(entities);
+		purchaseItemYetToSaveRepository.delete(entities);
 	}
 	
 	public void deleteInBatch(List<PurchaseItemYetToSave> entities) {
@@ -52,12 +52,12 @@ public class PurchaseItemYetToSaveImpl implements PurchaseItemYetToSaveService {
 	public PurchaseItemYetToSave getOne(Long id) {
 		return purchaseItemYetToSaveRepository.getOne(id);
 	}
-	public Optional<PurchaseItemYetToSave> findById(Long id) {
-		return purchaseItemYetToSaveRepository.findById(id);
+	public PurchaseItemYetToSave findById(Long id) {
+		return purchaseItemYetToSaveRepository.findOne(id);
 	}
 	
 	public boolean existsById(Long id) {
-		return purchaseItemYetToSaveRepository.existsById(id);
+		return purchaseItemYetToSaveRepository.exists(id);
 	}
 	
 	public List<PurchaseItemYetToSave> findAll() {
@@ -76,6 +76,11 @@ public class PurchaseItemYetToSaveImpl implements PurchaseItemYetToSaveService {
 	
 	public PurchaseItemYetToSave saveAndFlush(PurchaseItemYetToSave entity) {
 		return purchaseItemYetToSaveRepository.saveAndFlush(entity);
+	}
+
+	@Override
+	public List<PurchaseItemYetToSave> saveAll(List<PurchaseItemYetToSave> entities) {
+		return purchaseItemYetToSaveRepository.save(entities);
 	}
 	
 }

@@ -19,7 +19,7 @@ public interface VendorService {
 	public void deleteInBatch(List<Vendor> entities);
 	public void deleteAll();
 	public Vendor getOne(Long id);
-	public Optional<Vendor> findById(Long id);
+	public Vendor findById(Long id);
 	public boolean existsById(Long id);
 	public List<Vendor> findAll();
 	public List<Vendor> findAll(Sort sort);

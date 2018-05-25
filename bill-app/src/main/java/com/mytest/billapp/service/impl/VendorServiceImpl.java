@@ -21,8 +21,8 @@ public class VendorServiceImpl implements VendorService {
 		return vendorRepository.save(entity);
 	}
 	
-	public List<Vendor> saveAll(List<Vendor> entities) {
-		return vendorRepository.saveAll(entities);
+	public List<Vendor> save(List<Vendor> entities) {
+		return vendorRepository.save(entities);
 	}
 	
 	public void flush() {
@@ -30,7 +30,7 @@ public class VendorServiceImpl implements VendorService {
 	}
 	
 	public void deleteById(Long id) {
-		vendorRepository.deleteById(id);
+		vendorRepository.delete(id);
 	}
 	
 	public void delete(Vendor entity) {
@@ -38,7 +38,7 @@ public class VendorServiceImpl implements VendorService {
 	}
 	
 	public void deleteAll(List<Vendor> entities) {
-		vendorRepository.deleteAll(entities);
+		vendorRepository.delete(entities);
 	}
 	
 	public void deleteInBatch(List<Vendor> entities) {
@@ -52,12 +52,12 @@ public class VendorServiceImpl implements VendorService {
 	public Vendor getOne(Long id) {
 		return vendorRepository.getOne(id);
 	}
-	public Optional<Vendor> findById(Long id) {
-		return vendorRepository.findById(id);
+	public Vendor findById(Long id) {
+		return vendorRepository.findOne(id);
 	}
 	
 	public boolean existsById(Long id) {
-		return vendorRepository.existsById(id);
+		return vendorRepository.exists(id);
 	}
 	
 	public List<Vendor> findAll() {
@@ -77,5 +77,12 @@ public class VendorServiceImpl implements VendorService {
 	public Vendor saveAndFlush(Vendor entity) {
 		return vendorRepository.saveAndFlush(entity);
 	}
+
+	@Override
+	public List<Vendor> saveAll(List<Vendor> entities) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

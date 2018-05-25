@@ -63,8 +63,8 @@ public class VendorController {
 	@RequestMapping(value = "deleteVendor", method = RequestMethod.POST)
 	public String deleteVendor(@ModelAttribute("selectedId") Long selectedId, Model model) {
 	    try {
-			Vendor vendor = vendorService.findById(selectedId)
-			        .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
+			Vendor vendor = vendorService.findById(selectedId);
+			       // .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
 			vendorService.delete(vendor);
 			model.addAttribute("vendorList", vendorService.findAll());
 		} catch (ResourceNotFoundException e) {

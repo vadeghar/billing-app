@@ -1,4 +1,12 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <form id="headerForm" action="#" method="POST">
+<c:set var="req" value="${pageContext.request}" />
+<c:set var="baseURL" value="${fn:replace(req.requestURL, req.requestURI, '')}" />
+<c:set var="params" value="${requestScope['javax.servlet.forward.query_string']}"/>
+<c:set var="requestPath" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+<c:set var="pageUrl" value="${ baseURL }${ requestPath }${ not empty params?'?'+=params:'' }"/>
 <!-- Navigation -->
 <!-- Navigation -->
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom affix">
@@ -60,10 +68,10 @@
 
 function navigate(actionName) {
 	if(actionName != '') {
-		document.getElementById("headerForm").action = "/"+actionName;
+		document.getElementById("headerForm").action = actionName;
 		document.getElementById("headerForm").submit();
 	}else {
-		window.location = 'http://localhost:8090/home';
+		window.location = 'home';
 	}
 }
 
