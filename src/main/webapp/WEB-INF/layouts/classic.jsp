@@ -88,6 +88,9 @@
 	<!-- Custom JavaScript -->
 	<script src="${pageContext.request.contextPath}/assets/js/custom.js"></script>
 	
+	<!-- JQuery Validation -->
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+	
 	<!-- SweetAlert JS-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.0/sweetalert.min.js"></script>
 	<script type="text/javascript">

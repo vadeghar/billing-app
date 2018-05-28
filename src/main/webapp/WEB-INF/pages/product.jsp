@@ -8,6 +8,9 @@
 .sweet-alert p  {
 	display: none;
 }
+.error {
+    color: #ff0000;
+  }
 </style>
 <div class="col-lg-6">
 	<div class="column-section mright20">
@@ -17,8 +20,8 @@
 					<div class="form-group">
 						<label for="Vendor" class="control-label">Brand:</label>
 						<form:input type="hidden" path="id" />
-						<form:select path="brandId" class="form-control" >
-							<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
+						<form:select path="brandId" class="form-control"  required="required">
+							<form:option value=""><c:out value="<-- Select -->"></c:out> </form:option>
 							<c:forEach var="brand" items="${brandList}">
 								<c:choose>
 									<c:when test="${brandId eq brand.id}">
@@ -36,7 +39,7 @@
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label for="content"  class="control-label">Product Name: <span class="require">*</span></label>
-						<form:input type="text" path="name" class="form-control" autocomplete="off"/>
+						<form:input type="text" path="name" class="form-control" autocomplete="off" required="required"/>
 					</div>
 				</div>
 			</div>
@@ -113,21 +116,42 @@ $( document ).ready(function() {
 		      icon: iconType,
 		    });
     }
-});
-
-function saveProduct() {
-	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "saveProduct";
-	document.getElementById("myForm").submit();
+	$(function() {
+			$("form[name='myForm']").validate({
+				// Specify validation rules
+				rules : {
+					brandId : "required",
+					name : "required",
+				},
+				// Specify validation error messages
+				messages : {
+					brandId : "Please select Brand",
+					name : "Please enter Name"
+				},
+				submitHandler : function(form) {
+					return true;
+				}
+			});
+		});
 	
-}
-function listProduct() {
-	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "productList";
-	//document.getElementById("myForm").method = "get";
-	document.getElementById("myForm").submit();
-}
+	});
+	function validateForm() {
+		return true;
+	}
+	function saveProduct() {
+		var val = $("#myForm").valid();
+		if (val) {
+			document.getElementById("selectedId").value = 0;
+			document.getElementById("myForm").action = "saveProduct";
+			document.getElementById("myForm").submit();
+		}
 
+	}
+	function listProduct() {
+		document.getElementById("selectedId").value = 0;
+		document.getElementById("myForm").action = "productList";
+		document.getElementById("myForm").submit();
+	}
 </script>
 
 <script type="text/javascript">
