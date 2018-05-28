@@ -43,7 +43,19 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-
+<style type="text/css">
+.sweet-alert h2 {
+    color: #575757;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+    text-transform: none;
+    position: relative;
+    margin: 1px 0;
+    padding: 0;
+    display: block;
+}
+</style>
 <body id="page-top" class="index">
 
 

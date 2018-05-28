@@ -4,7 +4,11 @@
 <form:form action="${pageContext.request.contextPath}/saveProduct" method="post" id="myForm" modelAttribute="product">
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
 <input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="Refresh" onclick="listProduct()" >
-
+<style type="text/css">
+.sweet-alert p  {
+	display: none;
+}
+</style>
 <div class="col-lg-6">
 	<div class="column-section mright20">
 		<div class="form-horizontal">
@@ -39,7 +43,12 @@
 			<div class="form-column">
 				<div class="col-sm-12">
 					<div class="form-group pull-right">
-						<button type="button" class="btn btn-primary" onclick="saveProduct();">Save</button>
+						<button type="button" class="btn btn-primary" onclick="saveProduct();">
+						<c:choose>
+							<c:when test="${ product.id gt 0 }"> Update</c:when>
+							<c:otherwise>Save</c:otherwise>
+						</c:choose>
+						</button>
 						<button type="button" class="btn btn-danger" onclick="listProduct();">Cancel</button>
 					</div>
 				</div>
