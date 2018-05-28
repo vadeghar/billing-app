@@ -9,7 +9,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Home - Dashboard</title>
+	<title><tiles:getAsString name="title" /></title>
 
 	<!-- Bootstrap Core CSS -->
 	<link href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
