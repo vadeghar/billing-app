@@ -249,7 +249,7 @@
 					<div class="col-sm-12">
 						<div class="form-group pull-right">
 							<button type="button" class="btn btn-primary" onclick="savePurchase();">Save</button>
-							<button type="button" class="btn btn-danger" onclick="cancelPurchase();">Cancel</button>
+							<button type="button" class="btn btn-danger" onclick="navigate('purchaseList')">Cancel</button>
 						</div>
 					</div>
 				</div>						
@@ -491,5 +491,14 @@ function savePurchase() {
 	document.getElementById("myForm").action = "/savePurchase";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
+}
+
+function navigate(actionName) {
+	if(actionName != '') {
+		document.getElementById("headerForm").action = "/"+actionName;
+		document.getElementById("headerForm").submit();
+	}else {
+		window.location = 'http://localhost:8090/home';
+	}
 }
 </script>
