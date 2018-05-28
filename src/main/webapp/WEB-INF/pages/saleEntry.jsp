@@ -39,6 +39,14 @@
 						</tr>
 					</thead>
 					<tbody>
+						<tr valign="middle">
+							<td>1</td>
+							<td>Raymond Jeans 32</td>
+							<td>652</td>
+							<td><span id="minus" style="display: inline; cursor: pointer;">-</span> <input  type="text"  class="form-control" autocomplete="off" style="height: 20px; width: 32px; display: inline; " value="1"/> <span id="plus" style="display: inline; cursor: pointer;">+</span></td>
+							<td>652</td>
+							<td>X</td>
+						</tr>
 					</tbody>
 				</table>
 	</div>
