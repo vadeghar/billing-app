@@ -42,13 +42,13 @@
 						<tr valign="middle">
 							<td>1</td>
 							<td>Raymond Jeans 32</td>
-							<td>652</td>
+							<td><span id="rate0" >652</span> </td>
 							<td>
 								<!-- <span id="minus" style="display: inline; cursor: pointer;">-</span>  -->
-								<input  type="number"  class="form-control" autocomplete="off" style="height: 20px; width: 50px; padding-left: 5px; display: inline; " value="1"/>
+								<input  type="number" id="quantity0"  class="form-control" autocomplete="off" style="height: 20px; width: 50px; padding-left: 5px; display: inline; " value="1"/>
 								 <!-- <span id="plus" style="display: inline; cursor: pointer;">+</span></td> -->
-							<td>652</td>
-							<td>X</td>
+							<td><span id="total0" >652</span></td>
+							<td><span id="close" style="display: inline; cursor: pointer; color: red;">X</span></td>
 						</tr>
 					</tbody>
 				</table>
@@ -101,3 +101,10 @@
 </div>
 
 </form:form>
+
+<script type="text/javascript">
+$('#quantity0').on('change', function() {
+	alert($('#quantity0').val()+"\n"+$('#rate0').html()+"\n"+$('#total0').html());
+	
+});
+</script>
