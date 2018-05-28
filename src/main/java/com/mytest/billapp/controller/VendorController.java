@@ -19,9 +19,7 @@ public class VendorController {
 	
 	@RequestMapping(value = "vendorList", method = RequestMethod.POST)
 	public String getAllVendor(Model model) {
-		model.addAttribute("vendorList", vendorService.findAll());
-		model.addAttribute("vendor", new Vendor());
-		model.addAttribute("selectedId","");
+		addModelData(model);
 	    return "vendor";
 	}
 	
@@ -29,11 +27,10 @@ public class VendorController {
 	public String saveVendor(@ModelAttribute Vendor vendor, Model model) {
 		try {
 			vendorService.save(vendor);
-			model.addAttribute("vendor", new Vendor());
-			model.addAttribute("vendorList", vendorService.findAll());
+			addModelData(model);
 			model.addAttribute("message", "Succesfully Saved.");
-			model.addAttribute("selectedId","");
 		} catch (Exception e) {
+			addModelData(model);
 			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
 			e.printStackTrace();
 			return "vendor";
@@ -47,11 +44,11 @@ public class VendorController {
 		if(selectedId == null || selectedId.intValue() == 0)
 			model.addAttribute("vendor", new Vendor());
 		try {
-			model.addAttribute("vendor", vendorService.findById(selectedId));
-			model.addAttribute("vendorList", vendorService.findAll());
-			model.addAttribute("selectedId","");
-			model.addAttribute("message", "");
+			addModelData(model);
+			if(selectedId > 0)
+				model.addAttribute("vendor", vendorService.findById(selectedId));
 		} catch (Exception e) {
+			addModelData(model);
 			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
 			e.printStackTrace();
 			return "vendor";
@@ -64,14 +61,23 @@ public class VendorController {
 	public String deleteVendor(@ModelAttribute("selectedId") Long selectedId, Model model) {
 	    try {
 			Vendor vendor = vendorService.findById(selectedId);
-			       // .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
 			vendorService.delete(vendor);
-			model.addAttribute("vendorList", vendorService.findAll());
-		} catch (ResourceNotFoundException e) {
-			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			addModelData(model);
+			model.addAttribute("message", "Succesfully Deleted.");
+		} catch (Exception e) {
 			e.printStackTrace();
-			return getAllVendor(model);
+			addModelData(model);
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			return "vendor";
 		}
-	    return addVendor(0l, model);
+	    return "vendor";
+	}
+	
+	
+	private void addModelData(Model model) {
+		model.addAttribute("vendorList", vendorService.findAll());
+		model.addAttribute("vendor", new Vendor());
+		model.addAttribute("selectedId","");
+		model.addAttribute("message", "");
 	}
 }
