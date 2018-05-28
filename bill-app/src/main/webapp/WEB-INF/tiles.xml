@@ -57,6 +57,11 @@
         <put-attribute name="body" value="/WEB-INF/pages/purchase.jsp" />  
     </definition>
     
+    <definition name="saleEntry" extends="base.definition">  
+        <put-attribute name="title" value="Sales" />  
+        <put-attribute name="body" value="/WEB-INF/pages/saleEntry.jsp" />  
+    </definition>
+    
     <definition name="purchaseList" extends="base.definition">  
         <put-attribute name="title" value="Purchase List" />  
         <put-attribute name="body" value="/WEB-INF/pages/purchase-list.jsp" />  
