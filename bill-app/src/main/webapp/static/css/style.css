@@ -691,3 +691,11 @@ legend.scheduler-border {
 .border-bottom5 {
     border-bottom: 5px solid #c7c7c7;
 }
+
+form .error {
+  color: #ff0000;
+}
+
+.error {
+    color: #ff0000;
+  }
