@@ -42,14 +42,27 @@
 						<tr valign="middle">
 							<td>1</td>
 							<td>Raymond Jeans 32</td>
-							<td><span id="rate0" >652</span> </td>
+							<td><span id="rate-0" >652</span> </td>
 							<td>
 								<!-- <span id="minus" style="display: inline; cursor: pointer;">-</span>  -->
-								<input  type="number" id="quantity0"  class="form-control" autocomplete="off" style="height: 20px; width: 50px; padding-left: 5px; display: inline; " value="1"/>
+								<input  type="number" min="1" max="50" id="quantity-0"  class="form-control" autocomplete="off" style="height: 20px; width: 50px; padding-left: 5px; display: inline; " value="1"/>
 								 <!-- <span id="plus" style="display: inline; cursor: pointer;">+</span></td> -->
-							<td><span id="total0" >652</span></td>
-							<td><span id="close" style="display: inline; cursor: pointer; color: red;">X</span></td>
+							<td><span id="total-0" >652</span></td>
+							<td><span id="close-0" style="display: inline; cursor: pointer; color: red;">X</span></td>
 						</tr>
+						
+						<tr valign="middle">
+							<td>2</td>
+							<td>Peter England Jeans 32</td>
+							<td><span id="rate-1" >850</span> </td>
+							<td>
+								<!-- <span id="minus" style="display: inline; cursor: pointer;">-</span>  -->
+								<input  type="number" min="1" max="50"  id="quantity-1"  class="form-control" autocomplete="off" style="height: 20px; width: 50px; padding-left: 5px; display: inline; " value="1"/>
+								 <!-- <span id="plus" style="display: inline; cursor: pointer;">+</span></td> -->
+							<td><span id="total-1" >850</span></td>
+							<td><span id="close-1" style="display: inline; cursor: pointer; color: red;">X</span></td>
+						</tr>
+						
 					</tbody>
 				</table>
 	</div>
@@ -103,8 +116,23 @@
 </form:form>
 
 <script type="text/javascript">
-$('#quantity0').on('change', function() {
-	alert($('#quantity0').val()+"\n"+$('#rate0').html()+"\n"+$('#total0').html());
+$("[id^='quantity']").on('change', function() {
+	var idTxt = $(this).attr('id');
+	var temp = idTxt.split("-");
+	var rowNo = temp[1];
+	var ratePerUnit = $('#rate-'+rowNo).html();
+	var curQty = $(this).val();
+	var total = ratePerUnit * curQty;
+	$('#total-'+rowNo).html(total);
 	
+	//alert($(this).val()+"\n"+$('#rate-'+rowNo).html()+"\n"+total+'\n'+$('#total-'+rowNo).html(total)+"11111111111");
+	var allTotal = 0;
+	$("[id^='total']").each(function(indx, val) {
+		allTotal = parseFloat(allTotal) + parseFloat($(this).html());
+	});
+	$('#invoiceTotal').val(allTotal);
+	if($('#discount').val() == '') {
+		$('#netTotal').val(allTotal);
+	}
 });
 </script>
