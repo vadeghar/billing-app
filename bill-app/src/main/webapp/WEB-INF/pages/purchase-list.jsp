@@ -86,14 +86,14 @@ $( document ).ready(function() {
 
 $("#newPurchase").click(function(){
 	$("#selectedId").val(0);
-	document.getElementById("myForm").action = "/purchase";
+	document.getElementById("myForm").action = "purchase";
 	document.getElementById("myForm").submit();
 });
 
 
 function editPurchase(selectedId) {
 	$("#selectedId").val(selectedId);
-	document.getElementById("myForm").action = "/purchase";
+	document.getElementById("myForm").action = "purchase";
 	document.getElementById("myForm").submit();
 }
 
@@ -110,7 +110,7 @@ function deletePurchase(selectedId) {
 		.then((willDelete) => {
 		  if (willDelete) {
 			  $("#selectedId").val(selectedId);
-			document.getElementById("myForm").action = "/deletePurchase";
+			document.getElementById("myForm").action = "deletePurchase";
 			document.getElementById("myForm").submit();
 		  } else {
 		    
