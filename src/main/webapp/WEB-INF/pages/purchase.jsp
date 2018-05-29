@@ -283,14 +283,14 @@ $( document ).ready(function() {
 
 function addPurchaseItem() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/addPurchaseItem";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/addPurchaseItem";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 	
 }
 function listPurchase() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/purchase";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/purchase";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 }
@@ -299,7 +299,7 @@ function listPurchase() {
 
 function editPurchase(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "/purchase";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/purchase";
 	document.getElementById("myForm").submit();
 }
 
@@ -313,7 +313,7 @@ function deletePurchaseItem(purchaseId, purchaseItemId, itemCode) {
 	alert("ID:"+purchaseId);
 	if(confirm("Are you sure?")) {
 		document.getElementById("selectedId").value =purchaseId+"#"+purchaseItemId+"#"+itemCode;
-		document.getElementById("myForm").action = "/deletePurchaseItem";
+		document.getElementById("myForm").action = "${pageContext.request.contextPath}/deletePurchaseItem";
 		document.getElementById("myForm").submit();
 	}
 	
@@ -374,7 +374,7 @@ $( document ).ready(function() {
 $("#vendorId").on('change', function() {
 	var vendorId = $("#vendorId").val();
 	if(vendorId != 0) {
-		$.ajax({url: "/ajax/vendor/"+vendorId, 
+		$.ajax({url: "${pageContext.request.contextPath}/ajax/vendor/"+vendorId, 
 			success: 
 				function(result){
 					$("#vendorMobile").val(result.mobile);
@@ -392,7 +392,7 @@ $("#purchaseItemDTO\\.productId").on('change', function() {
 	var productId = $('#purchaseItemDTO\\.productId').find(":selected").val(); // $("#purchaseItemDTO\\productId option:selected").val();
 	if(productId != 0) {
 		$.ajax({
-			url: "/ajax/product/"+productId, 
+			url: "${pageContext.request.contextPath}/ajax/product/"+productId, 
 			success: 
 				function(result){
 					var len = result.length
@@ -440,7 +440,17 @@ function generateItemCode() {
 			itemCode = itemCode + 'E';
 		else 
 			itemCode = itemCode + 'F';
-		itemCode = itemCode + ((parseInt(sp)/10).toFixed());
+		
+		var postFix = (parseInt(sp)/10).toFixed();
+		if(postFix.length < 4) {
+			var noOfZeros = 4 - postFix.length;
+			var zeros = '';
+			for(var i=0; i < noOfZeros; i++) {
+				zeros = zeros + '0';
+			}
+			postFix = zeros+postFix;
+		}
+		itemCode = itemCode +postFix;
 		$("#purchaseItemDTO\\.itemCode").val(itemCode);
 	}
 }
@@ -488,14 +498,14 @@ $('[name="discountType"]').click(function() {
 
 function savePurchase() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/savePurchase";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/savePurchase";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 }
 
 function navigate(actionName) {
 	if(actionName != '') {
-		document.getElementById("headerForm").action = "/"+actionName;
+		document.getElementById("headerForm").action = "${pageContext.request.contextPath}/"+actionName;
 		document.getElementById("headerForm").submit();
 	}else {
 		window.location = 'http://localhost:8090/home';
