@@ -133,6 +133,17 @@ $("[id^='quantity']").on('change', function() {
 	$('#invoiceTotal').val(allTotal);
 	if($('#discount').val() == '') {
 		$('#netTotal').val(allTotal);
+	} else {
+		var discountType = $("input[name=discountType]:checked").val();
+		var discount = parseFloat($("#discount").val());
+		if(discountType == '%'){
+			$("#netTotal").val((allTotal - (allTotal * discount / 100)).toFixed());
+		}else {
+			$("#netTotal").val((allTotal - discount).toFixed());
+		}
 	}
+	$("#discount").prop("readonly", true);
+	$("#netTotal").prop("readonly", true);
+	$("#invoiceTotal").prop("readonly", true);
 });
 </script>
