@@ -17,7 +17,7 @@
 
 				<div class="col-lg-4">
 					<div class="stride-logo text-center">
-						<a href="index.html">
+						<a href="#" id="logo">
 							<img class="center-block" src="img/logo.png">
 						</a>
 					</div>
@@ -44,16 +44,16 @@
 								class="caret glyphicon glyphicon-menu-right"></b>
 						</span>
 						<ul class="dropdown-menu" aria-labelledby="themes">
-							<li><a href="#" onclick="navigate('productList')">Product</a> </li>
-							<li><a href="#" title="Platform Migration" onclick="navigate('vendorList')">Vendor</a></li>
+							<li><a href="#" id="productList" >Product</a> </li>
+							<li><a href="#"  id="vendorList" title="Platform Migration" >Vendor</a></li>
 							<li><a href="page2.html" title="Platform Migration">Page 2</a></li>
 						</ul>
 					</li>
-					<li><a href="#" onclick="navigate('purchaseList')">Purchase</a> </li>
-					<li><a href="#" onclick="navigate('saleEntry')">Sales Invoice</a> </li>
-					<li><a href="#" onclick="navigate('repList')">Reports</a> </li>
-					<li><a href="#" onclick="navigate('notesList')">Notes</a></li>
-					<li><a href="#" onclick="navigate('contactus')">Contact Us</a> </li>
+					<li><a href="#" id="purchaseList">Purchase</a> </li>
+					<li><a href="#"   id="saleEntry" >Sales Invoice</a> </li>
+					<li><a href="#"   id="repList" >Reports</a> </li>
+					<li><a href="#"  id="notesList" >Notes</a></li>
+					<li><a href="#"  id="contactus" >Contact Us</a> </li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -66,13 +66,43 @@
 
 <script type="text/javascript">
 
-function navigate(actionName) {
-	if(actionName != '') {
-		document.getElementById("headerForm").action = actionName;
-		document.getElementById("headerForm").submit();
-	}else {
-		window.location = 'home';
-	}
-}
+$('#logo').on('click', function() {
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}';
+	document.getElementById("headerForm").submit();
+});
 
+$('#purchaseList').on('click', function() {
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/purchaseList';
+	document.getElementById("headerForm").submit();
+});
+
+$('#saleEntry').on('click', function() {
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/saleEntry';
+	document.getElementById("headerForm").submit();
+});
+
+$('#repList').on('click', function() {
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/repList';
+	document.getElementById("headerForm").submit();
+});
+
+$('#notesList').on('click', function() {
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/notesList';
+	document.getElementById("headerForm").submit();
+});
+
+$('#contactus').on('click', function() {
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/contactus';
+	document.getElementById("headerForm").submit();
+});
+
+$('#productList').on('click', function() {
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/productList';
+	document.getElementById("headerForm").submit();
+});
+
+$('#vendorList').on('click', function() {
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/vendorList';
+	document.getElementById("headerForm").submit();
+});
 </script>
