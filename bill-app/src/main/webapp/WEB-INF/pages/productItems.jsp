@@ -3,7 +3,7 @@
 
 <form:form action="${pageContext.request.contextPath}/saveProduct" method="post" id="myForm" modelAttribute="productView">
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${productView.message}"/></div>
-<input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="Refresh" onclick="listProduct()" >
+<input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="Back to Products" onclick="listProduct()" >
 <style type="text/css">
 .sweet-alert p  {
 	display: none;
@@ -20,39 +20,48 @@
 					<div class="form-group">
 						<label for="Vendor" class="control-label">Brand:</label>
 						<form:input type="hidden" path="product.id" />
-						<form:select path="product.brandId" class="form-control"  required="required">
-							<form:option value=""><c:out value="<-- Select -->"></c:out> </form:option>
-							<c:forEach var="brand" items="${productView.brandList}">
-								<c:choose>
-									<c:when test="${product.brandId eq brand.id}">
-										<form:option value="${brand.id}" selected="selected"> ${brand.name}  </form:option>
-									</c:when>
-									<c:otherwise>
-										<form:option value="${brand.id}">${brand.name} </form:option>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						</form:select>
-						<button type="button" class="" onclick="showAddBrand()" title="Add new brand"><span class="glyphicon glyphicon-plus"></span></button>
+						<form:input type="hidden" path="product.brandId" />
+						<form:input type="text" path="brandName" class="form-control" autocomplete="off"  readonly="true"/>
+						<%-- <c:out value="${productView.brandName }"/> --%>
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="form-group">
 						<label for="content"  class="control-label">Product Name: <span class="require">*</span></label>
-						<form:input type="text" path="product.name" class="form-control" autocomplete="off" required="required"/>
+						<form:input type="text" path="product.name" class="form-control" autocomplete="off"  readonly="true"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="form-horizontal">
+			<h4>Product Item</h4>
+			<div class="form-column">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="Vendor" class="control-label">Item Name:</label>
+						<form:input type="hidden" path="productItems.id" />
+						<form:input type="text" path="productItems.name" class="form-control" autocomplete="off"  />
+						<%-- <c:out value="${productView.brandName }"/> --%>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label for="content"  class="control-label">Description</label>
+						<form:input type="text" path="productItems.description" class="form-control" autocomplete="off" />
 					</div>
 				</div>
 			</div>
 			<div class="form-column">
 				<div class="col-sm-12">
 					<div class="form-group pull-right">
-						<button type="button" class="btn btn-primary" onclick="saveProduct();">
+						<button type="button" class="btn btn-primary"  id="saveProductItem">
 						<c:choose>
-							<c:when test="${ product.id gt 0 }"> Update</c:when>
+							<c:when test="${productView.productItems.id gt 0 }"> Update</c:when>
 							<c:otherwise>Save</c:otherwise>
 						</c:choose>
 						</button>
-						<button type="button" class="btn btn-danger" onclick="listProduct();">Cancel</button>
+						<button type="button" class="btn btn-danger"  id="cancelProductItem">Cancel</button>
 					</div>
 				</div>
 			</div>
@@ -61,42 +70,47 @@
 </div>
 <div class="col-lg-6">
 	<div class="column-section section-scroll marbottom20">
-		<c:choose>
-			<c:when test="${not empty productList}">
 				<table
 					class="table table-bordered tb-color darken uh-table price-list">
 					<thead>
 						<tr class="text-white">
 							<th>#</th>
-				            <th>Brand</th>
 				            <th>Name</th>
-				 			<th>Action</th>
+				            <th>Description</th>
+				 			<th></th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="product" items="${productList}">
-				           <tr>
-				               <td>${product.id}</td>
-				               <td>${product.brandName}</td>
-				               <td>${product.name}</td>
-				               <td>
-				               <button type="button" class="" onclick="editProduct('${product.id}')">
-						          <span class="glyphicon glyphicon-pencil"></span>
-						        </button>
-						        <button type="button" class="" onclick="deleteProduct('${product.id}')">
-						          <span class="glyphicon glyphicon glyphicon-remove"></span>
-						        </button>
-				              </td>
-				           </tr>
-				         </c:forEach>
+					<c:choose>
+							<c:when test="${ not empty productView.productItems && productView.productItems.id gt 0 }"> 
+								<c:forEach var="productItems" items="${productView.productItemsList}">
+						           <tr>
+						               <td>${productItems.id}</td>
+						               <td>${productItems.name}</td>
+						               <td>${productItems.description}</td>
+						               <td>
+						               <button type="button" class="" onclick="editProductItems('${productItems.id}')">
+								          <span class="glyphicon glyphicon-pencil"></span>
+								        </button>
+								        <button type="button" class="" onclick="deleteProductItems('${productItems.id}')">
+								          <span class="glyphicon glyphicon glyphicon-remove"></span>
+								        </button>
+						              </td>
+						           </tr>
+						         </c:forEach>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td colspan="4" style="width: 100%; text-align: center;" > <span  style="color: red;">No Items found.</span> </td>
+								</tr>
+							</c:otherwise>
+					</c:choose>
+						
 					</tbody>
 				</table>
-			</c:when>
-		</c:choose>
 	</div>
 </div>
 
-<%-- <form:hidden path="product.selectedId"/> --%>
 
 <input type="hidden" id="selectedId" name="selectedId" value="${selectedId}">
 <input type="hidden" id="newBrnadName" name="newBrnadName" value="${newBrnadName}">
@@ -159,7 +173,7 @@ $( document ).ready(function() {
 
 function editProduct(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "productItems";
+	document.getElementById("myForm").action = "product";
 	document.getElementById("myForm").submit();
 }
 
