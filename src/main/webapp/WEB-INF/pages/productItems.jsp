@@ -82,7 +82,7 @@
 					</thead>
 					<tbody>
 					<c:choose>
-							<c:when test="${ not empty productView.productItems && productView.productItems.id gt 0 }"> 
+							<c:when test="${ not empty productView.productItemsList }"> 
 								<c:forEach var="productItems" items="${productView.productItemsList}">
 						           <tr>
 						               <td>${productItems.id}</td>
