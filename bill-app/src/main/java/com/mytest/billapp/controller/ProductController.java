@@ -121,7 +121,7 @@ public class ProductController {
 				Product product = productService.findById(selectedId);
 				productView.setProduct(product);
 				productView.setBrandName(brandService.findById(product.getBrandId()).getName());
-				productView.setProductItemsList( productItemsService.findAllByProductId(productView.getSelectedId()));
+				productView.setProductItemsList( productItemsService.findAllByProductId(selectedId));
 				productView.setSelectedId(0l);
 				productView.setSelectedItemId(0l);
 				productView.setNewBrnadName(StringUtils.EMPTY);
