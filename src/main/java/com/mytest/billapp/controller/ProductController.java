@@ -2,10 +2,10 @@ package com.mytest.billapp.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,45 +13,46 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mytest.billapp.model.Brand;
 import com.mytest.billapp.model.Product;
 import com.mytest.billapp.service.BrandService;
+import com.mytest.billapp.service.ProductItemsService;
 import com.mytest.billapp.service.ProductService;
+import com.mytest.billapp.view.ProductView;
 
 @Controller
 public class ProductController {
 	
 	@Autowired
 	ProductService productService;
+	@Autowired
+	ProductItemsService productItemsService;
 	
 	@Autowired
 	BrandService brandService;
 	
+	private ProductView productView;
+	
+	private void init() {
+		productView = new ProductView();
+	}
+	
 	@RequestMapping(value = "productList", method = RequestMethod.POST)
 	public String getAllProduct(Model model) {
 		addModelData(model);
-		/*model.addAttribute("brandList", brandService.findAll());
-		model.addAttribute("productList", setBrandOnAllProducts(productService.findAll()));
-		model.addAttribute("product", new Product());
-		model.addAttribute("selectedId","");
-		model.addAttribute("newBrnadName","");*/
+		model.addAttribute("productView",productView);
 	    return "product";
 	}
 	
 	@RequestMapping(value = "saveBrandInProduct", method = RequestMethod.POST)
 	public String saveBrandInProduct(@ModelAttribute("newBrnadName") String newBrnadName, @ModelAttribute Product product, Model model) {
 		try {
-			addModelData(model);
+			
 			if(!StringUtils.isEmpty(newBrnadName)) {
 				Brand brand = new Brand();
 				brand.setName(newBrnadName);
 				brandService.save(brand);
-				model.addAttribute("message", "Brand Saved");
+				addModelData(model);
+				productView.setMessage("Brand Saved");
 			}
-			model.addAttribute("product", product);
-			
-			/*model.addAttribute("brandList", brandService.findAll());
-			model.addAttribute("productList", setBrandOnAllProducts(productService.findAll()));
-			model.addAttribute("selectedId","");
-			model.addAttribute("newBrnadName","");*/
-			
+			model.addAttribute("productView",productView);
 		} catch (Exception e) {
 			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
 			e.printStackTrace();
@@ -61,14 +62,12 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "saveProduct", method = RequestMethod.POST)
-	public String saveProduct(@ModelAttribute Product product, Model model) {
+	public String saveProduct(@ModelAttribute ProductView productView, Model model) {
 		try {
-			System.out.println("Brand ID @@@@@@@@@@@@ "+product.getBrandId());
-			/*if(product.getBrand() == null)
-				product.setBrand(new Brand());*/
-			productService.save(product);
+			productService.save(productView.getProduct());
 			addModelData(model);
-			model.addAttribute("message", "Succesfully Saved.");
+			this.productView.setMessage("Succesfully Saved.");
+			model.addAttribute("productView",this.productView);
 		} catch (Exception e) {
 			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
 			e.printStackTrace();
@@ -82,22 +81,60 @@ public class ProductController {
 	
 	@RequestMapping(value = "product", method = RequestMethod.POST)
 	public String addProduct(@ModelAttribute("selectedId") Long selectedId,  Model model) {
+		addModelData(model);
 		if(selectedId == null || selectedId.intValue() == 0)
 			model.addAttribute("product", new Product());
 		try {
-			addModelData(model);
-			model.addAttribute("product", productService.findById(selectedId));
-			/*model.addAttribute("productList", setBrandOnAllProducts(productService.findAll()));
-			model.addAttribute("brandList", brandService.findAll());
-			model.addAttribute("selectedId","");
-			model.addAttribute("message", "");
-			model.addAttribute("newBrnadName","");*/
+			productView.setProduct(productService.findById(selectedId));
+			model.addAttribute("productView",productView);
 		} catch (Exception e) {
 			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
 			e.printStackTrace();
 			return "product";
 		}
 		return "product";
+	}
+	
+	/*
+	@RequestMapping(value = "productItems", method = RequestMethod.POST)
+	public String productItems(@ModelAttribute("selectedId") Long selectedId,  Model model) {
+		if(selectedId == null || selectedId.intValue() == 0)
+			model.addAttribute("product", new Product());
+		try {
+			addModelData(model);
+			productView.setProduct(productService.findById(selectedId));
+			model.addAttribute("productView",productView);
+		} catch (Exception e) {
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			e.printStackTrace();
+			return "product";
+		}
+		return "product";
+	}
+	*/
+	@RequestMapping(value = "productItems", method = RequestMethod.POST)
+	public String productItems(@ModelAttribute("selectedId") Long selectedId,  Model model) {
+		try {
+			if(productView == null) productView = new ProductView();
+				//productView.setBrandList(brandService.findAll());
+				//productView.setProductList(setBrandOnAllProducts(productService.findAll()));
+				Product product = productService.findById(selectedId);
+				productView.setProduct(product);
+				productView.setBrandName(brandService.findById(product.getBrandId()).getName());
+				productView.setProductItemsList( productItemsService.findAllByProductId(productView.getSelectedId()));
+				productView.setSelectedId(0l);
+				productView.setSelectedItemId(0l);
+				productView.setNewBrnadName(StringUtils.EMPTY);
+				productView.setMessage(StringUtils.EMPTY);
+				productView.setFeedback(StringUtils.EMPTY);
+				
+				model.addAttribute("productView",productView);
+		} catch (Exception e) {
+			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
+			e.printStackTrace();
+			return "product";
+		}
+		return "productItems";
 	}
 	
 	
@@ -107,7 +144,8 @@ public class ProductController {
 			Product product = productService.findById(selectedId);
 			productService.delete(product);
 			addModelData(model);
-			model.addAttribute("message", "Succesfully Deleted.");
+			productView.setMessage("Succesfully Deleted.");
+			model.addAttribute("productView",productView);
 		} catch (Exception e) {
 			e.printStackTrace();
 			addModelData(model);
@@ -118,8 +156,19 @@ public class ProductController {
 	}
 	
 	private void addModelData(Model model) {
+		init();
+		
+		productView.setBrandList(brandService.findAll());
+		productView.setProductList(setBrandOnAllProducts(productService.findAll()));
+		productView.setProduct(new Product());
+		productView.setSelectedId(0l);
+		productView.setSelectedItemId(0l);
+		productView.setNewBrnadName(StringUtils.EMPTY);
+		productView.setMessage(StringUtils.EMPTY);
+		productView.setFeedback(StringUtils.EMPTY);
+		
 		model.addAttribute("productList", setBrandOnAllProducts(productService.findAll()));
-		model.addAttribute("brandList", brandService.findAll());
+		//model.addAttribute("brandList", brandService.findAll());
 		model.addAttribute("selectedId","");
 		model.addAttribute("message", "");
 		model.addAttribute("newBrnadName","");
