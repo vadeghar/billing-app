@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mytest.billapp.model.Brand;
 import com.mytest.billapp.model.Product;
+import com.mytest.billapp.model.ProductItems;
+import com.mytest.billapp.repsitory.ProductItemsRepository;
 import com.mytest.billapp.service.BrandService;
 import com.mytest.billapp.service.ProductItemsService;
 import com.mytest.billapp.service.ProductService;
@@ -76,6 +78,74 @@ public class ProductController {
 	    return "product";
 	}
 	
+	
+	//
+	@RequestMapping(value = "saveProductItem", method = RequestMethod.POST)
+	public String saveProductItem(@ModelAttribute ProductView productView, Model model) {
+
+		if(productView == null) productView = new ProductView();
+		if(productView.getProductItems() != null) {
+			productView.getProductItems().setProductId(productView.getProduct().getId());
+			productItemsService.save(productView.getProductItems());
+		}
+		//productView.setBrandList(brandService.findAll());
+		//productView.setProductList(setBrandOnAllProducts(productService.findAll()));
+		/*Product product = productService.findById(selectedId);
+		productView.setProduct(product);
+		productView.setBrandName(brandService.findById(product.getBrandId()).getName());*/
+		productView.setProductItems(new ProductItems());
+		productView.setProductItemsList( productItemsService.findAllByProductId(productView.getProduct().getId()));
+		productView.setSelectedId(0l);
+		productView.setSelectedItemId(0l);
+		productView.setNewBrnadName(StringUtils.EMPTY);
+		productView.setMessage("Item saved successfully");
+		productView.setFeedback(StringUtils.EMPTY);
+		
+		model.addAttribute("productView",productView);
+		
+		
+		return "productItems";
+	}
+	
+	@RequestMapping(value = "deleteProductItems", method = RequestMethod.POST)
+	public String deleteProductItems(@ModelAttribute("selectedId") Long selectedId, Model model) {
+
+		if(productView == null) productView = new ProductView();
+		productItemsService.deleteById(selectedId);
+		productView.setProductItems(new ProductItems());
+		productView.setProductItemsList( productItemsService.findAllByProductId(productView.getProduct().getId()));
+		productView.setSelectedId(0l);
+		productView.setSelectedItemId(0l);
+		productView.setNewBrnadName(StringUtils.EMPTY);
+		productView.setMessage("Sucessfully Deleted");
+		productView.setFeedback(StringUtils.EMPTY);
+		
+		model.addAttribute("productView",productView);
+		
+		
+		return "productItems";
+	}
+	
+	@RequestMapping(value = "editProductItem", method = RequestMethod.POST)
+	public String editProductItem(@ModelAttribute("selectedId") Long selectedId, Model model) {
+
+		if(productView == null) productView = new ProductView();
+		if(productView.getProductItems() != null)
+			productView.setProductItems(productItemsService.findById(selectedId));
+		else
+			productView.setProductItems(new ProductItems());
+		productView.setProductItemsList( productItemsService.findAllByProductId(productView.getProduct().getId()));
+		productView.setSelectedId(0l);
+		productView.setSelectedItemId(0l);
+		productView.setNewBrnadName(StringUtils.EMPTY);
+		productView.setMessage(StringUtils.EMPTY);
+		productView.setFeedback(StringUtils.EMPTY);
+		
+		model.addAttribute("productView",productView);
+		
+		
+		return "productItems";
+	}
 	
 	
 	
