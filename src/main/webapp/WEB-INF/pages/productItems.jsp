@@ -245,40 +245,35 @@ function showAddBrand() {
 		document.getElementById("myForm").action = "saveBrandInProduct";
 		document.getElementById("myForm").submit();
 		});
-	 
-	 
-	/* swal("Add new Brand:",{
-		  content: "input",
-		  buttons: true,
-		  dangerMode: true,
-		})
-		.then((value) => {
-		  if (value) {
-			    document.getElementById("newBrnadName").value = value;
-				document.getElementById("myForm").action = "/saveBrandInProduct";
-				document.getElementById("myForm").submit();
-		  } else {
-		    	swal("Your imaginary file is safe!");
-		  }
-		}); */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }
+
+
+$('#saveProductItem').on('click', function() {
+	document.getElementById("myForm").action = "saveProductItem";
+	document.getElementById("myForm").submit();
+});
+
+function editProductItems(itemId) {
+	document.getElementById("selectedId").value = itemId;
+	document.getElementById("myForm").action = "editProductItem";
+	document.getElementById("myForm").submit();
+}
+
+function deleteProductItems(itemId) {
+	document.getElementById("selectedId").value = itemId;
+	document.getElementById("myForm").action = "deleteProductItems";
+	document.getElementById("myForm").submit();
+}
+
+$('#editProductItem').on('click', function() {
+	
+});
+$('#cancelProductItem').on('click', function() {
+	document.getElementById("selectedId").value = $('#productItems\\.id').val();
+	document.getElementById("myForm").action = "productItems";
+	document.getElementById("myForm").submit();
+});
+
 
 </script> 
