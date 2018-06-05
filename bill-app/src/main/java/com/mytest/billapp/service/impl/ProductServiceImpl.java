@@ -1,17 +1,16 @@
 package com.mytest.billapp.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.mytest.billapp.model.Product;
+import com.mytest.billapp.model.ProductItems;
+import com.mytest.billapp.repsitory.ProductItemsRepository;
 import com.mytest.billapp.repsitory.ProductRepository;
 import com.mytest.billapp.service.ProductService;
 import com.mytest.billapp.utils.ProductSizeEnum;
@@ -22,6 +21,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	ProductRepository productRepository; 
+	
+	@Autowired
+	ProductItemsRepository productItemsRepository; 
 	
 	public Product save(Product entity) {
 		return productRepository.save(entity);
@@ -104,6 +106,10 @@ public class ProductServiceImpl implements ProductService {
 		//return productSizeList.stream().filter( p -> p.getBrandId().longValue() == productId.longValue()).collect(Collectors.toList());
 	}
 	
+	public List<ProductItems> getProductItemList(Long productId) {
+		return productItemsRepository.findByProductId(productId);
+	}
+	
 	private static List<Product> productSizeList = new ArrayList<>();
 	static {
 		
@@ -124,6 +130,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> saveAll(List<Product> entities) {
 		return productRepository.save(entities);
+	}
+
+	@Override
+	public List<Product> getProductsByBrand(Long brandId) {
+		return productRepository.findByBrandId(brandId);
 	}
 	
 }

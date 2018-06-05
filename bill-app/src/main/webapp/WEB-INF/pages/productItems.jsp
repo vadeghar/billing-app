@@ -270,7 +270,7 @@ $('#editProductItem').on('click', function() {
 	
 });
 $('#cancelProductItem').on('click', function() {
-	document.getElementById("selectedId").value = $('#productItems\\.id').val();
+	document.getElementById("selectedId").value = $('#product\\.id').val();
 	document.getElementById("myForm").action = "productItems";
 	document.getElementById("myForm").submit();
 });

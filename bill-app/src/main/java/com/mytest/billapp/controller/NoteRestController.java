@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Notes;
 import com.mytest.billapp.model.Product;
+import com.mytest.billapp.model.ProductItems;
 import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.NotesRepository;
 import com.mytest.billapp.service.ProductService;
@@ -66,6 +67,17 @@ public class NoteRestController {
 			return null;
 		}
 	}
+	
+	@GetMapping("/product/items/{id}")
+	public List<ProductItems> getProductItemListById(@PathVariable(value = "id") Long productId) {
+	    try {
+			return productService.getProductItemList(productId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	
 	
 	@GetMapping("/notes/{id}")

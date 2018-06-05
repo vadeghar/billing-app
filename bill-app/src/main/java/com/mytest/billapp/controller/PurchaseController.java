@@ -1,9 +1,12 @@
 package com.mytest.billapp.controller;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
@@ -22,6 +25,7 @@ import com.mytest.billapp.service.StockService;
 import com.mytest.billapp.service.VendorService;
 import com.mytest.billapp.utils.Utils;
 
+@PropertySource("classpath:application.properties")
 @Controller
 public class PurchaseController {
 	
@@ -37,11 +41,14 @@ public class PurchaseController {
 	@Autowired
 	StockService stockService;
 	
+	@Value("${spring.default.brandId}")
+	  private Long defaultBrandId;
+	
 	private List<PurchaseItemDTO> purchaseItems;
 	private List<PurchaseItemDTO> deletedPurchaseItems;
 	
 	@RequestMapping(value = "purchaseList", method = RequestMethod.POST)
-	public String getAllPurchase(Model model) {
+	public String purchaseList(Model model) {
 		model.addAttribute("PurchaseList", purchaseService.findAll());
 		model.addAttribute("purchase", new Purchase());
 		model.addAttribute("selectedId","");
@@ -94,7 +101,11 @@ public class PurchaseController {
 
 	private void addDataToModel(Model model) {
 		model.addAttribute("purchaseList", purchaseService.findAll());
-		model.addAttribute("productTypeList", productService.getProductTypes());
+		if(defaultBrandId > 0) {
+			model.addAttribute("productList", productService.getProductsByBrand(defaultBrandId));
+		} else {
+			model.addAttribute("productTypeList", productService.getProductTypes());
+		}
 		model.addAttribute("vendorList", vendorService.findAll());
 		model.addAttribute("selectedId","");
 		model.addAttribute("message", "");
@@ -152,7 +163,12 @@ public class PurchaseController {
 			model.addAttribute("purchase", purchaseDTO);
 			purchaseItems = new ArrayList<>(purchaseDTO.getPurchaseItems());
 			model.addAttribute("purchaseItems", purchaseItems);
-			model.addAttribute("productTypeList", productService.getProductTypes());
+			if(defaultBrandId > 0) {
+				model.addAttribute("productList", productService.getProductsByBrand(defaultBrandId));
+			} else {
+				model.addAttribute("productTypeList", productService.getProductTypes());
+			}
+			
 			model.addAttribute("vendorList", vendorService.findAll());
 			model.addAttribute("selectedId","");
 			model.addAttribute("message", "");
@@ -172,12 +188,16 @@ public class PurchaseController {
 			        .orElseThrow(() -> new ResourceNotFoundException("Note", "selectedId", selectedId));
 			purchaseService.delete(purchase);*/
 	    	model.addAttribute("vendorList", vendorService.findAll());
-	    	model.addAttribute("productTypeList", productService.getProductList());
+	    	if(defaultBrandId > 0) {
+				model.addAttribute("productList", productService.getProductsByBrand(defaultBrandId));
+			} else {
+				model.addAttribute("productTypeList", productService.getProductTypes());
+			}
 			model.addAttribute("purchaseList", purchaseService.findAll());
 		} catch (ResourceNotFoundException e) {
 			model.addAttribute("message", "Error: Something went wrong, please check logs \n Detail: "+e.getClass().toString());
 			e.printStackTrace();
-			return getAllPurchase(model);
+			return purchaseList(model);
 		}
 	    return addPurchase(0l, model);
 	}
