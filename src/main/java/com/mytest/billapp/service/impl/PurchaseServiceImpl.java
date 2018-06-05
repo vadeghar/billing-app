@@ -3,29 +3,25 @@ package com.mytest.billapp.service.impl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import com.mytest.billapp.dto.PurchaseDTO;
 import com.mytest.billapp.dto.PurchaseItemDTO;
+import com.mytest.billapp.model.Product;
 import com.mytest.billapp.model.ProductItems;
 import com.mytest.billapp.model.Purchase;
 import com.mytest.billapp.model.PurchaseItem;
-import com.mytest.billapp.model.Stock;
 import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.ProductItemsRepository;
+import com.mytest.billapp.repsitory.ProductRepository;
 import com.mytest.billapp.repsitory.PurchaseItemRepository;
 import com.mytest.billapp.repsitory.PurchaseRepository;
 import com.mytest.billapp.repsitory.VendorRepository;
 import com.mytest.billapp.service.PurchaseService;
-import com.mytest.billapp.service.StockService;
-import com.mytest.billapp.utils.ProductSizeEnum;
-import com.mytest.billapp.utils.ProductTypeEnum;
 import com.mytest.billapp.utils.Utils;
 
 @Service
@@ -35,7 +31,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 	
 	@Autowired
 	PurchaseRepository purchaseRepository; 
-	
+	@Autowired
+	ProductRepository productRepository;
 	@Autowired
 	PurchaseItemRepository purchaseItemRepository; 
 	@Autowired
@@ -88,11 +85,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 			purchaseItem.setMargin(purchaseItemDTO.getMargin());
 			purchaseItem.setMarginType(purchaseItemDTO.getMarginType());
 			purchaseItem.setPurchaseId(purchaseId);
+			purchaseItem.setProductItemId(purchaseItemDTO.getProductItemId());
 			//purchaseItem.setModel(purchaseItemDTO.getModel());
 			purchaseItem.setPricePerPc(purchaseItemDTO.getPricePerUnit());
-			purchaseItem.setProductTypeText(purchaseItemDTO.getProductId().toString());
 			purchaseItem.setQuantity(purchaseItemDTO.getQuantity());
-			purchaseItem.setSize(purchaseItemDTO.getSize());
+			//purchaseItem.setSize(purchaseItemDTO.getSize());
 			purchaseItem.setSrNo(purchaseItemDTO.getSrNo());
 			purchaseItem.setTotalPrice(purchaseItemDTO.getTotal());
 			purchaseItemList.add(purchaseItem);
@@ -228,26 +225,23 @@ public class PurchaseServiceImpl implements PurchaseService {
 					dto.setMargin(pi.getMargin());
 					dto.setMarginType(pi.getMarginType());
 					dto.setPricePerUnit(pi.getPricePerPc());
-					
-					
-					if(pi.getProductTypeText() != null) {
-						dto.setProductId(ProductTypeEnum.getById(Long.parseLong(pi.getProductTypeText())).id);
-						dto.setProductType(ProductTypeEnum.getById(dto.getProductId().longValue()).code);
-					}
 					dto.setQuantity(pi.getQuantity());
+					
+					
+					ProductItems productItem = productItemsRepository.getOne(pi.getProductItemId());
+					dto.setProductItemId(productItem.getId());
+					dto.setProductItemName(productItem.getName());
+					dto.setProductId(productItem.getProductId());
+					Product product = productRepository.getOne(productItem.getProductId());
+					dto.setProductName(product.getName());
 					Double salePrice = 0.0;
 					if(pi.getMarginType() != null && pi.getMarginType().equals("%")){
 						salePrice = dto.getPricePerUnit() + (dto.getPricePerUnit() * dto.getMargin() / 100);
 					}else {
 						salePrice = dto.getPricePerUnit() + dto.getMargin();
 					}
-					if(!StringUtils.isEmpty(pi.getSize())){
-						ProductItems productItem = productItemsRepository.getOne(Long.parseLong(pi.getSize()));
-						dto.setSize(productItem.getId()+"");
-						dto.setSizeName(productItem.getName());
-					}
-					dto.setSalePrice(salePrice);
 					
+					dto.setSalePrice(salePrice);
 					dto.setSrNo(pi.getSrNo());
 					dto.setTotal(pi.getTotalPrice());
 					purchaseDTO.getPurchaseItems().add(dto);

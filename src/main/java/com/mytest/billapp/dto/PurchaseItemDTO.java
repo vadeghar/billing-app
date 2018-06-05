@@ -13,26 +13,21 @@ public class PurchaseItemDTO {
 		this.id = dto.getId();
 		this.srNo = dto.getSrNo();
 		this.productId = dto.getProductId();
-		this.size = dto.getSize();
 		this.quantity = dto.getQuantity();
 		this.pricePerUnit = dto.getPricePerUnit();
+		this.productItemId = dto.getProductId();
 		this.total = dto.getTotal();
 		this.marginType = dto.getMarginType();
 		this.margin = dto.getMargin();
 		this.salePrice = dto.getSalePrice();
 		this.itemCode = dto.getItemCode();
-		this.productType = ProductTypeEnum.getById(dto.getProductId().longValue()).code;
-		if(dto.getSize() != null)
-			this.sizeName = ProductSizeEnum.getById(Long.parseLong(dto.getSize())).getSize();
 	}
 	private Long id;
 	private String srNo;
-	private Integer productId;
-	private String productType;
-	/*private String productType;
-	private String model;*/
-	private String size;
-	private String sizeName;
+	private Long productId;
+	private String productName;
+	private Long productItemId;
+	private String productItemName;
 	private Integer quantity;
 	private Double pricePerUnit;
 	private Double total;
@@ -53,18 +48,8 @@ public class PurchaseItemDTO {
 	public void setSrNo(String srNo) {
 		this.srNo = srNo;
 	}
-	public Integer getProductId() {
-		return productId;
-	}
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
-	public String getSize() {
-		return size;
-	}
-	public void setSize(String size) {
-		this.size = size;
-	}
+	
+	
 	public Integer getQuantity() {
 		return quantity;
 	}
@@ -109,27 +94,45 @@ public class PurchaseItemDTO {
 	}
 
 
-	public String getProductType() {
-		return productType;
+	
+	public Long getProductId() {
+		return productId;
 	}
 
 
-	public void setProductType(String productType) {
-		this.productType = productType;
+	public void setProductId(Long productId) {
+		this.productId = productId;
 	}
 
 
-	public String getSizeName() {
-		return sizeName;
+	public Long getProductItemId() {
+		return productItemId;
 	}
 
 
-	public void setSizeName(String sizeName) {
-		this.sizeName = sizeName;
+	public void setProductItemId(Long productItemId) {
+		this.productItemId = productItemId;
 	}
-	
-	
-	
-	
-	
+
+
+	public String getProductName() {
+		return productName;
+	}
+
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+
+	public String getProductItemName() {
+		return productItemName;
+	}
+
+
+	public void setProductItemName(String productItemName) {
+		this.productItemName = productItemName;
+	}
+
+
 }

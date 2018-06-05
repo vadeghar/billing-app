@@ -14,7 +14,7 @@ public class PurchaseDTO {
 	
 	private String billDate;
 	private String billNo;
-	
+	private PurchaseItemDTO purchaseItemDTO;
 	private String entryDate;
 	private Double billTotal;
 	private String discountType;
@@ -22,7 +22,7 @@ public class PurchaseDTO {
 	private Double discountedAmount;
 	private Double netTotal;
 	
-	private PurchaseItemDTO purchaseItemDTO;
+	
 	List<PurchaseItemDTO> purchaseItems = new ArrayList<>();
 	List<PurchaseItemDTO> deletedPurchaseItems = new ArrayList<>();
 

@@ -36,9 +36,6 @@ public class PurchaseItem  extends BEntity implements Serializable {
 	@Column(name = "PRODUCT_ITEM_ID")
 	private Long productItemId;
 	
-	@Column(name="PRODUCT_TYPE_TEXT")
-	private String productTypeText;
-	
 	@Column(name="MODEL")
 	private String model;
 	
@@ -153,14 +150,6 @@ public class PurchaseItem  extends BEntity implements Serializable {
 
 	public void setItemCode(String itemCode) {
 		this.itemCode = itemCode;
-	}
-
-	public String getProductTypeText() {
-		return productTypeText;
-	}
-
-	public void setProductTypeText(String productTypeText) {
-		this.productTypeText = productTypeText;
 	}
 
 	public String getSize() {

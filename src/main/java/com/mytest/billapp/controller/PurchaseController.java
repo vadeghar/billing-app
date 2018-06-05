@@ -1,7 +1,6 @@
 package com.mytest.billapp.controller;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import com.mytest.billapp.dto.PurchaseDTO;
 import com.mytest.billapp.dto.PurchaseItemDTO;
 import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Purchase;
+import com.mytest.billapp.service.ProductItemsService;
 import com.mytest.billapp.service.ProductService;
 import com.mytest.billapp.service.PurchaseService;
 import com.mytest.billapp.service.StockService;
@@ -31,6 +31,9 @@ public class PurchaseController {
 	
 	@Autowired
 	PurchaseService purchaseService;
+	
+	@Autowired
+	ProductItemsService productItemsService;
 	
 	@Autowired
 	VendorService vendorService;
@@ -121,12 +124,14 @@ public class PurchaseController {
 				model.addAttribute("message", "No items found to save this purchase");
 			}else {
 				purchaseDTO.setPurchaseItems(purchaseItems);
+				
 				PurchaseDTO dto = purchaseService.save(purchaseDTO);
 				stockService.addToSrock(purchaseItems);
 				purchaseDTO = new PurchaseDTO();
 				purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
 				purchaseItems = new ArrayList<PurchaseItemDTO>();
 				model.addAttribute("PurchaseList", purchaseService.findAll());
+				model.addAttribute("productItemsList", new ArrayList());
 				//model.addAttribute("purchase", new Purchase());
 				model.addAttribute("selectedId","");
 				model.addAttribute("message", "Succesfully Saved.");
