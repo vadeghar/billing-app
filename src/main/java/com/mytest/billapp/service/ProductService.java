@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Sort;
 
 import com.mytest.billapp.model.Product;
+import com.mytest.billapp.model.ProductItems;
 
 public interface ProductService {
 	
@@ -26,7 +27,9 @@ public interface ProductService {
 	public List<Product> findAll(Sort sort);
 	public long count();
 	public Map<Integer, String> getProductSizeList(Long productId);
+	public List<ProductItems> getProductItemList(Long productId);
 	public List<Product> getProductList();
 	public Map<Integer, String> getProductTypes();
+	public List<Product> getProductsByBrand(Long defaultBrandId);
 
 }

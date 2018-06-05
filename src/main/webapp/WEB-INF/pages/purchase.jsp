@@ -58,9 +58,8 @@
 					<label for="purchaseItemDTO.productId"  class="control-label">Product: </label>
 					<form:select path="purchaseItemDTO.productId" class="form-control">
 						<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
-						<c:forEach var="productType" items="${productTypeList}">
-							<c:out value="${productType.key}"/>
-							<form:option value="${productType.key}"> <c:out value="${productType.value}"></c:out> </form:option>
+						<c:forEach var="product" items="${productList}">
+							<form:option value="${product.id}"> <c:out value="${product.name}"></c:out> </form:option>
 						</c:forEach>
 					</form:select>
 				</div>
@@ -392,16 +391,16 @@ $("#purchaseItemDTO\\.productId").on('change', function() {
 	var productId = $('#purchaseItemDTO\\.productId').find(":selected").val(); // $("#purchaseItemDTO\\productId option:selected").val();
 	if(productId != 0) {
 		$.ajax({
-			url: "${pageContext.request.contextPath}/ajax/product/"+productId, 
+			url: "${pageContext.request.contextPath}/ajax/product/items/"+productId, 
 			success: 
 				function(result){
 					var len = result.length
 					var $size = $('#purchaseItemDTO\\.size');
 					$size.empty();
 					
-					$.each( result, function(index,value){
-						 console.log("Index = " + index + " value = " + value); 
-						 $size.append("<option value='"+index+"'>"+value+"</option>");
+					$.each( result, function(index, productItem){
+						 console.log("Index = " + productItem.id + " value = " + productItem.name); 
+						 $size.append("<option value='"+productItem.id+"'>"+productItem.name+"</option>");
 						})
 						
 					/* for( var i = 0; i<len; i++){
