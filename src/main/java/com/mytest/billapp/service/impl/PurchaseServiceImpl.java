@@ -13,10 +13,12 @@ import org.springframework.util.StringUtils;
 
 import com.mytest.billapp.dto.PurchaseDTO;
 import com.mytest.billapp.dto.PurchaseItemDTO;
+import com.mytest.billapp.model.ProductItems;
 import com.mytest.billapp.model.Purchase;
 import com.mytest.billapp.model.PurchaseItem;
 import com.mytest.billapp.model.Stock;
 import com.mytest.billapp.model.Vendor;
+import com.mytest.billapp.repsitory.ProductItemsRepository;
 import com.mytest.billapp.repsitory.PurchaseItemRepository;
 import com.mytest.billapp.repsitory.PurchaseRepository;
 import com.mytest.billapp.repsitory.VendorRepository;
@@ -36,7 +38,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 	
 	@Autowired
 	PurchaseItemRepository purchaseItemRepository; 
-	
+	@Autowired
+	ProductItemsRepository productItemsRepository;
 	@Autowired
 	VendorRepository vendorRepository;
 	
@@ -225,6 +228,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 					dto.setMargin(pi.getMargin());
 					dto.setMarginType(pi.getMarginType());
 					dto.setPricePerUnit(pi.getPricePerPc());
+					
+					
 					if(pi.getProductTypeText() != null) {
 						dto.setProductId(ProductTypeEnum.getById(Long.parseLong(pi.getProductTypeText())).id);
 						dto.setProductType(ProductTypeEnum.getById(dto.getProductId().longValue()).code);
@@ -237,8 +242,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 						salePrice = dto.getPricePerUnit() + dto.getMargin();
 					}
 					if(!StringUtils.isEmpty(pi.getSize())){
-						dto.setSize(pi.getSize());
-						dto.setSizeName(ProductSizeEnum.getById(Long.parseLong(pi.getSize())).getSize());
+						ProductItems productItem = productItemsRepository.getOne(Long.parseLong(pi.getSize()));
+						dto.setSize(productItem.getId()+"");
+						dto.setSizeName(productItem.getName());
 					}
 					dto.setSalePrice(salePrice);
 					

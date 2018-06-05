@@ -85,18 +85,19 @@ public class StockServiceImpl implements StockService {
 		if(CollectionUtils.isEmpty(purchaseItems)) return;
 		for(PurchaseItemDTO purchaseItemDTO : purchaseItems) {
 			if(purchaseItemDTO.getItemCode() == null) continue;
-			stockRepository.removeByItemCode(purchaseItemDTO.getItemCode());
-			//if(stock == null) {
-			Stock stock = new Stock();
-			stock.setItemCode(purchaseItemDTO.getItemCode());
-			stock.setQuantity(purchaseItemDTO.getQuantity());
-			stock.setSalePricePerPc(purchaseItemDTO.getSalePrice());
-			/*} else {
-				Integer existingQty = stock.getQuantity();
-				Integer updatedQty = existingQty + purchaseItemDTO.getQuantity();
-				stock.setQuantity(updatedQty);
-			}*/
-			stockRepository.save(stock);
+			Stock stock = stockRepository.findByItemCode(purchaseItemDTO.getItemCode());
+			if(stock == null) {
+				stock = new Stock();
+				stock.setItemCode(purchaseItemDTO.getItemCode());
+				stock.setQuantity(purchaseItemDTO.getQuantity());
+				stock.setSalePricePerPc(purchaseItemDTO.getSalePrice());
+				stockRepository.save(stock);
+			} else {
+				int existingStock = stock.getQuantity();
+				int updatedStock = purchaseItemDTO.getQuantity() + existingStock;
+				stock.setQuantity(updatedStock);
+				stockRepository.save(stock);
+			}
 		}
 	}
 	
