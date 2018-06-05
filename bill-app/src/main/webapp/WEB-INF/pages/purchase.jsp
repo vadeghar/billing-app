@@ -66,10 +66,18 @@
 			</div>
 			<div class="col-sm-4">
 				<div class="form-group">
-					<label for="purchaseItemDTO.size"  class="control-label">Size: </label>
-					<%-- <form:input path="purchaseItemDTO.size" class="form-control" cols="25"/> --%>
-					<form:select path="purchaseItemDTO.size" class="form-control">
-						<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
+					<label for="purchaseItemDTO.productItemId"  class="control-label">Size: </label>
+					<form:select path="purchaseItemDTO.productItemId" class="form-control">
+						<c:choose>
+							<c:when test="${purchase.id gt 0 }">
+								<c:forEach var="productItem" items="${productItemsList}">
+									<%-- <form:option value="${productItem.id}"> <c:out value="${productItem.name}"></c:out> </form:option> --%>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
+							</c:otherwise>
+						</c:choose>
 					</form:select>
 				</div>
 			</div>
@@ -163,8 +171,8 @@
 		            	<c:forEach var="purchaseItem" items="${purchaseItems}">
 				           <tr>
 				               <td>${purchaseItem.id}</td>
-				               <td>${purchaseItem.productType}</td>
-				               <td>${purchaseItem.sizeName}</td>
+				               <td>${purchaseItem.productName}</td>
+				               <td>${purchaseItem.productItemName}</td>
 				               
 				               <td>${purchaseItem.quantity}</td>
 				               <td>${purchaseItem.pricePerUnit}</td>
@@ -395,7 +403,7 @@ $("#purchaseItemDTO\\.productId").on('change', function() {
 			success: 
 				function(result){
 					var len = result.length
-					var $size = $('#purchaseItemDTO\\.size');
+					var $size = $('#purchaseItemDTO\\.productItemId');
 					$size.empty();
 					
 					$.each( result, function(index, productItem){
@@ -418,12 +426,12 @@ $("#purchaseItemDTO\\.productId").on('change', function() {
 $("#purchaseItemDTO\\.margin").on('change', function() {
 	generateItemCode();
 });
-$("#purchaseItemDTO\\.size").on('change', function() {
+$("#purchaseItemDTO\\.productItemId").on('change', function() {
 	generateItemCode();
 });
 function generateItemCode() {
 	var prod = $('#purchaseItemDTO\\.productId').find(":selected").text();
-	var sz = $('#purchaseItemDTO\\.size').find(":selected").val();
+	var sz = $('#purchaseItemDTO\\.productItemId').find(":selected").val();
 	var sp = $("#purchaseItemDTO\\.salePrice").val();
 	if(prod != '' && sz != '' && sp != '') {
 		var itemCode =  prod.charAt(1); //prod.substring(1, prod.length);
