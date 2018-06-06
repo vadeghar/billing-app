@@ -71,7 +71,7 @@
 						<c:choose>
 							<c:when test="${purchaseView.purchaseItemDTO.productId gt 0 }">
 								<c:forEach var="productItem" items="${purchaseView.productItemsList}">
-									<%-- <form:option value="${productItem.id}"> <c:out value="${productItem.name}"></c:out> </form:option> --%>
+									<form:option value="${productItem.id}"> <c:out value="${productItem.name}"></c:out> </form:option>
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
