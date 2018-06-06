@@ -40,7 +40,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Autowired
 	VendorRepository vendorRepository;
 	
-	public PurchaseDTO save(PurchaseDTO entity) {
+	public PurchaseDTO saveOrUpatePurchase(PurchaseDTO entity) {
 		try {
 			Purchase purchase = null;
 			if(entity.getId() != null && entity.getId().longValue() > 0) {
@@ -56,11 +56,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 			
 			
 			Purchase p = purchaseRepository.save(purchase);
-			if(!CollectionUtils.isEmpty(entity.getPurchaseItems())) {
+			/*if(!CollectionUtils.isEmpty(entity.getPurchaseItems())) {
 				saveAllPurchaseItem(entity.getPurchaseItems(), p.getId());
-			}
-			setTotalAdnDiscount(p, entity);
-			purchaseRepository.save(purchase);
+			}*/
+			
 			PurchaseDTO dbPurchaseDTO = findById(p.getId());
 			return dbPurchaseDTO;
 			
@@ -96,10 +95,40 @@ public class PurchaseServiceImpl implements PurchaseService {
 		});
 		purchaseItemRepository.save(purchaseItemList);
 	}
+	
+	public void savePurchaseItem(PurchaseItemDTO purchaseItemDTO, Long purchaseId) {
+
+			List<PurchaseItem> purchaseItems = purchaseItemRepository.findByItemCode(purchaseItemDTO.getItemCode());
+			PurchaseItem purchaseItem = null;
+			Integer existCount = new Integer(0);
+			if(!CollectionUtils.isEmpty(purchaseItems)) {
+				purchaseItem = purchaseItems.get(0);
+				if(purchaseItemDTO.getId() == null || purchaseItemDTO.getId().intValue()  == 0)
+					existCount = purchaseItem.getQuantity();
+			}else {
+				purchaseItem = new PurchaseItem();
+			}
+			/*if(purchaseItemDTO.getId() == null || purchaseItemDTO.getId().longValue() == 0) 
+				purchaseItem = new PurchaseItem();
+			else 
+				purchaseItem = purchaseItemRepository.getOne(purchaseItemDTO.getId());*/
+			
+			purchaseItem.setItemCode(purchaseItemDTO.getItemCode());
+			purchaseItem.setMargin(purchaseItemDTO.getMargin());
+			purchaseItem.setMarginType(purchaseItemDTO.getMarginType());
+			purchaseItem.setPurchaseId(purchaseId);
+			purchaseItem.setProductItemId(purchaseItemDTO.getProductItemId());
+			purchaseItem.setPricePerPc(purchaseItemDTO.getPricePerUnit());
+			purchaseItem.setQuantity(purchaseItemDTO.getQuantity() + existCount);
+			purchaseItem.setSrNo(purchaseItemDTO.getSrNo());
+			purchaseItem.setTotalPrice(purchaseItemDTO.getTotal());
+			purchaseItemRepository.save(purchaseItem);
+	}
 
 	
 
-	private void setTotalAdnDiscount(Purchase purchase, PurchaseDTO entity) {
+	public void updatePurchaseTotals(PurchaseDTO entity) {
+		Purchase purchase = purchaseRepository.findOne(entity.getId());
 		List<PurchaseItem> set = purchaseItemRepository.findByPurchaseId(purchase.getId()); // purchase.getPurchaseItemSet();
 		Double totalOfAllItems = new Double(0);
 		Double discountedAmount = new Double(0);
@@ -119,7 +148,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		purchase.setBillTotal(totalOfAllItems);
 		purchase.setDiscountedAmount(discountedAmount);
 		purchase.setNetTotal(totalOfAllItems - discountedAmount);
-		
+		purchaseRepository.save(purchase);
 	}
 
 	public List<Purchase> saveAll(List<Purchase> entities) {
@@ -219,37 +248,40 @@ public class PurchaseServiceImpl implements PurchaseService {
 			
 			if(!CollectionUtils.isEmpty(purchaseItemList)) {
 				purchaseItemList.stream().forEach(pi -> {
-					PurchaseItemDTO dto = new PurchaseItemDTO();
-					dto.setId(pi.getId());
-					dto.setItemCode(pi.getItemCode());
-					dto.setMargin(pi.getMargin());
-					dto.setMarginType(pi.getMarginType());
-					dto.setPricePerUnit(pi.getPricePerPc());
-					dto.setQuantity(pi.getQuantity());
-					
-					
-					ProductItems productItem = productItemsRepository.getOne(pi.getProductItemId());
-					dto.setProductItemId(productItem.getId());
-					dto.setProductItemName(productItem.getName());
-					dto.setProductId(productItem.getProductId());
-					Product product = productRepository.getOne(productItem.getProductId());
-					dto.setProductName(product.getName());
-					Double salePrice = 0.0;
-					if(pi.getMarginType() != null && pi.getMarginType().equals("%")){
-						salePrice = dto.getPricePerUnit() + (dto.getPricePerUnit() * dto.getMargin() / 100);
-					}else {
-						salePrice = dto.getPricePerUnit() + dto.getMargin();
-					}
-					
-					dto.setSalePrice(salePrice);
-					dto.setSrNo(pi.getSrNo());
-					dto.setTotal(pi.getTotalPrice());
+					PurchaseItemDTO dto = convertModelToView(pi);
 					purchaseDTO.getPurchaseItems().add(dto);
 				});
 			}
 			
 		}
 		return purchaseDTO;
+	}
+	
+	
+	public PurchaseItemDTO convertModelToView(PurchaseItem pi) {
+		PurchaseItemDTO dto = new PurchaseItemDTO();
+		dto.setId(pi.getId());
+		dto.setItemCode(pi.getItemCode());
+		dto.setMargin(pi.getMargin());
+		dto.setMarginType(pi.getMarginType());
+		dto.setPricePerUnit(pi.getPricePerPc());
+		dto.setQuantity(pi.getQuantity());
+		ProductItems productItem = productItemsRepository.getOne(pi.getProductItemId());
+		dto.setProductItemId(productItem.getId());
+		dto.setProductItemName(productItem.getName());
+		dto.setProductId(productItem.getProductId());
+		Product product = productRepository.getOne(productItem.getProductId());
+		dto.setProductName(product.getName());
+		Double salePrice = 0.0;
+		if(pi.getMarginType() != null && pi.getMarginType().equals("%")){
+			salePrice = dto.getPricePerUnit() + (dto.getPricePerUnit() * dto.getMargin() / 100);
+		}else {
+			salePrice = dto.getPricePerUnit() + dto.getMargin();
+		}
+		dto.setSalePrice(salePrice);
+		dto.setSrNo(pi.getSrNo());
+		dto.setTotal(pi.getTotalPrice());
+		return dto;
 	}
 
 

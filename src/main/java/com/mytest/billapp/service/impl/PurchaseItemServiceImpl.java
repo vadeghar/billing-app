@@ -89,9 +89,8 @@ public class PurchaseItemServiceImpl implements PurchaseItemService {
 	}
 
 	@Override
-	public PurchaseItemDTO getOne(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public PurchaseItem getOne(Long id) {
+		return purchaseRepoistoryItem.getOne(id);
 	}
 
 	@Override

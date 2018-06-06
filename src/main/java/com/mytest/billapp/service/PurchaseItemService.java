@@ -33,7 +33,7 @@ public interface PurchaseItemService {
 	public void deleteAll(List<PurchaseItem> entities);
 	public void deleteInBatch(List<PurchaseItem> entities);
 	public void deleteAll();
-	public PurchaseItemDTO getOne(Long id);
+	public PurchaseItem getOne(Long id);
 	public PurchaseItemDTO findById(Long id);
 	public boolean existsById(Long id);
 	public List<PurchaseItemDTO> findAll();
