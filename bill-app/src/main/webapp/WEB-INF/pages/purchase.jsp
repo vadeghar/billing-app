@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<form:form action="${pageContext.request.contextPath}/savePurchase" method="post" modelAttribute="purchase"  id="myForm" >
+<form:form action="${pageContext.request.contextPath}/savePurchase" method="post" modelAttribute="purchaseView"  id="myForm" >
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
  <div class="col-lg-6">
  	<div class="column-section mright20">
@@ -8,11 +8,11 @@
 		<div class="form-column">
 			<div class="col-sm-4">
 				<div class="form-group">
-					<label for="Vendor" class="control-label">Vendor:</label>
-					<form:hidden path="id"/>
-					<form:select path="vendorId" class="form-control">
+					<label for="purchase.vendor" class="control-label">Vendor:</label>
+					<form:hidden path="purchase.id"/>
+					<form:select path="purchase.vendorId" class="form-control">
 						<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
-						<c:forEach var="vendor" items="${vendorList}">
+						<c:forEach var="vendor" items="${purchaseView.vendorList}">
 							<form:option value="${vendor.id}"> <c:out value="${vendor.name}"></c:out> </form:option>
 						</c:forEach>
 					</form:select>
@@ -20,14 +20,14 @@
 			</div>
 			<div class="col-sm-4">
 				<div class="form-group">
-					<label for="vendorMobile" class="control-label">Mobile:</label>
-					<form:input type="name" class="form-control" path="vendorMobile" placeholder="" readonly="true" autocomplete="off"/>
+					<label for="purchase.vendorMobile" class="control-label">Mobile:</label>
+					<form:input type="name" class="form-control" path="purchase.vendorMobile" placeholder="" readonly="true" autocomplete="off"/>
 				</div>
 			</div>									
 			<div class="col-sm-4 nomargin">
 				<div class="form-group">
-					<label for="vendorGst" class="control-label">GST No:</label>
-					<form:input path="vendorGst" class="form-control" placeholder="" readonly="true"/>
+					<label for="purchase.vendorGst" class="control-label">GST No:</label>
+					<form:input path="purchase.vendorGst" class="form-control" placeholder="" readonly="true"/>
 				</div>
 			</div>
 		</div>
@@ -35,14 +35,14 @@
 		<div class="form-column">
 			<div class="col-sm-4">
 				<div class="form-group">
-					<label for="billDate"  class="control-label">Bill Date: <span class="require">*</span></label>
-					<form:input path="billDate" class="form-control" placeholder="dd/MM/yyyy" autocomplete="off"/>
+					<label for="purchase.billDate"  class="control-label">Bill Date: <span class="require">*</span></label>
+					<form:input path="purchase.billDate" class="form-control" placeholder="dd/MM/yyyy" autocomplete="off"/>
 				</div>
 			</div>									
 			<div class="col-sm-4">
 				<div class="form-group">
-					<label for="billNo"  class="control-label">Bill No: </label>
-					<form:input path="billNo" class="form-control" placeholder="" autocomplete="off"/>
+					<label for="purchase.billNo"  class="control-label">Bill No: </label>
+					<form:input path="purchase.billNo" class="form-control" placeholder="" autocomplete="off"/>
 				</div>
 			</div>
 			<div class="col-sm-4 nomargin">
@@ -58,7 +58,7 @@
 					<label for="purchaseItemDTO.productId"  class="control-label">Product: </label>
 					<form:select path="purchaseItemDTO.productId" class="form-control">
 						<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
-						<c:forEach var="product" items="${productList}">
+						<c:forEach var="product" items="${purchaseView.productList}">
 							<form:option value="${product.id}"> <c:out value="${product.name}"></c:out> </form:option>
 						</c:forEach>
 					</form:select>
@@ -69,8 +69,8 @@
 					<label for="purchaseItemDTO.productItemId"  class="control-label">Size: </label>
 					<form:select path="purchaseItemDTO.productItemId" class="form-control">
 						<c:choose>
-							<c:when test="${purchase.id gt 0 }">
-								<c:forEach var="productItem" items="${productItemsList}">
+							<c:when test="${purchaseView.purchaseItemDTO.productId gt 0 }">
+								<c:forEach var="productItem" items="${purchaseView.productItemsList}">
 									<%-- <form:option value="${productItem.id}"> <c:out value="${productItem.name}"></c:out> </form:option> --%>
 								</c:forEach>
 							</c:when>
@@ -139,7 +139,8 @@
 		<div class="form-column">
 			<div class="col-sm-12">
 				<div class="form-group pull-right">
-					<button type="button" class="btn btn-primary" onclick="addPurchaseItem();">Add to list</button>
+					<!-- <button type="button" class="btn btn-primary" onclick="addPurchaseItem();">Add to list</button> -->
+					<button type="button" class="btn btn-primary"  id="savePurhcaseItem">Save</button>
 					<button type="button" class="btn btn-danger" onclick="listPurchase();">Cancel</button>
 				</div>
 			</div>
@@ -152,7 +153,7 @@
  <div class="col-lg-6">
  	<div class="column-section section-scroll marbottom20">
  		<c:choose>
-			<c:when test="${not empty purchaseItems}">
+			<c:when test="${not empty purchaseView.purchase.purchaseItems}">
 		        <table class="table table-bordered tb-color darken uh-table price-list">
 		            <thead>
 		                <tr class="text-white">
@@ -168,7 +169,7 @@
 		                </tr>								
 		            </thead>
 		            <tbody>
-		            	<c:forEach var="purchaseItem" items="${purchaseItems}">
+		            	<c:forEach var="purchaseItem" items="${purchaseView.purchase.purchaseItems}">
 				           <tr>
 				               <td>${purchaseItem.id}</td>
 				               <td>${purchaseItem.productName}</td>
@@ -181,8 +182,11 @@
 				                <td>${purchaseItem.salePrice}</td>
 				               <td>${purchaseItem.itemCode}</td>
 				               <td>
-				               <c:if test="${purchase.id ne 0}">
-							        <button type="button" class="btn btn-danger btn-xs delete" onclick="deletePurchaseItem('${id}','${purchaseItem.id}','${purchaseItem.itemCode}')">
+				               <c:if test="${purchaseItem.id ne 0}">
+							        <button type="button" class="btn btn-danger btn-xs pencil" onclick="editPurchaseItem('${purchaseItem.id}')">
+							          <span class="glyphicon glyphicon-trash"></span>
+							        </button>
+							         <button type="button" class="btn btn-danger btn-xs delete" onclick="deletePurchaseItem('${purchaseItem.id}')">
 							          <span class="glyphicon glyphicon-trash"></span>
 							        </button>
 						        </c:if>
@@ -208,33 +212,33 @@
 					<div class="col-sm-3">
 						<div class="form-column">
 							<div class="form-group">
-								<label for="billTotal"  class="control-label">Bill Total: </label>
-								<form:input path="billTotal" class="control-label text-block" placeholder=""/>
+								<label for="purchase.billTotal"  class="control-label">Bill Total: </label>
+								<form:input path="purchase.billTotal" class="control-label text-block" placeholder=""/>
 							</div>							
 						</div>
 					</div>	
 					<div class="col-sm-3">
 						<div class="form-group form-group-required">
-							<label for="discountType" class="control-label">Discount:</label><br/>
+							<label for="purchase.discountType" class="control-label">Discount:</label><br/>
 							<label class="radio-inline">
-							  <form:radiobutton path="discountType" value="%" /> %  
+							  <form:radiobutton path="purchase.discountType" value="%" /> %  
 							</label>
 							<label class="radio-inline mleft">
-							  <form:radiobutton path="discountType" value="RS" /> INR 
+							  <form:radiobutton path="purchase.discountType" value="RS" /> INR 
 							</label>
 						</div>
 					</div>
 					
 					<div class="col-sm-3">
 						<div class="form-group">
-							<label for="discount"  class="control-label">Discount(% / Rs): </label>	
-							<form:input path="discount" class="control-label text-block" placeholder="" autocomplete="off"/>
+							<label for="purchase.discount"  class="control-label">Discount(% / Rs): </label>	
+							<form:input path="purchase.discount" class="control-label text-block" placeholder="" autocomplete="off"/>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="form-group">
-							<label for="netTotal"  class="control-label">Net Total: </label>
-							<form:input path="netTotal" class="control-label text-block" placeholder="" autocomplete="off"/>
+							<label for="purchase.netTotal"  class="control-label">Net Total: </label>
+							<form:input path="purchase.netTotal" class="control-label text-block" placeholder="" autocomplete="off"/>
 						</div>
 					</div>
 				</div>
@@ -263,14 +267,14 @@
 			</div>	
 		</div>
  </div>
-<input type="hidden" id="selectedId" name="selectedId" value="${selectedId}">
+<input type="hidden" id="selectedPurchaseItemId" name="selectedPurchaseItemId" value="${selectedPurchaseItemId}">
 </form:form>
 
 <script type="text/javascript">
 
 $( document ).ready(function() {
 	
-	$('#billDate').datepicker({
+	$('#purchase\\.billDate').datepicker({
 		autoclose: true
 	});	
 
@@ -310,12 +314,16 @@ function editPurchase(selectedId) {
 	document.getElementById("myForm").submit();
 }
 
-
+function editPurchaseItem(purchaseItemId) {
+	document.getElementById("selectedPurchaseItemId").value = purchaseItemId;
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/loadPurhcaseItem";
+	document.getElementById("myForm").submit();
+}
 
 function deletePurchaseItem(purchaseId, purchaseItemId, itemCode) {
 	if(purchaseId == '') {
 		
-		purchaseId = $('[name="id"]').val();
+		purchaseId = $('[name="purchase.id"]').val();
 	}
 	alert("ID:"+purchaseId);
 	if(confirm("Are you sure?")) {
@@ -378,19 +386,19 @@ $( document ).ready(function() {
 	
 });
 
-$("#vendorId").on('change', function() {
-	var vendorId = $("#vendorId").val();
+$("#purchase\\.vendorId").on('change', function() {
+	var vendorId = $("#purchase\\.vendorId").val();
 	if(vendorId != 0) {
 		$.ajax({url: "${pageContext.request.contextPath}/ajax/vendor/"+vendorId, 
 			success: 
 				function(result){
-					$("#vendorMobile").val(result.mobile);
-					$("#vendorGst").val(result.gstNo);
+					$("#purchase\\.vendorMobile").val(result.mobile);
+					$("#purchase\\.vendorGst").val(result.gstNo);
 	    		}
 		});
 	}else {
-		$("#vendorMobile").val('');
-		$("#vendorGst").val('');
+		$("#purchase\\.vendorMobile").val('');
+		$("#purchase\\.vendorGst").val('');
 	}
 });
 
@@ -423,6 +431,13 @@ $("#purchaseItemDTO\\.productId").on('change', function() {
 		
 	}
 });
+
+$('#savePurhcaseItem').on('click', function() {
+	$("#selectedPurchaseItemId").val(0);
+	document.getElementById("myForm").action = "savePurhcaseItem";
+	document.getElementById("myForm").submit();
+});
+
 $("#purchaseItemDTO\\.margin").on('change', function() {
 	generateItemCode();
 });
@@ -482,25 +497,25 @@ function calculateSalePrice(){
 	}
 }
 
-$("#discount").blur(function() {
-	if($.isNumeric($("#billTotal").val()) && $.isNumeric($("#discount").val())) {
-		var discountType = $("input[name=discountType]:checked").val();
-		var discount = parseFloat($("#discount").val());
-		var billTotal = parseFloat($("#billTotal").val());
+$("#purchase\\.discount").blur(function() {
+	if($.isNumeric($("#purchase\\.billTotal").val()) && $.isNumeric($("#purchase\\.discount").val())) {
+		var discountType = $("input[name=purchase\\.discountType]:checked").val();
+		var discount = parseFloat($("#purchase\\.discount").val());
+		var billTotal = parseFloat($("#purchase\\.billTotal").val());
 		if(discountType == '%'){
-			$("#netTotal").val((billTotal - (billTotal * discount / 100)).toFixed());
+			$("#purchase\\.netTotal").val((billTotal - (billTotal * discount / 100)).toFixed());
 		}else {
-			$("#netTotal").val((billTotal - discount).toFixed());
+			$("#purchase\\.netTotal").val((billTotal - discount).toFixed());
 		}
 		//$("#netTotal").val(billTotal-parseFloat($("#discount").val()));
-		$("#discount").prop("readonly", true);
+		$("#purchase\\.discount").prop("readonly", true);
 	}
 });
 
-$('[name="discountType"]').click(function() {
-	var billTotal = parseFloat($("#billTotal").val());
-	$("#netTotal").val(billTotal);
-	$("#discount").val('');
+$('[name="purchase.discountType"]').click(function() {
+	var billTotal = parseFloat($("#purchase\\.billTotal").val());
+	$("#purchase\\.netTotal").val(billTotal);
+	$("#purchase\\.discount").val('');
 });
 
 function savePurchase() {
