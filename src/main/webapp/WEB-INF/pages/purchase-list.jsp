@@ -86,14 +86,14 @@ $( document ).ready(function() {
 
 $("#newPurchase").click(function(){
 	$("#selectedId").val(0);
-	document.getElementById("myForm").action = "purchase";
+	document.getElementById("myForm").action = "loadPurchase";
 	document.getElementById("myForm").submit();
 });
 
 
 function editPurchase(selectedId) {
 	$("#selectedId").val(selectedId);
-	document.getElementById("myForm").action = "purchase";
+	document.getElementById("myForm").action = "loadPurchase";
 	document.getElementById("myForm").submit();
 }
 
