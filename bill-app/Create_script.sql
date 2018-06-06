@@ -1,46 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `billingsoftware`;
 USE `billingsoftware`;
 
-DROP TABLE IF EXISTS `brand`;
-CREATE TABLE `brand` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `notes`;
-CREATE TABLE `notes` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `content` varchar(255) DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `product`;
-CREATE TABLE `product` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `BRAND_ID` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKsj2lk079hwjngnn3o9o183b6q` (`BRAND_ID`),
-  CONSTRAINT `BRAND_ID_FK` FOREIGN KEY (`BRAND_ID`) REFERENCES `brand` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `product_items`;
-CREATE TABLE `product_items` (
-  `id` int(20) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `product_id` int(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_product_id_idx` (`product_id`),
-  CONSTRAINT `FK_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
 DROP TABLE IF EXISTS `vendor`;
 CREATE TABLE `vendor` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -70,9 +30,38 @@ CREATE TABLE `vendor` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS `brand`;
+CREATE TABLE `brand` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `BRAND_ID` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `BRAND_ID_FK` FOREIGN KEY (`BRAND_ID`) REFERENCES `brand` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `product_items`;
+CREATE TABLE `product_items` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `product_id` int(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `FK_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+
 DROP TABLE IF EXISTS `purchase`;
 CREATE TABLE `purchase` (
-  `ID` int(20) NOT NULL,
+  `ID` int(20) NOT NULL AUTO_INCREMENT,
   `BILL_DATE` datetime DEFAULT NULL,
   `BILL_NO` varchar(255) DEFAULT NULL,
   `BILL_TOTAL` double DEFAULT NULL,
@@ -84,7 +73,6 @@ CREATE TABLE `purchase` (
   `VENDOR_ID` int(11) DEFAULT NULL,
   `DISCOUNTED_AMOUNT` double DEFAULT NULL,
   PRIMARY KEY (`ID`),
-  KEY `FK_vendor_id_idx` (`VENDOR_ID`),
   CONSTRAINT `FK_vendor_id` FOREIGN KEY (`VENDOR_ID`) REFERENCES `vendor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT  CHARSET=utf8;
 
@@ -107,25 +95,6 @@ CREATE TABLE `purchase_item` (
   PRIMARY KEY (`ID`),
   CONSTRAINT `FK_product_item_id` FOREIGN KEY (`PRODUCT_ITEM_ID`) REFERENCES `product_items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_purchase_id` FOREIGN KEY (`PURCHASE_ID`) REFERENCES `purchase` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-
-DROP TABLE IF EXISTS `purchase_item_yet_to_save`;
-CREATE TABLE `purchase_item_yet_to_save` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `created_at` datetime NOT NULL,
-  `item_code` varchar(255) DEFAULT NULL,
-  `margin` double DEFAULT NULL,
-  `margin_type` varchar(255) DEFAULT NULL,
-  `price_per_pc` double DEFAULT NULL,
-  `product_size_id` bigint(20) DEFAULT NULL,
-  `product_type_id` bigint(20) DEFAULT NULL,
-  `purchase_id` bigint(20) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `sr_no` varchar(255) DEFAULT NULL,
-  `total_price` double DEFAULT NULL,
-  `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `sale`;
