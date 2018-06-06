@@ -10,6 +10,7 @@
 				<div class="form-group">
 					<label for="purchase.vendor" class="control-label">Vendor:</label>
 					<form:hidden path="purchase.id"/>
+					<form:hidden path="purchaseItemDTO.id" />
 					<form:select path="purchase.vendorId" class="form-control">
 						<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
 						<c:forEach var="vendor" items="${purchaseView.vendorList}">
