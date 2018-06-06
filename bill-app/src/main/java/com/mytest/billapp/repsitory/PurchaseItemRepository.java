@@ -11,4 +11,5 @@ import com.mytest.billapp.model.PurchaseItem;
 public interface PurchaseItemRepository extends JpaRepository<PurchaseItem, Long> {
 
 	public List<PurchaseItem> findByPurchaseId(Long purchaseId);
+	public List<PurchaseItem> findByItemCode(String itemCode);
 }

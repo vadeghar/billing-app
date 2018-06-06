@@ -18,12 +18,15 @@ import com.mytest.billapp.dto.PurchaseDTO;
 import com.mytest.billapp.dto.PurchaseItemDTO;
 import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Purchase;
+import com.mytest.billapp.model.PurchaseItem;
 import com.mytest.billapp.service.ProductItemsService;
 import com.mytest.billapp.service.ProductService;
+import com.mytest.billapp.service.PurchaseItemService;
 import com.mytest.billapp.service.PurchaseService;
 import com.mytest.billapp.service.StockService;
 import com.mytest.billapp.service.VendorService;
 import com.mytest.billapp.utils.Utils;
+import com.mytest.billapp.view.PurchaseView;
 
 @PropertySource("classpath:application.properties")
 @Controller
@@ -31,6 +34,9 @@ public class PurchaseController {
 	
 	@Autowired
 	PurchaseService purchaseService;
+	
+	@Autowired
+	PurchaseItemService purchaseItemService;
 	
 	@Autowired
 	ProductItemsService productItemsService;
@@ -115,7 +121,7 @@ public class PurchaseController {
 	}
 
 
-
+	@Deprecated
 	@RequestMapping(value = "savePurchase", method = RequestMethod.POST)
 	public String savePurchase(@ModelAttribute PurchaseDTO purchaseDTO, Model model) {
 		try {
@@ -125,7 +131,7 @@ public class PurchaseController {
 			}else {
 				purchaseDTO.setPurchaseItems(purchaseItems);
 				
-				PurchaseDTO dto = purchaseService.save(purchaseDTO);
+				PurchaseDTO dto = purchaseService.saveOrUpatePurchase(purchaseDTO);
 				stockService.addToSrock(purchaseItems);
 				purchaseDTO = new PurchaseDTO();
 				purchaseDTO.setPurchaseItemDTO(new PurchaseItemDTO());
@@ -160,6 +166,73 @@ public class PurchaseController {
 		
 		return purchaseDTO;
 	}
+	
+	
+	@RequestMapping(value = "loadPurchase", method = RequestMethod.POST)
+	public String loadPurchase(@ModelAttribute("selectedId") Long selectedId, Model model) {
+		PurchaseView purchaseView = new PurchaseView(); 
+		purchaseView.setSelectedId(selectedId);
+		if(purchaseView.getSelectedId() == null || purchaseView.getSelectedId() == 0) {
+			purchaseView.setPurchase(new PurchaseDTO());
+		} else {
+			purchaseView.setPurchase(getPurchaseDTOById(purchaseView.getSelectedId()));
+		}
+		purchaseView.setSelectedId(0l);
+		purchaseView.setSelectedPurchaseItemId(0l);
+		purchaseView.setVendorList(vendorService.findAll());
+		purchaseView.setProductList(productService.getProductsByBrand(defaultBrandId));
+		if(purchaseView.getPurchaseItemDTO() != null && purchaseView.getPurchaseItemDTO().getProductId() != null &&
+				purchaseView.getPurchaseItemDTO().getProductId().intValue() > 0)
+			purchaseView.setProductItemsList(productItemsService.findAllByProductId(purchaseView.getPurchaseItemDTO().getProductId()));
+		model.addAttribute("purchaseView", purchaseView);
+		return "purchase";
+	}
+	
+	
+	
+	@RequestMapping(value = "savePurhcaseItem", method = RequestMethod.POST)
+	public String savePurhcaseItem(@ModelAttribute PurchaseView purchaseView, Model model) {
+		
+		PurchaseDTO purchaseDTO = purchaseService.saveOrUpatePurchase(purchaseView.getPurchase());
+		purchaseService.savePurchaseItem(purchaseView.getPurchaseItemDTO(), purchaseDTO.getId());
+		purchaseView.getPurchase().setId(purchaseDTO.getId());
+		purchaseService.updatePurchaseTotals(purchaseView.getPurchase());
+		
+		purchaseView.setSelectedId(0l);
+		purchaseView.setSelectedPurchaseItemId(0l);
+		purchaseView.setVendorList(vendorService.findAll());
+		purchaseView.setProductList(productService.getProductsByBrand(defaultBrandId));
+		purchaseView.setPurchaseItemDTO(new PurchaseItemDTO());
+		purchaseView.setPurchase( purchaseService.findById(purchaseDTO.getId()));
+		
+		
+		model.addAttribute("purchaseView", purchaseView);
+		
+		
+		
+		return  "purchase";
+	}
+	
+	@RequestMapping(value = "loadPurhcaseItem", method = RequestMethod.POST)
+	public String loadPurhcaseItem(@ModelAttribute("selectedPurchaseItemId") Long selectedPurchaseItemId, @ModelAttribute PurchaseView purchaseView, Model model) {
+		PurchaseItem purchaseItem = purchaseItemService.getOne(selectedPurchaseItemId);
+		
+		
+		purchaseView.setSelectedId(0l);
+		purchaseView.setSelectedPurchaseItemId(0l);
+		purchaseView.setVendorList(vendorService.findAll());
+		purchaseView.setProductList(productService.getProductsByBrand(defaultBrandId));
+		
+		
+		purchaseView.setPurchaseItemDTO(purchaseService.convertModelToView(purchaseItem));
+		purchaseView.setPurchase( purchaseService.findById(purchaseItem.getPurchaseId()));
+		purchaseView.setProductItemsList(productItemsService.findAllByProductId(purchaseView.getPurchaseItemDTO().getProductId()));
+		model.addAttribute("purchaseView", purchaseView);
+		return  "purchase";
+	}
+	
+	
+	
 	@RequestMapping(value = "purchase", method = RequestMethod.POST)
 	public String addPurchase(@ModelAttribute("selectedId") Long selectedId,  Model model) {
 		

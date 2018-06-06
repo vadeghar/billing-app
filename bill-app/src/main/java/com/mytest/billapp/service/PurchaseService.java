@@ -7,10 +7,11 @@ import org.springframework.data.domain.Sort;
 import com.mytest.billapp.dto.PurchaseDTO;
 import com.mytest.billapp.dto.PurchaseItemDTO;
 import com.mytest.billapp.model.Purchase;
+import com.mytest.billapp.model.PurchaseItem;
 
 public interface PurchaseService {
 	
-	public PurchaseDTO save(PurchaseDTO entity);
+	public PurchaseDTO saveOrUpatePurchase(PurchaseDTO entity);
 	public List<Purchase> saveAll(List<Purchase> entities);
 	public Purchase saveAndFlush(Purchase entity);
 	public void flush();
@@ -26,5 +27,9 @@ public interface PurchaseService {
 	public List<Purchase> findAll(Sort sort);
 	public long count();
 	public void deletePurchaseItems(List<PurchaseItemDTO> deletedPurchaseItems);
+	
+	public void savePurchaseItem(PurchaseItemDTO purchaseItemDTO, Long purchaseId);
+	public void updatePurchaseTotals(PurchaseDTO entity);
+	public PurchaseItemDTO convertModelToView(PurchaseItem pi) ;
 
 }
