@@ -1,5 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<style type="text/css">
+label {
+    margin-bottom: 2px;
+    margin-top: 5px;
+}
+</style>
 
 <div class="form-inline margin-top-30">
 <form:form action="${pageContext.request.contextPath}/saveVendor" method="post" modelAttribute="vendor"  id="myForm" >
@@ -20,9 +26,9 @@
 						<div class="col-sm-24 col-md-12 borderOnePx">
 							<div class="tabs-wrapper margin-top-10" id="tabsData2" style="">
 								<ul class="nav nav-tabs border-bottom5">
-									<li class="active"><a href="#tab_1" data-toggle="tab" class="tab_1">Personal Information</a> </li>
-									<li><a href="#tab_2" data-toggle="tab" class="tab_2">Address Details</a> </li>
-									<li><a href="#tab_3" data-toggle="tab" class="tab_3">Bank Details</a> </li>
+									<li class="active"><a href="#tab_1" data-toggle="tab" class="tab_1" onclick="">Personal Information</a> </li>
+									<li><a href="#tab_2" data-toggle="tab" class="tab_2" onclick="" >Address Details</a> </li>
+									<li><a href="#tab_3" data-toggle="tab" class="tab_3" onclick="">Bank Details</a> </li>
 								</ul>
 								<div class="tab-content acount-info">
 									<div role="tabpanel" class="tab-pane active" id="tab_1">		
@@ -32,13 +38,13 @@
 												<div class="col-sm-4">
 													<div class="form-group">
 														<form:hidden path="id"/>
-														<label for="name" class="rightAlign">Name: <span class="require">*</span></label>
+														<label for="name" class="rightAlign">Name: <span class="required">*</span></label>
 														<form:input path="name" class="form-control"/>
 													</div>
 												</div>
 												<div class="col-sm-4">
 													<div class="form-group">
-														<label for="mobile"  class="rightAlign">Mobile: <span class="require">*</span></label>
+														<label for="mobile"  class="rightAlign">Mobile: <span class="required">*</span></label>
 														<form:input path="mobile" class="form-control" cols="25"/>
 													</div>
 												</div>
@@ -66,7 +72,7 @@
 												
 												<div class="col-sm-4">
 													<div class="form-group">
-														<label for="email"  class="rightAlign">Email: <span class="require">*</span></label>
+														<label for="email"  class="rightAlign">Email: </label>
 														<form:input path="email" class="form-control" cols="25"/>
 													</div>
 												</div>
@@ -117,8 +123,8 @@
 												
 												<div class="col-sm-4">
 													<div class="form-group">
-														<label for="city"  class="rightAlign">City: </label>
-														<form:input path="city" class="form-control" cols="25"/>
+														<label for="city"  class="rightAlign">City:<span class="required">*</span></label>
+														<form:input path="city" class="form-control"/>
 													</div>
 												</div>
 												
@@ -253,12 +259,47 @@
 		      icon: iconType,
 		    });
     }
+    
+
+    $(function() {
+		$("#myForm").validate({
+			rules : {
+				name: { 
+	                required: true
+	            },
+	            mobile : { 
+	                required: true 
+	            },
+	            city : { 
+	                required: true 
+	            }
+			},
+			messages : {
+				name : {
+					 required:"Please enter vendor name"
+				},
+				mobile : {
+					 required:"Please enter mobile number"
+				},
+				bankName :{
+					required:"Please enter city name"
+				}
+			},
+			ignore:"",
+			errorContainer: $('#errorContainer'),
+		    errorLabelContainer: $('#errorContainer ul'),
+		    wrapper: 'li'
+		});
+	});
 }); 
 
 function saveVendor() {
-	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "saveVendor";
-	document.getElementById("myForm").submit();
+	var val = $("#myForm").valid();
+	if (val) {
+		document.getElementById("selectedId").value = 0;
+		document.getElementById("myForm").action = "saveVendor";
+		document.getElementById("myForm").submit();
+	}
 	
 }
 function listVendor() {
