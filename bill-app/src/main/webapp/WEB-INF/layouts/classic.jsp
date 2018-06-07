@@ -67,6 +67,9 @@
 		<div class="fluid-container">
 			<div class="content-post">
 				<div class="col-lg-12 div-outline">
+					<div id="errorContainer">
+    					<ul/>
+					</div>
 					<tiles:insertAttribute name="body" />
 				</div>
 			</div>

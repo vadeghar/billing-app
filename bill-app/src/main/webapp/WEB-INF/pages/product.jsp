@@ -4,23 +4,16 @@
 <form:form action="${pageContext.request.contextPath}/saveProduct" method="post" id="myForm" modelAttribute="productView">
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${productView.message}"/></div>
 <input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="Refresh" onclick="listProduct()" >
-<style type="text/css">
-.sweet-alert p  {
-	display: none;
-}
-.error {
-    color: #ff0000;
-  }
-</style>
+
 <div class="col-lg-6">
 	<div class="column-section mright20">
 		<div class="form-horizontal">
 			<div class="form-column">
 				<div class="col-sm-4">
 					<div class="form-group">
-						<label for="Vendor" class="control-label">Brand:</label>
 						<form:input type="hidden" path="product.id" />
-						<form:select path="product.brandId" class="form-control"  required="required">
+						<label for=brandId class="control-label">Brand:<span class="required">*</span></label>
+						<form:select path="product.brandId" class="form-control">
 							<form:option value=""><c:out value="<-- Select -->"></c:out> </form:option>
 							<c:forEach var="brand" items="${productView.brandList}">
 								<c:choose>
@@ -38,8 +31,8 @@
 				</div>
 				<div class="col-sm-4">
 					<div class="form-group">
-						<label for="content"  class="control-label">Product Name: <span class="require">*</span></label>
-						<form:input type="text" path="product.name" class="form-control" autocomplete="off" required="required"/>
+						<label for="name"  class="control-label">Product Name: <span class="required">*</span></label>
+						<form:input type="text" path="product.name" class="form-control" autocomplete="off"/>
 					</div>
 				</div>
 			</div>
@@ -118,20 +111,26 @@ $( document ).ready(function() {
 		    });
     }
 	$(function() {
-			$("form[name='myForm']").validate({
-				// Specify validation rules
+			$("#myForm").validate({
 				rules : {
-					brandId : "required",
-					name : "required",
+					"product.brandId": { 
+		                required: true
+		            },
+		            "product.name": { 
+		                required: true
+		            }
 				},
-				// Specify validation error messages
 				messages : {
-					brandId : "Please select Brand",
-					name : "Please enter Name"
+					"product.brandId" : {
+						 required: "Please select brand name"
+					},
+					"product.name" : {
+						 required: "Please select product name"
+					}
 				},
-				submitHandler : function(form) {
-					return true;
-				}
+				errorContainer: $('#errorContainer'),
+			    errorLabelContainer: $('#errorContainer ul'),
+			    wrapper: 'li'
 			});
 		});
 	

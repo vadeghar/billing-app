@@ -807,3 +807,31 @@ footer .footer-below {
 .price-list .btn {
 	font-size: 10px;
 }
+
+#errorContainer {
+    display: none;
+    overflow: auto;
+    background-color: #FFDDDD;
+    border: 1px solid #FF2323;
+    padding-top: 0;
+    width: 100%;
+    margin-bottom: 10px;
+}
+ 
+#errorContainer label {
+    color:red;
+    font-weight: 100;
+    font-size: 12px;
+}
+
+#errorContainer li{
+	margin-bottom: 0px;
+}
+#errorContainer ul{
+	margin-bottom: 2px;
+	margin-top: 2px;
+}
+.required {
+	font-weight: bold;
+	color: red;
+}
