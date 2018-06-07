@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <form:form action="${pageContext.request.contextPath}/savePurchase" method="post" modelAttribute="purchaseView"  id="myForm" >
-<div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
+<div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${purchaseView.message}"/></div>
  <div class="col-lg-6">
  	<div class="column-section mright20">
       <div class="form-horizontal">
@@ -11,6 +11,7 @@
 					<label for="purchase.vendor" class="control-label">Vendor:</label>
 					<form:hidden path="purchase.id"/>
 					<form:hidden path="purchaseItemDTO.id" />
+					<form:hidden path="purchaseItemDTO.purchaseId" />
 					<form:select path="purchase.vendorId" class="form-control">
 						<form:option value="0"><c:out value="<-- Select -->"></c:out> </form:option>
 						<c:forEach var="vendor" items="${purchaseView.vendorList}">
@@ -140,9 +141,13 @@
 		<div class="form-column">
 			<div class="col-sm-12">
 				<div class="form-group pull-right">
-					<!-- <button type="button" class="btn btn-primary" onclick="addPurchaseItem();">Add to list</button> -->
-					<button type="button" class="btn btn-primary"  id="savePurhcaseItem">Save</button>
-					<button type="button" class="btn btn-danger" onclick="listPurchase();">Cancel</button>
+					<button type="button" class="btn btn-primary" id="savePurhcaseItem">
+						<c:choose>
+							<c:when test="${purchaseView.purchaseItemDTO.id gt 0 }"> Update</c:when>
+							<c:otherwise>Save</c:otherwise>
+						</c:choose>
+						</button>
+					<button type="button" class="btn btn-danger" onclick="listPurchaseItem();">Cancel</button>
 				</div>
 			</div>
 		</div>
@@ -184,8 +189,8 @@
 				               <td>${purchaseItem.itemCode}</td>
 				               <td>
 				               <c:if test="${purchaseItem.id ne 0}">
-							        <button type="button" class="btn btn-danger btn-xs pencil" onclick="editPurchaseItem('${purchaseItem.id}')">
-							          <span class="glyphicon glyphicon-trash"></span>
+							        <button type="button" class="btn btn-danger btn-xs edit" onclick="editPurchaseItem('${purchaseItem.id}')">
+							          <span class="glyphicon glyphicon-pencil"></span>
 							        </button>
 							         <button type="button" class="btn btn-danger btn-xs delete" onclick="deletePurchaseItem('${purchaseItem.id}')">
 							          <span class="glyphicon glyphicon-trash"></span>
@@ -260,8 +265,7 @@
 				<div class="form-column">
 					<div class="col-sm-12">
 						<div class="form-group pull-right">
-							<button type="button" class="btn btn-primary" onclick="savePurchase();">Save</button>
-							<button type="button" class="btn btn-danger" onclick="navigate('purchaseList')">Cancel</button>
+							<a href="#" onclick="savePurchase();">Update Discounts</a>
 						</div>
 					</div>
 				</div>						
@@ -269,6 +273,7 @@
 		</div>
  </div>
 <input type="hidden" id="selectedPurchaseItemId" name="selectedPurchaseItemId" value="${selectedPurchaseItemId}">
+<input type="hidden" id="selectedId" name="selectedId" value="${selectedId}">
 </form:form>
 
 <script type="text/javascript">
@@ -300,10 +305,9 @@ function addPurchaseItem() {
 	document.getElementById("myForm").submit();
 	
 }
-function listPurchase() {
-	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "${pageContext.request.contextPath}/purchase";
-	//document.getElementById("myForm").method = "get";
+function listPurchaseItem() {
+	document.getElementById("selectedId").value = $('#purchaseItemDTO\\.purchaseId').val();
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/loadPurchase";
 	document.getElementById("myForm").submit();
 }
 
@@ -321,14 +325,9 @@ function editPurchaseItem(purchaseItemId) {
 	document.getElementById("myForm").submit();
 }
 
-function deletePurchaseItem(purchaseId, purchaseItemId, itemCode) {
-	if(purchaseId == '') {
-		
-		purchaseId = $('[name="purchase.id"]').val();
-	}
-	alert("ID:"+purchaseId);
+function deletePurchaseItem(purchaseItemId) {
+	document.getElementById("selectedPurchaseItemId").value = purchaseItemId;
 	if(confirm("Are you sure?")) {
-		document.getElementById("selectedId").value =purchaseId+"#"+purchaseItemId+"#"+itemCode;
 		document.getElementById("myForm").action = "${pageContext.request.contextPath}/deletePurchaseItem";
 		document.getElementById("myForm").submit();
 	}

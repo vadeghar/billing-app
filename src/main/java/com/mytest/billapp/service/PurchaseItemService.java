@@ -8,22 +8,7 @@ import com.mytest.billapp.dto.PurchaseItemDTO;
 import com.mytest.billapp.model.PurchaseItem;
 
 public interface PurchaseItemService {
-	
-	
 	public List<PurchaseItem> findByPurchaseId(Long purchaseId);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public PurchaseItemDTO save(PurchaseItemDTO entity);
 	public List<PurchaseItem> saveAll(List<PurchaseItem> entities);
 	public PurchaseItem saveAndFlush(PurchaseItem entity);
@@ -39,5 +24,6 @@ public interface PurchaseItemService {
 	public List<PurchaseItemDTO> findAll();
 	public List<PurchaseItem> findAll(Sort sort);
 	public long count();
+	
 
 }

@@ -15,11 +15,13 @@ import com.mytest.billapp.model.Product;
 import com.mytest.billapp.model.ProductItems;
 import com.mytest.billapp.model.Purchase;
 import com.mytest.billapp.model.PurchaseItem;
+import com.mytest.billapp.model.Stock;
 import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.ProductItemsRepository;
 import com.mytest.billapp.repsitory.ProductRepository;
 import com.mytest.billapp.repsitory.PurchaseItemRepository;
 import com.mytest.billapp.repsitory.PurchaseRepository;
+import com.mytest.billapp.repsitory.StockRepository;
 import com.mytest.billapp.repsitory.VendorRepository;
 import com.mytest.billapp.service.PurchaseService;
 import com.mytest.billapp.utils.Utils;
@@ -39,6 +41,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 	ProductItemsRepository productItemsRepository;
 	@Autowired
 	VendorRepository vendorRepository;
+	
+	@Autowired
+	StockRepository stockRepository;
 	
 	public PurchaseDTO saveOrUpatePurchase(PurchaseDTO entity) {
 		try {
@@ -96,9 +101,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 		purchaseItemRepository.save(purchaseItemList);
 	}
 	
-	public void savePurchaseItem(PurchaseItemDTO purchaseItemDTO, Long purchaseId) {
+	public void savePurchaseItemAndStock(PurchaseItemDTO purchaseItemDTO, Long purchaseId) {
 
 			List<PurchaseItem> purchaseItems = purchaseItemRepository.findByItemCode(purchaseItemDTO.getItemCode());
+			Stock stock = stockRepository.findByItemCode(purchaseItemDTO.getItemCode());
 			PurchaseItem purchaseItem = null;
 			Integer existCount = new Integer(0);
 			if(!CollectionUtils.isEmpty(purchaseItems)) {
@@ -108,6 +114,21 @@ public class PurchaseServiceImpl implements PurchaseService {
 			}else {
 				purchaseItem = new PurchaseItem();
 			}
+			
+			if(stock == null) {
+				stock = new Stock();
+				stock.setItemCode(purchaseItemDTO.getItemCode());
+				stock.setQuantity(purchaseItemDTO.getQuantity());
+				stock.setSalePricePerPc(purchaseItemDTO.getSalePrice());
+			} else {
+				if(purchaseItemDTO.getId() == null || purchaseItemDTO.getId().intValue()  == 0) {
+					int existingStock = stock.getQuantity();
+					stock.setQuantity(purchaseItemDTO.getQuantity() + existingStock);
+				}else {
+					stock.setQuantity(purchaseItemDTO.getQuantity());
+				}
+			}
+			
 			/*if(purchaseItemDTO.getId() == null || purchaseItemDTO.getId().longValue() == 0) 
 				purchaseItem = new PurchaseItem();
 			else 
@@ -123,9 +144,23 @@ public class PurchaseServiceImpl implements PurchaseService {
 			purchaseItem.setSrNo(purchaseItemDTO.getSrNo());
 			purchaseItem.setTotalPrice(purchaseItemDTO.getTotal());
 			purchaseItemRepository.save(purchaseItem);
+			stockRepository.save(stock);
 	}
 
-	
+	public void deletePurchaseItemUpdateStock(PurchaseItem purchaseItem) {
+		Stock stock = stockRepository.findByItemCode(purchaseItem.getItemCode());
+		if(stock != null) {
+			Integer qntyAvbl = stock.getQuantity();
+			qntyAvbl = qntyAvbl - purchaseItem.getQuantity();
+			if(qntyAvbl > 0) {
+				stock.setQuantity(qntyAvbl);
+				stockRepository.save(stock);
+			}else {
+				stockRepository.delete(stock);
+			}
+		}
+		purchaseItemRepository.delete(purchaseItem);
+	}
 
 	public void updatePurchaseTotals(PurchaseDTO entity) {
 		Purchase purchase = purchaseRepository.findOne(entity.getId());
@@ -261,6 +296,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public PurchaseItemDTO convertModelToView(PurchaseItem pi) {
 		PurchaseItemDTO dto = new PurchaseItemDTO();
 		dto.setId(pi.getId());
+		dto.setPurchaseId(pi.getPurchaseId());
 		dto.setItemCode(pi.getItemCode());
 		dto.setMargin(pi.getMargin());
 		dto.setMarginType(pi.getMarginType());
