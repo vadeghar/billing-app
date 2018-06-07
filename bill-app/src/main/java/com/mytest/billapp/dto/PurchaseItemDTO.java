@@ -21,6 +21,7 @@ public class PurchaseItemDTO {
 		this.margin = dto.getMargin();
 		this.salePrice = dto.getSalePrice();
 		this.itemCode = dto.getItemCode();
+		this.purchaseId = dto.getPurchaseId();
 	}
 	private Long id;
 	private String srNo;
@@ -35,6 +36,7 @@ public class PurchaseItemDTO {
 	private Double margin;
 	private Double salePrice;
 	private String itemCode;
+	private Long purchaseId;
 	
 	public Long getId() {
 		return id;
@@ -132,6 +134,16 @@ public class PurchaseItemDTO {
 
 	public void setProductItemName(String productItemName) {
 		this.productItemName = productItemName;
+	}
+
+
+	public Long getPurchaseId() {
+		return purchaseId;
+	}
+
+
+	public void setPurchaseId(Long purchaseId) {
+		this.purchaseId = purchaseId;
 	}
 
 

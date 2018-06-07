@@ -1,6 +1,7 @@
 package com.mytest.billapp.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -62,6 +67,16 @@ public class PurchaseItem  extends BEntity implements Serializable {
 	
 	@Column(name="ITEM_CODE")
 	private String itemCode;
+	
+	@Column(name = "ADDED_TS", nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Date addedAt;
+
+    @Column(name = "UPDATED_TS", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @LastModifiedDate
+    private Date updatedAt;
 
 	public Long getId() {
 		return id;
@@ -158,6 +173,22 @@ public class PurchaseItem  extends BEntity implements Serializable {
 
 	public void setSize(String size) {
 		this.size = size;
+	}
+
+	public Date getAddedAt() {
+		return addedAt;
+	}
+
+	public void setAddedAt(Date addedAt) {
+		this.addedAt = addedAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 	
 }

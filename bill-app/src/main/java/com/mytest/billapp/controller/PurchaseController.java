@@ -194,7 +194,7 @@ public class PurchaseController {
 	public String savePurhcaseItem(@ModelAttribute PurchaseView purchaseView, Model model) {
 		
 		PurchaseDTO purchaseDTO = purchaseService.saveOrUpatePurchase(purchaseView.getPurchase());
-		purchaseService.savePurchaseItem(purchaseView.getPurchaseItemDTO(), purchaseDTO.getId());
+		purchaseService.savePurchaseItemAndStock(purchaseView.getPurchaseItemDTO(), purchaseDTO.getId());
 		purchaseView.getPurchase().setId(purchaseDTO.getId());
 		purchaseService.updatePurchaseTotals(purchaseView.getPurchase());
 		
@@ -205,7 +205,7 @@ public class PurchaseController {
 		purchaseView.setPurchaseItemDTO(new PurchaseItemDTO());
 		purchaseView.setPurchase( purchaseService.findById(purchaseDTO.getId()));
 		
-		
+		purchaseView.setMessage("Succesfully saved");
 		model.addAttribute("purchaseView", purchaseView);
 		
 		
@@ -231,7 +231,23 @@ public class PurchaseController {
 		return  "purchase";
 	}
 	
-	
+	@RequestMapping(value = "deletePurchaseItem", method = RequestMethod.POST)
+	public String deletePurhcaseItem(@ModelAttribute("selectedPurchaseItemId") Long selectedPurchaseItemId, @ModelAttribute PurchaseView purchaseView, Model model) {
+		PurchaseItem purchaseItem = purchaseItemService.getOne(selectedPurchaseItemId);
+		Long purchaseItemId = purchaseItem.getPurchaseId();
+		purchaseService.deletePurchaseItemUpdateStock(purchaseItem);
+		purchaseView.setMessage("Succesfully deleted");
+		purchaseView.setPurchase(purchaseService.findById(purchaseItemId));
+		purchaseView.setSelectedId(0l);
+		purchaseView.setSelectedPurchaseItemId(0l);
+		purchaseView.setVendorList(vendorService.findAll());
+		purchaseView.setProductList(productService.getProductsByBrand(defaultBrandId));
+		if(purchaseView.getPurchaseItemDTO() != null && purchaseView.getPurchaseItemDTO().getProductId() != null &&
+				purchaseView.getPurchaseItemDTO().getProductId().intValue() > 0)
+		purchaseView.setProductItemsList(productItemsService.findAllByProductId(purchaseView.getPurchaseItemDTO().getProductId()));
+		model.addAttribute("purchaseView", purchaseView);
+		return  "purchase";
+	}
 	
 	@RequestMapping(value = "purchase", method = RequestMethod.POST)
 	public String addPurchase(@ModelAttribute("selectedId") Long selectedId,  Model model) {
@@ -280,7 +296,8 @@ public class PurchaseController {
 	    return addPurchase(0l, model);
 	}
 	
-	@RequestMapping(value = "deletePurchaseItem", method = RequestMethod.POST)
+	@Deprecated
+	@RequestMapping(value = "deletePurchaseItemssss", method = RequestMethod.POST)
 	public String deletePurchaseItem(@ModelAttribute("selectedId") String selectedId, Model model) {
 	    try {
 	    	Long purchaseItemId = 0l;

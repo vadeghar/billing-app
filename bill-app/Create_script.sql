@@ -97,6 +97,10 @@ CREATE TABLE `purchase_item` (
   CONSTRAINT `FK_purchase_id` FOREIGN KEY (`PURCHASE_ID`) REFERENCES `purchase` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+ALTER TABLE `billingsoftware`.`purchase_item` 
+ADD COLUMN `added_ts` DATETIME NOT NULL AFTER `total_price`,
+ADD COLUMN `updated_ts` DATETIME NOT NULL AFTER `added_ts`;
+
 DROP TABLE IF EXISTS `sale`;
 CREATE TABLE `sale` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,

@@ -28,8 +28,9 @@ public interface PurchaseService {
 	public long count();
 	public void deletePurchaseItems(List<PurchaseItemDTO> deletedPurchaseItems);
 	
-	public void savePurchaseItem(PurchaseItemDTO purchaseItemDTO, Long purchaseId);
+	public void savePurchaseItemAndStock(PurchaseItemDTO purchaseItemDTO, Long purchaseId);
 	public void updatePurchaseTotals(PurchaseDTO entity);
 	public PurchaseItemDTO convertModelToView(PurchaseItem pi) ;
+	public void deletePurchaseItemUpdateStock(PurchaseItem purchaseItem);
 
 }
