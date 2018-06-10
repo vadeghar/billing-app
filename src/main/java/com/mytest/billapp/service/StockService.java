@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 
 import com.mytest.billapp.dto.PurchaseItemDTO;
 import com.mytest.billapp.model.Stock;
+import com.mytest.billapp.view.SaleEntryView;
 
 public interface StockService {
 	
@@ -27,5 +28,6 @@ public interface StockService {
 	public long count();
 	public void addToSrock(List<PurchaseItemDTO> deletedPurchaseItems);
 	public void removeFromSrock(List<PurchaseItemDTO> deletedPurchaseItems);
+	public SaleEntryView getStockEntryByItemCode(String itemCode);
 
 }
