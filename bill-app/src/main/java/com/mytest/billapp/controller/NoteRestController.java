@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Notes;
-import com.mytest.billapp.model.Product;
 import com.mytest.billapp.model.ProductItems;
 import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.NotesRepository;
 import com.mytest.billapp.service.ProductService;
+import com.mytest.billapp.service.StockService;
 import com.mytest.billapp.service.VendorService;
+import com.mytest.billapp.view.SaleEntryView;
 
 @RestController
 @RequestMapping("/ajax")
@@ -37,6 +37,9 @@ public class NoteRestController {
 	
 	@Autowired
 	VendorService vendorService;
+	
+	@Autowired
+	StockService stockService;
 	
 	@GetMapping("/notes")
 	public List<Notes> getAllNotes() {
@@ -105,6 +108,13 @@ public class NoteRestController {
 	    noteRepository.delete(note);
 
 	    return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/stock/itemCode/{itemCode}")
+	public SaleEntryView getSaleEntry(@PathVariable(value = "itemCode") String itemCode) {
+		System.out.println("@@@@@@@@@@@@  "+itemCode);
+		SaleEntryView saleEntryView = stockService.getStockEntryByItemCode(itemCode);
+	    return saleEntryView;
 	}
 
 }

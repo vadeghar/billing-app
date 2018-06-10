@@ -1,7 +1,6 @@
 package com.mytest.billapp.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -9,15 +8,36 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.mytest.billapp.dto.PurchaseItemDTO;
+import com.mytest.billapp.model.Brand;
+import com.mytest.billapp.model.Product;
+import com.mytest.billapp.model.ProductItems;
+import com.mytest.billapp.model.PurchaseItem;
 import com.mytest.billapp.model.Stock;
+import com.mytest.billapp.repsitory.BrandRepository;
+import com.mytest.billapp.repsitory.ProductItemsRepository;
+import com.mytest.billapp.repsitory.ProductRepository;
+import com.mytest.billapp.repsitory.PurchaseItemRepository;
 import com.mytest.billapp.repsitory.StockRepository;
 import com.mytest.billapp.service.StockService;
+import com.mytest.billapp.view.SaleEntryView;
 
 @Service
 public class StockServiceImpl implements StockService {
 	
 	@Autowired
 	StockRepository stockRepository; 
+	
+	@Autowired
+	ProductItemsRepository productItemsRepository; 
+	
+	@Autowired
+	ProductRepository productRepository; 
+	
+	@Autowired
+	BrandRepository brandRepository;
+	
+	@Autowired
+	PurchaseItemRepository purchaseItemRepository;
 	
 	public Stock save(Stock entity) {
 		return stockRepository.save(entity);
@@ -119,6 +139,29 @@ public class StockServiceImpl implements StockService {
 			}
 			stockRepository.save(stock);
 		}
+	}
+
+	@Override
+	public SaleEntryView getStockEntryByItemCode(String itemCode) {
+		Stock stock = stockRepository.findByItemCode(itemCode);
+		SaleEntryView saleEntryView = new SaleEntryView();
+		StringBuilder desc = new StringBuilder();
+		if(stock != null) {
+			saleEntryView.setItemCode(itemCode);
+			saleEntryView.setRate(stock.getSalePricePerPc());
+			saleEntryView.setQuantity(1);
+			List<PurchaseItem> purchaseItem = purchaseItemRepository.findByItemCode(itemCode);
+			ProductItems productItem = productItemsRepository.getOne(purchaseItem.get(0).getProductItemId());
+			Product product = productRepository.getOne(productItem.getProductId());
+			Brand brand = brandRepository.getOne(product.getBrandId());
+			if(!brand.getName().equalsIgnoreCase("Other")) {
+				desc.append(brand.getName()+" ");
+			}
+			desc.append(product.getName()+" ");
+			desc.append(productItem.getName());
+			saleEntryView.setProductDescription(desc.toString());
+		}
+		return saleEntryView;
 	}
 	
 }

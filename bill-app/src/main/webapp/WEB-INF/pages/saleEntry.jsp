@@ -26,8 +26,7 @@
 
 <div class="col-lg-6">
 	<div class="column-section section-scroll marbottom20">
-				<table
-					class="table table-bordered tb-color darken uh-table price-list">
+				<table class="table table-bordered tb-color darken uh-table price-list" id="saleEntries">
 					<thead>
 						<tr class="text-white">
 							<th style="width: 5%;">#</th>
@@ -145,5 +144,19 @@ $("[id^='quantity']").on('change', function() {
 	$("#discount").prop("readonly", true);
 	$("#netTotal").prop("readonly", true);
 	$("#invoiceTotal").prop("readonly", true);
+});
+
+$("#itemCode").on('change', function() {
+	var itemCode = $("#itemCode").val();
+	alert("itemCode: "+itemCode);
+	if(itemCode.length == 6) {
+		$.ajax({url: "${pageContext.request.contextPath}/ajax/stock/itemCode/"+itemCode, 
+			success: 
+				function(result){
+					
+				}
+		});
+	}
+	
 });
 </script>
