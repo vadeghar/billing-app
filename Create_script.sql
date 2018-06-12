@@ -98,8 +98,9 @@ CREATE TABLE `purchase_item` (
 ) ENGINE=InnoDB  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 ALTER TABLE `billingsoftware`.`purchase_item` 
-ADD COLUMN `added_ts` DATETIME NOT NULL AFTER `total_price`,
-ADD COLUMN `updated_ts` DATETIME NOT NULL AFTER `added_ts`;
+ADD COLUMN `added_ts` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `total_price`,
+ADD COLUMN `updated_ts` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `added_ts`;
+
 
 DROP TABLE IF EXISTS `sale`;
 CREATE TABLE `sale` (
