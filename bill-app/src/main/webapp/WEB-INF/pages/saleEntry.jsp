@@ -115,12 +115,45 @@
 </form:form>
 
 <script type="text/javascript">
-$("[id^='quantity']").on('change', function() {
-	var idTxt = $(this).attr('id');
-	var temp = idTxt.split("-");
-	var rowNo = temp[1];
+
+$( document ).ready(function() {
+	
+	$("[id^='quantity']").on('change', function() {
+		var idTxt = $(this).attr('id');
+		var temp = idTxt.split("-");
+		var rowNo = temp[1];
+		var ratePerUnit = $('#rate-'+rowNo).html();
+		var curQty = $(this).val();
+		var total = ratePerUnit * curQty;
+		$('#total-'+rowNo).html(total);
+		
+		//alert($(this).val()+"\n"+$('#rate-'+rowNo).html()+"\n"+total+'\n'+$('#total-'+rowNo).html(total)+"11111111111");
+		var allTotal = 0;
+		$("[id^='total']").each(function(indx, val) {
+			allTotal = parseFloat(allTotal) + parseFloat($(this).html());
+		});
+		$('#invoiceTotal').val(allTotal);
+		if($('#discount').val() == '') {
+			$('#netTotal').val(allTotal);
+		} else {
+			var discountType = $("input[name=discountType]:checked").val();
+			var discount = parseFloat($("#discount").val());
+			if(discountType == '%'){
+				$("#netTotal").val((allTotal - (allTotal * discount / 100)).toFixed());
+			}else {
+				$("#netTotal").val((allTotal - discount).toFixed());
+			}
+		}
+		$("#discount").prop("readonly", true);
+		$("#netTotal").prop("readonly", true);
+		$("#invoiceTotal").prop("readonly", true);
+	});
+});
+
+function updateTotals(rowNo) {
 	var ratePerUnit = $('#rate-'+rowNo).html();
-	var curQty = $(this).val();
+	var curQty = $('#quantity-'+rowNo).val();
+	
 	var total = ratePerUnit * curQty;
 	$('#total-'+rowNo).html(total);
 	
@@ -144,16 +177,27 @@ $("[id^='quantity']").on('change', function() {
 	$("#discount").prop("readonly", true);
 	$("#netTotal").prop("readonly", true);
 	$("#invoiceTotal").prop("readonly", true);
-});
+}
+
+
 
 $("#itemCode").on('change', function() {
 	var itemCode = $("#itemCode").val();
-	alert("itemCode: "+itemCode);
 	if(itemCode.length == 6) {
 		$.ajax({url: "${pageContext.request.contextPath}/ajax/stock/itemCode/"+itemCode, 
 			success: 
 				function(result){
-					
+				var rows = $('#saleEntries tbody tr').length;
+					var tabRow = '<tr valign="middle">'+
+													'<td>'+(rows+1)+'</td>'+
+													'<td>'+result.productDescription+'</td>'+
+													'<td><span id="rate-'+rows+'" >'+result.rate+'</span> </td>'+
+													'<td>'+
+														'<input  type="number" min="1" max="50" id="quantity-'+rows+'"  class="form-control" autocomplete="off" style="height: 20px; width: 50px; padding-left: 5px; display: inline; " value="1" onchange="updateTotals('+rows+')"/>'+
+													'<td><span id="total-'+rows+'" >'+result.rate+'</span></td>'+
+													'<td><span id="close-'+rows+'" style="display: inline; cursor: pointer; color: red;">X</span></td>'+
+												'</tr>';
+					$("#saleEntries > tbody").append(tabRow);
 				}
 		});
 	}
