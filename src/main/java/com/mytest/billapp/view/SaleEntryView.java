@@ -73,5 +73,12 @@ public class SaleEntryView {
 	public void setNetTotal(Double netTotal) {
 		this.netTotal = netTotal;
 	}
-
+	@Override
+	public String toString() {
+		return "[productDescription=" + productDescription + ", rate=" + rate + ", quantity=" + quantity
+				+ ", total=" + total + ", productItemId=" + productItemId + ", itemCode=" + itemCode + ", invoiceTotal="
+				+ invoiceTotal + ", discountType=" + discountType + ", discount=" + discount + ", netTotal=" + netTotal
+				+ "]";
+	}
+	
 }
