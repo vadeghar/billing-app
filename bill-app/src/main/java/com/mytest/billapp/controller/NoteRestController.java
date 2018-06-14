@@ -116,5 +116,14 @@ public class NoteRestController {
 		SaleEntryView saleEntryView = stockService.getStockEntryByItemCode(itemCode);
 	    return saleEntryView;
 	}
+	
+	@PostMapping("sale/saveSale")
+	public boolean saveSale(@RequestBody List<SaleEntryView> saleEntryViewList) {
+		
+		System.out.println("############## "+saleEntryViewList);
+		
+		
+		return false;
+	}
 
 }

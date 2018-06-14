@@ -30,7 +30,8 @@
 					<thead>
 						<tr class="text-white">
 							<th style="width: 5%;">#</th>
-				            <th style="width: 50%;">Product Description</th>
+							<th style="width: 15%;">Item</th>
+				            <th style="width: 40%;">Name</th>
 				            <th style="width: 10%;">Rate</th>
 				            <th style="width: 20%;">Quantity</th>
 				 			<th style="width: 10%;">Total</th>
@@ -40,6 +41,7 @@
 					<tbody>
 						<tr valign="middle">
 							<td>1</td>
+							<td>JTEST6</td>
 							<td>Raymond Jeans 32</td>
 							<td><span id="rate-0" >652</span> </td>
 							<td>
@@ -52,6 +54,7 @@
 						
 						<tr valign="middle">
 							<td>2</td>
+							<td>JATEST</td>
 							<td>Peter England Jeans 32</td>
 							<td><span id="rate-1" >850</span> </td>
 							<td>
@@ -104,7 +107,7 @@
 				<div class="form-column">
 					<div class="col-sm-12">
 						<div class="form-group pull-right">
-							<button type="button" class="btn btn-primary" onclick="">Generate Invoice</button>
+							<button type="button" class="btn btn-primary" onclick="" id="generateInvoice">Generate Invoice</button>
 						</div>
 					</div>
 				</div>						
@@ -115,7 +118,7 @@
 </form:form>
 
 <script type="text/javascript">
-
+var saleEntryViewList = [];
 $( document ).ready(function() {
 	
 	$("[id^='quantity']").on('change', function() {
@@ -150,6 +153,7 @@ $( document ).ready(function() {
 	});
 });
 
+
 function updateTotals(rowNo) {
 	var ratePerUnit = $('#rate-'+rowNo).html();
 	var curQty = $('#quantity-'+rowNo).val();
@@ -177,6 +181,8 @@ function updateTotals(rowNo) {
 	$("#discount").prop("readonly", true);
 	$("#netTotal").prop("readonly", true);
 	$("#invoiceTotal").prop("readonly", true);
+	
+	saleEntryViewList[rowNo].quantity = curQty;
 }
 
 
@@ -187,9 +193,11 @@ $("#itemCode").on('change', function() {
 		$.ajax({url: "${pageContext.request.contextPath}/ajax/stock/itemCode/"+itemCode, 
 			success: 
 				function(result){
+				saleEntryViewList.push(result);
 				var rows = $('#saleEntries tbody tr').length;
 					var tabRow = '<tr valign="middle">'+
 													'<td>'+(rows+1)+'</td>'+
+													'<td>'+result.itemCode+'</td>'+
 													'<td>'+result.productDescription+'</td>'+
 													'<td><span id="rate-'+rows+'" >'+result.rate+'</span> </td>'+
 													'<td>'+
@@ -198,9 +206,15 @@ $("#itemCode").on('change', function() {
 													'<td><span id="close-'+rows+'" style="display: inline; cursor: pointer; color: red;">X</span></td>'+
 												'</tr>';
 					$("#saleEntries > tbody").append(tabRow);
+					$("#quantity-"+rows).focus();
+					$('#itemCode').val('');
 				}
 		});
 	}
 	
+});
+
+$('#generateInvoice').click(function() {
+	alert(saleEntryViewList[0].quantity);
 });
 </script>
