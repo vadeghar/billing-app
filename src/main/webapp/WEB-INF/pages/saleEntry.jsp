@@ -39,31 +39,6 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr valign="middle">
-							<td>1</td>
-							<td>JTEST6</td>
-							<td>Raymond Jeans 32</td>
-							<td><span id="rate-0" >652</span> </td>
-							<td>
-								<!-- <span id="minus" style="display: inline; cursor: pointer;">-</span>  -->
-								<input  type="number" min="1" max="50" id="quantity-0"  class="form-control" autocomplete="off" style="height: 20px; width: 50px; padding-left: 5px; display: inline; " value="1"/>
-								 <!-- <span id="plus" style="display: inline; cursor: pointer;">+</span></td> -->
-							<td><span id="total-0" >652</span></td>
-							<td><span id="close-0" style="display: inline; cursor: pointer; color: red;">X</span></td>
-						</tr>
-						
-						<tr valign="middle">
-							<td>2</td>
-							<td>JATEST</td>
-							<td>Peter England Jeans 32</td>
-							<td><span id="rate-1" >850</span> </td>
-							<td>
-								<!-- <span id="minus" style="display: inline; cursor: pointer;">-</span>  -->
-								<input  type="number" min="1" max="50"  id="quantity-1"  class="form-control" autocomplete="off" style="height: 20px; width: 50px; padding-left: 5px; display: inline; " value="1"/>
-								 <!-- <span id="plus" style="display: inline; cursor: pointer;">+</span></td> -->
-							<td><span id="total-1" >850</span></td>
-							<td><span id="close-1" style="display: inline; cursor: pointer; color: red;">X</span></td>
-						</tr>
 						
 					</tbody>
 				</table>
@@ -119,6 +94,7 @@
 
 <script type="text/javascript">
 var saleEntryViewList = [];
+var saleEntryView = {productDescription:"", rate: 0.0, quantity: 0, total:0.0, productItemId:0, itemCode:"", invoiceTotal:0.0, discountType:"", discount:0.0, netTotal:0.0};
 $( document ).ready(function() {
 	
 	$("[id^='quantity']").on('change', function() {
@@ -182,7 +158,8 @@ function updateTotals(rowNo) {
 	$("#netTotal").prop("readonly", true);
 	$("#invoiceTotal").prop("readonly", true);
 	
-	saleEntryViewList[rowNo].quantity = curQty;
+	var saleEntryView = saleEntryViewList[0];
+	saleEntryView.quantity = curQty;
 }
 
 
@@ -215,6 +192,6 @@ $("#itemCode").on('change', function() {
 });
 
 $('#generateInvoice').click(function() {
-	alert(saleEntryViewList[0].quantity);
+	alert("Quantiry: "+saleEntryViewList[0].quantity);
 });
 </script>
