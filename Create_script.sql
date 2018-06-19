@@ -144,3 +144,18 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB  AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
+
+
+CREATE TABLE `billingsoftware`.`sale_items` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `sale_id` INT NOT NULL,
+  `item_code` VARCHAR(45) NOT NULL,
+  `item_desc` VARCHAR(50) NULL,
+  `item_rate` DOUBLE NULL,
+  `item_qty` INT NULL,
+  `item_total` DOUBLE NULL,
+  PRIMARY KEY (`id`));
+
+ALTER TABLE `billingsoftware`.`sale_items` 
+ADD COLUMN `item_added_ts` DATETIME NULL AFTER `item_total`,
+ADD COLUMN `item_updated_ts` DATETIME NULL AFTER `item_added_ts`;

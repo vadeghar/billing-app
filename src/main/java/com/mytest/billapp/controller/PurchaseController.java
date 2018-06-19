@@ -25,7 +25,7 @@ import com.mytest.billapp.service.PurchaseItemService;
 import com.mytest.billapp.service.PurchaseService;
 import com.mytest.billapp.service.StockService;
 import com.mytest.billapp.service.VendorService;
-import com.mytest.billapp.utils.Utils;
+import com.mytest.billapp.utils.AppUtils;
 import com.mytest.billapp.view.PurchaseView;
 
 @PropertySource("classpath:application.properties")
@@ -89,7 +89,7 @@ public class PurchaseController {
 		for(PurchaseItemDTO purchaseItemDTO : purchaseItems) {
 			total = total + purchaseItemDTO.getTotal();
 		}
-		purchaseDTO.setBillTotal(Utils.formatDecimals(total));
+		purchaseDTO.setBillTotal(AppUtils.formatDecimals(total));
 		if(purchaseDTO.getId() != null && purchaseDTO.getId() > 0) {
 			purchaseDTO.setDiscount(discount);
 			purchaseDTO.setNetTotal(discount);
@@ -100,8 +100,8 @@ public class PurchaseController {
 				}else {
 					discount = total - purchaseDTO.getDiscount();
 				}
-				purchaseDTO.setDiscount(Utils.formatDecimals(discount));
-				purchaseDTO.setNetTotal(Utils.formatDecimals(total - discount));
+				purchaseDTO.setDiscount(AppUtils.formatDecimals(discount));
+				purchaseDTO.setNetTotal(AppUtils.formatDecimals(total - discount));
 			}
 		}
 	}
