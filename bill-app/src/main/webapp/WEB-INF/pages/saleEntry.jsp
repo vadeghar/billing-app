@@ -24,7 +24,7 @@
 	</div>
 </div>
 
-<div class="col-lg-6">
+<div class="col-lg-6 salePart">
 	<div class="column-section section-scroll marbottom20">
 				<table class="table table-bordered tb-color darken uh-table price-list" id="saleEntries">
 					<thead>
@@ -94,6 +94,7 @@
 
 <script type="text/javascript">
 var saleEntryViewList = [];
+var _headers = {};
 var saleEntryView = {productDescription:"", rate: 0.0, quantity: 0, total:0.0, productItemId:0, itemCode:"", invoiceTotal:0.0, discountType:"", discount:0.0, netTotal:0.0};
 $( document ).ready(function() {
 	
@@ -123,7 +124,7 @@ $( document ).ready(function() {
 				$("#netTotal").val((allTotal - discount).toFixed());
 			}
 		}
-		$("#discount").prop("readonly", true);
+		//$("#discount").prop("readonly", true);
 		$("#netTotal").prop("readonly", true);
 		$("#invoiceTotal").prop("readonly", true);
 	});
@@ -158,7 +159,7 @@ function updateTotals(rowNo) {
 	$("#netTotal").prop("readonly", true);
 	$("#invoiceTotal").prop("readonly", true);
 	
-	var saleEntryView = saleEntryViewList[0];
+	var saleEntryView = saleEntryViewList[rowNo];
 	saleEntryView.quantity = curQty;
 }
 
@@ -185,6 +186,7 @@ $("#itemCode").on('change', function() {
 					$("#saleEntries > tbody").append(tabRow);
 					$("#quantity-"+rows).focus();
 					$('#itemCode').val('');
+					updateTotals(rows);
 				}
 		});
 	}
@@ -192,6 +194,51 @@ $("#itemCode").on('change', function() {
 });
 
 $('#generateInvoice').click(function() {
-	alert("Quantiry: "+saleEntryViewList[0].quantity);
+	//alert("Quantiry: "+saleEntryViewList[0].quantity);
+	var saleEntryView = saleEntryViewList[0];
+	// Set total and discount details on first saleEntryObject
+	saleEntryView.invoiceTotal = $('#invoiceTotal').val();
+	var discountType = $("input[name=discountType]:checked").val();
+	saleEntryView.discountType = discountType;
+	saleEntryView.discount = $('#discount').val();
+	saleEntryView.netTotal = $('#netTotal').val();
+	simpleDataCall("ajax/sale/saveSale", "Save sale", $(".salePart"), saleEntryViewList, submitAfterSave)
 });
+
+function submitAfterSave(result) {
+	if(result == null){
+		alert("Not Saved");
+	}else{
+		alert("Saved.."+result);
+	}
+}
+
+function simpleDataCall(url, title, $content, requestData, responseCallback) {
+	$.ajax({
+		url: url,
+		headers: _headers,
+		type: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify(requestData),
+		beforeSend: function() {
+			//toastr.clear();
+			//toastr.success(_AOC_INFO_LOAD_IN_PROGRESS, title);
+			if (!$content.hasClass('sk-loading')) {
+				$content.addClass('sk-loading');
+			}
+		},
+		success: function(data) {
+			responseCallback(data);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			responseCallback(null);
+			handleError(jqXHR, textStatus, errorThrown);
+		},
+		complete: function() {
+			window.setTimeout(function() {
+				$content.toggleClass('sk-loading');
+			}, 1000);
+		}
+	});
+}
 </script>

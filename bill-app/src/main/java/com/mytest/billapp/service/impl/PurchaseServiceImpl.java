@@ -24,7 +24,7 @@ import com.mytest.billapp.repsitory.PurchaseRepository;
 import com.mytest.billapp.repsitory.StockRepository;
 import com.mytest.billapp.repsitory.VendorRepository;
 import com.mytest.billapp.service.PurchaseService;
-import com.mytest.billapp.utils.Utils;
+import com.mytest.billapp.utils.AppUtils;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -263,12 +263,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 			purchaseDTO.setId(p.getId());
 			purchaseDTO.setBillDate(sdf.format(p.getBillDate()));
 			purchaseDTO.setBillNo(p.getBillNo());
-			purchaseDTO.setBillTotal(Utils.formatDecimals(p.getBillTotal()));
-			purchaseDTO.setDiscount(Utils.formatDecimals(p.getDiscount()));
-			purchaseDTO.setDiscountedAmount(Utils.formatDecimals(p.getDiscountedAmount()));
+			purchaseDTO.setBillTotal(AppUtils.formatDecimals(p.getBillTotal()));
+			purchaseDTO.setDiscount(AppUtils.formatDecimals(p.getDiscount()));
+			purchaseDTO.setDiscountedAmount(AppUtils.formatDecimals(p.getDiscountedAmount()));
 			purchaseDTO.setDiscountType(p.getDiscountType());
 			purchaseDTO.setEntryDate(sdf.format(p.getEntryDate()));
-			purchaseDTO.setNetTotal(Utils.formatDecimals(p.getNetTotal()));
+			purchaseDTO.setNetTotal(AppUtils.formatDecimals(p.getNetTotal()));
 			Vendor v = p.getVendor();
 			if(v != null)
 			{

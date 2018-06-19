@@ -21,6 +21,7 @@ import com.mytest.billapp.model.ProductItems;
 import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.NotesRepository;
 import com.mytest.billapp.service.ProductService;
+import com.mytest.billapp.service.SalesService;
 import com.mytest.billapp.service.StockService;
 import com.mytest.billapp.service.VendorService;
 import com.mytest.billapp.view.SaleEntryView;
@@ -40,6 +41,9 @@ public class NoteRestController {
 	
 	@Autowired
 	StockService stockService;
+	
+	@Autowired
+	SalesService salesService;
 	
 	@GetMapping("/notes")
 	public List<Notes> getAllNotes() {
@@ -119,11 +123,14 @@ public class NoteRestController {
 	
 	@PostMapping("sale/saveSale")
 	public boolean saveSale(@RequestBody List<SaleEntryView> saleEntryViewList) {
-		
-		System.out.println("############## "+saleEntryViewList);
-		
-		
-		return false;
+		try {
+			System.out.println("############## "+saleEntryViewList);
+			salesService.saveSales(saleEntryViewList);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }

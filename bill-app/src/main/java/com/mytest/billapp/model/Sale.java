@@ -41,8 +41,9 @@ public class Sale  extends BEntity implements Serializable {
 	@Column(name = "INVOICE_NO")
 	private String invoiceNo;
 	
+	
+	@Column(name="INVOICE_DATE", columnDefinition="TIMESTAMP(6)")
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="INVOICE_DATE")
 	private Date invoiceDate;
 	
 	@Temporal(TemporalType.TIMESTAMP)

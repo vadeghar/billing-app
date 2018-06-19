@@ -2,6 +2,8 @@ package com.mytest.billapp.view;
 
 public class SaleEntryView {
 	
+	private Long saleId;
+	private Long saleItemId;
 	private String productDescription;
 	private Double rate;
 	private Integer quantity;
@@ -13,6 +15,13 @@ public class SaleEntryView {
 	private Double discount;
 	private Double netTotal;
 	
+	
+	public Long getSaleId() {
+		return saleId;
+	}
+	public void setSaleId(Long saleId) {
+		this.saleId = saleId;
+	}
 	public String getProductDescription() {
 		return productDescription;
 	}
@@ -72,6 +81,13 @@ public class SaleEntryView {
 	}
 	public void setNetTotal(Double netTotal) {
 		this.netTotal = netTotal;
+	}
+	
+	public Long getSaleItemId() {
+		return saleItemId;
+	}
+	public void setSaleItemId(Long saleItemId) {
+		this.saleItemId = saleItemId;
 	}
 	@Override
 	public String toString() {
