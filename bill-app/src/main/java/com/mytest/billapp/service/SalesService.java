@@ -6,6 +6,6 @@ import com.mytest.billapp.view.SaleEntryView;
 
 public interface SalesService {
 	
-	public boolean saveSales( List<SaleEntryView> saleEntryViewList);
+	public String saveSales( List<SaleEntryView> saleEntryViewList);
 
 }

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,22 +33,28 @@ public class SalesServiceImpl implements SalesService {
 	StockRepository stockRepository;
 
 	@Override
-	public boolean saveSales(List<SaleEntryView> saleEntryViewList) {
+	public String saveSales(List<SaleEntryView> saleEntryViewList) {
 		
-		if(CollectionUtils.isEmpty(saleEntryViewList)) return false;
+		if(CollectionUtils.isEmpty(saleEntryViewList)) return StringUtils.EMPTY;
 		int i = 1;
-		List<Sale> existingSales = salesRepository.findByInvoiceDate(new java.sql.Date(new Date().getTime()));
-		if(CollectionUtils.isEmpty(existingSales))
-			existingSales = new ArrayList<>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		String yyyyMMdd = sdf.format(new Date());
+		String lastInvoiceNo = salesRepository. findLatesetInvoiceNo();
+		String nextInvoiceNo = StringUtils.EMPTY;
+		if(StringUtils.isEmpty(lastInvoiceNo))
+			nextInvoiceNo = yyyyMMdd+"0";
+		else {
+			Long temp = new Long(lastInvoiceNo);
+			nextInvoiceNo = (temp+1) + "";
+		}
+		
 		Sale savedSale = null;
 		for(SaleEntryView saleEntry : saleEntryViewList ) {
 			Stock stock = stockRepository.findByItemCode(saleEntry.getItemCode());
 			Integer existingQty = stock.getQuantity();
 			if(existingQty < saleEntry.getQuantity()) {
 				// Requested quantity is more than existing quantity 
-				return false;
+				return StringUtils.EMPTY;
 			}
 			if(saleEntry.getSaleId() == null || saleEntry.getSaleId().intValue() == 0) {
 				try {
@@ -57,7 +64,7 @@ public class SalesServiceImpl implements SalesService {
 						sale.setDiscount(saleEntry.getDiscount());
 						sale.setDiscountedAmount(AppUtils.getDiscountedValue(saleEntry.getInvoiceTotal(), saleEntry.getDiscount(), saleEntry.getDiscountType()));
 						sale.setDiscountType(saleEntry.getDiscountType());
-						sale.setInvoiceNo(yyyyMMdd+existingSales.size());
+						sale.setInvoiceNo(nextInvoiceNo);
 						sale.setInvoiceTotal(saleEntry.getInvoiceTotal());
 						sale.setNetTotal(saleEntry.getNetTotal());
 						sale.setEntryDate(new Date());
@@ -81,8 +88,9 @@ public class SalesServiceImpl implements SalesService {
 			}
 			i++;
 		}
-		
-		return false;
+		if(savedSale != null)
+			return savedSale.getInvoiceNo();
+		return StringUtils.EMPTY;
 	}
 
 }

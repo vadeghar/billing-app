@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -122,14 +123,15 @@ public class NoteRestController {
 	}
 	
 	@PostMapping("sale/saveSale")
-	public boolean saveSale(@RequestBody List<SaleEntryView> saleEntryViewList) {
+	public String saveSale(@RequestBody List<SaleEntryView> saleEntryViewList) {
+		String invoiceNo = StringUtils.EMPTY;
 		try {
 			System.out.println("############## "+saleEntryViewList);
-			salesService.saveSales(saleEntryViewList);
-			return true;
+			invoiceNo = salesService.saveSales(saleEntryViewList);
+			return invoiceNo;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return invoiceNo;
 		}
 	}
 

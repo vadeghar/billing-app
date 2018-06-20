@@ -20,6 +20,8 @@
 	<!-- Responsive CSS -->
 	<link href="${pageContext.request.contextPath}/assets/css/responsive.css" rel="stylesheet">
 
+	<link href="${pageContext.request.contextPath}/vendor/bootstrap/css/dataTables/datatables.min.css" rel="stylesheet">
+	
 	<!-- Date picker CSS -->
 	<link href="${pageContext.request.contextPath}/assets/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
 	
@@ -85,6 +87,8 @@
 	<!-- Plugin JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
+	<script src="${pageContext.request.contextPath}/assets/js/dataTables/datatables.min.js" type="text/javascript"></script>
+
 	<!-- Date Picker JS-->
 	<script src="${pageContext.request.contextPath}/assets/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 	
@@ -121,7 +125,34 @@
 						swal("Cancel", "Go to your Dashboard.", "error");
 					}
 				});
-			});			
+			});		
+			
+			
+			
+			
+			$('.printable-table').DataTable({
+                pageLength: 25,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy'},
+                    {extend: 'csv'},
+                    {extend: 'excel', title: 'My Test Data'},
+                    {extend: 'pdf', title: 'My Data'},
+
+                    {extend: 'print',
+                     customize: function (win){
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                    }
+                    }
+                ]
+
+            });
 		});
 	</script>
 </body>
