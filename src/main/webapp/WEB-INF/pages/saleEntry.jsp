@@ -202,15 +202,33 @@ $('#generateInvoice').click(function() {
 	saleEntryView.discountType = discountType;
 	saleEntryView.discount = $('#discount').val();
 	saleEntryView.netTotal = $('#netTotal').val();
-	simpleDataCall("ajax/sale/saveSale", "Save sale", $(".salePart"), saleEntryViewList, submitAfterSave)
+	simpleDataCall("ajax/sale/saveSale", "Save sale", $(".salePart"), saleEntryViewList, printAfterSave)
 });
 
-function submitAfterSave(result) {
-	if(result == null){
-		alert("Not Saved");
+function printAfterSave(invoiceNo) {
+	if(invoiceNo != null){
+		alert("Saved");
+		printInvoice(saleEntryViewList, invoiceNo);
 	}else{
-		alert("Saved.."+result);
+		alert(" Not Saved..");
 	}
+}
+
+function printContent(invoiceTable) {
+	return "<html><head><link href='vendor/bootstrap/css/bootstrap.min.css' rel='stylesheet'><script>function step1(){\n" +
+			"setTimeout('step2()', 10);}\n" +
+			"function step2(){window.print();window.close()}\n" +
+			"</scri" + "pt></head><body class='text-center' onload='step1()'>\n" +
+			""+invoiceTable+"</body></html>";
+}
+
+function printInvoice(saleEntryViewList, invoiceNo) {
+	Pagelink = "about:blank";
+	var pwa = window.open(Pagelink, "_new");
+	pwa.document.open();
+	var invoiceTable = document.getElementById("saleEntries").innerHTML;
+	pwa.document.write(printContent(invoiceTable));
+	pwa.document.close();
 }
 
 function simpleDataCall(url, title, $content, requestData, responseCallback) {
