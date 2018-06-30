@@ -46,12 +46,30 @@
 						<ul class="dropdown-menu" aria-labelledby="themes">
 							<li><a href="#" id="productList" >Product</a> </li>
 							<li><a href="#"  id="vendorList" title="Platform Migration" >Vendor</a></li>
-							<li><a href="page2.html" title="Platform Migration">Page 2</a></li>
 						</ul>
 					</li>
-					<li><a href="#" id="purchaseList">Purchase</a> </li>
-					<li><a href="#"   id="saleEntry" >Sales Invoice</a> </li>
-					<li><a href="#"   id="repList" >Reports</a> </li>
+					<li class="dropdown"><a class="dropdown-link" href="#">Inventory</a>
+						<span class="dropdown-caret dropdown-toggle"
+							data-toggle="dropdown"> <b
+								class="caret glyphicon glyphicon-menu-right"></b>
+						</span>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="#" id="purchaseList" >Purchase</a> </li>
+							<li><a href="#"  id="saleEntry" title="Platform Migration" >New Sale</a></li>
+						</ul>
+					</li>
+					<li class="dropdown"><a class="dropdown-link" href="#">Reports</a>
+						<span class="dropdown-caret dropdown-toggle"
+							data-toggle="dropdown"> <b
+								class="caret glyphicon glyphicon-menu-right"></b>
+						</span>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="#" id="purchaseList" >Available Stock</a> </li>
+							<li><a href="#" id="purchaseList" >Purchase Report</a> </li>
+							<li><a href="#"  id="saleEntry" title="Platform Migration" >Sales Report</a></li>
+						</ul>
+					</li>
+
 					<li><a href="#"  id="notesList" >Notes</a></li>
 					<li><a href="#"  id="contactus" >Contact Us</a> </li>
 				</ul>
