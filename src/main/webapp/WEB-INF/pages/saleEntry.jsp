@@ -7,6 +7,7 @@
 .sweet-alert p  {
 	display: none;
 }
+
 </style>
 <div class="col-lg-6">
 	<div class="column-section mright20">
@@ -91,7 +92,7 @@
 </div>
 
 </form:form>
-
+<div id="invoicePrintData"></div>
 <script type="text/javascript">
 var saleEntryViewList = [];
 var _headers = {};
@@ -205,16 +206,65 @@ $('#generateInvoice').click(function() {
 	simpleDataCall("ajax/sale/saveSale", "Save sale", $(".salePart"), saleEntryViewList, printAfterSave)
 });
 
-function printAfterSave(invoiceNo) {
-	if(invoiceNo != null){
-		alert("Saved");
-		printInvoice(saleEntryViewList, invoiceNo);
+function printAfterSave(invoicePrintView) {
+	if(invoicePrintView != null){
+		printInvoice(invoicePrintView, '#invoicePrintData');
+		//printInvoice(saleEntryViewList, invoicePrintView);
 	}else{
 		alert(" Not Saved..");
 	}
 }
 
-function printContent(invoiceTable) {
+function printInvoice(invoicePrintData, element) {
+	Popup($(element).html(), invoicePrintData);	
+}
+
+
+function Popup(divElementData, invoicePrintData) {
+	 var mywindow = window.open('', 'Invoice', '_new');
+     mywindow.document.write('<html><head><title>Invoice Print</title>');
+     /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+		//mywindow.document.write('<style type="text/css">table { border-collapse: collapse; padding-left:10px} tr { border: solid; border-width: 1px 0; padding-left:10px} tr:first-child { border-top: none;} tr:last-child { border-bottom: none; }</style>');
+		mywindow.document.write('<style type="text/css">@media print   @page  {  size: 5.5in 8.5in ; size: landscape;  } }</style>');
+     mywindow.document.write("</head><body><div class='invoiceData'>");
+     
+     var tableData = "<table style='width:325px; text-align: center;'>"+
+					 "<tr><tr>-----------------------------------------------------------</tr></tr>"+
+					 "<tr><td>"+invoicePrintData.invoiceHeader.businessName+"</td></tr>" +
+					 "<tr><td>"+invoicePrintData.invoiceHeader.addressLine1+"</td></tr>"+
+					 "<tr><td>"+invoicePrintData.invoiceHeader.addressLine2+"</td></tr>"+
+					 "<tr><td> Email: "+invoicePrintData.invoiceHeader.email+"</td></tr>"+
+					 "<tr><td>-----------------------------------------------------------</td></tr>"+
+					 "</table><br/>"+
+					 "<table style='width:320px;'><tr><td>Inv. No: "+invoicePrintData.invoiceNumber+"</td><td style='text-align: right;'>Date: "+invoicePrintData.invoiceDate+"</td></tr>";
+					 
+	 if ( invoicePrintData.invoiceItems.length != 0 ) {					
+			tableData += "<table style='width:325px;'>"+
+						 "<tr><td colspan='5'>-----------------------------------------------------------</td></tr>"+
+						 "<tr><th>S.No</th><th>Desc</th><th>Rate</th><th>Qty</th><th>Cost</th></tr>"+
+						 "<tr><td colspan='5'>-----------------------------------------------------------</td></tr>";
+							
+			for(var i=0; i < invoicePrintData.invoiceItems.length; i++){
+				tableData += "<tr><td>"+invoicePrintData.invoiceItems[i].srNo+"</td><td>"+invoicePrintData.invoiceItems[i].desc+"</td><td>"+invoicePrintData.invoiceItems[i].rate+"</td><td style='text-align: center;'>"+invoicePrintData.invoiceItems[i].quantity+"</td><td>"+invoicePrintData.invoiceItems[i].totalItemCost+"</td></tr>";
+			}
+			tableData += "<tr><td colspan='5'>-----------------------------------------------------------</td></tr>";
+			tableData += "<tr><td></td><td></td><td></td><td><b>Total:</b> </td><td>"+invoicePrintData.invoiceItemTotal+"</td></tr>";
+			tableData += "<tr><td></td><td></td><td></td><td><b>Discount:</b> </td><td>"+invoicePrintData.invoiceDiscount+"</td></tr>";
+			tableData += "<tr><td></td><td></td><td></td><td><b>Net Total:</b> </td><td>"+invoicePrintData.invoiceNetAmount+"</td></tr>";
+			tableData += "<tr><td colspan='5'>-----------------------------------------------------------</td></tr>";
+			tableData += "<tr><td colspan='5'>Total Purchased: "+invoicePrintData.itemCount+"</td></tr>";
+			tableData += "<tr><td colspan='5'>-----------------------------------------------------------</td></tr>";
+			tableData += "</table>";
+		}
+	 
+	 mywindow.document.write(tableData);
+     mywindow.document.write('</div></body></html>');
+    mywindow.print();
+    mywindow.close();
+     return true;
+}
+
+/* function printContent(invoiceTable) {
 	return "<html><head><link href='vendor/bootstrap/css/bootstrap.min.css' rel='stylesheet'><script>function step1(){\n" +
 			"setTimeout('step2()', 10);}\n" +
 			"function step2(){window.print();window.close()}\n" +
@@ -222,14 +272,14 @@ function printContent(invoiceTable) {
 			""+invoiceTable+"</body></html>";
 }
 
-function printInvoice(saleEntryViewList, invoiceNo) {
+function printInvoice(saleEntryViewList, invoicePrintView) {
 	Pagelink = "about:blank";
 	var pwa = window.open(Pagelink, "_new");
 	pwa.document.open();
 	var invoiceTable = document.getElementById("saleEntries").innerHTML;
 	pwa.document.write(printContent(invoiceTable));
 	pwa.document.close();
-}
+} */
 
 function simpleDataCall(url, title, $content, requestData, responseCallback) {
 	$.ajax({

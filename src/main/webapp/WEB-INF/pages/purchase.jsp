@@ -417,7 +417,7 @@ $("#purchaseItemDTO\\.productId").on('change', function() {
 					$.each( result, function(index, productItem){
 						 console.log("Index = " + productItem.id + " value = " + productItem.name); 
 						 $size.append("<option value='"+productItem.id+"'>"+productItem.name+"</option>");
-						})
+						});
 						
 					/* for( var i = 0; i<len; i++){
 						var id = result[i].id;

@@ -16,5 +16,7 @@ public interface  SalesRepository extends JpaRepository<Sale, Long> {
 	
 	@Query("select s1.invoiceNo from Sale s1 where s1.id = (select max(s2.id) from Sale s2) and date(s1.entryDate) = date(current_date()) ")
 	public String findLatesetInvoiceNo();
+	
+	public Sale findByInvoiceNo(String invoiceNo);
 
 }

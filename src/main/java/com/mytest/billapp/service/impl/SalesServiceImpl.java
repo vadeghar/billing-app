@@ -92,5 +92,13 @@ public class SalesServiceImpl implements SalesService {
 			return savedSale.getInvoiceNo();
 		return StringUtils.EMPTY;
 	}
+	
+	public Sale findByInvoiceNo(String invoiceNo) {
+		return salesRepository.findByInvoiceNo(invoiceNo);
+	}
+	
+	public List<SaleItems> findBySaleId(Long saleId) {
+		return salesItemsRepository.findBySaleId(saleId);
+	}
 
 }
