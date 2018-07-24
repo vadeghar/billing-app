@@ -44,8 +44,10 @@
 								class="caret glyphicon glyphicon-menu-right"></b>
 						</span>
 						<ul class="dropdown-menu" aria-labelledby="themes">
-							<li><a href="#" id="productList" >Product</a> </li>
-							<li><a href="#"  id="vendorList" title="Platform Migration" >Vendor</a></li>
+							<li><a href="#" id="productList" >Users</a> </li>
+							<li><a href="#" id="productList" >Customer</a> </li>
+							<li><a href="#" id="productList" >Brand & Product</a> </li>
+							<li><a href="#"  id="vendorList" title="Platform Migration" >Vendor/Supplier</a></li>
 						</ul>
 					</li>
 					<li class="dropdown"><a class="dropdown-link" href="#">Inventory</a>
@@ -54,8 +56,8 @@
 								class="caret glyphicon glyphicon-menu-right"></b>
 						</span>
 						<ul class="dropdown-menu" aria-labelledby="themes">
-							<li><a href="#" id="purchaseList" >Purchase</a> </li>
-							<li><a href="#"  id="saleEntry" title="Platform Migration" >New Sale</a></li>
+							<li><a href="#" id="purchaseList" >Purchases</a> </li>
+							<li><a href="#"  id="saleEntry" title="Platform Migration" >Sales</a></li>
 						</ul>
 					</li>
 					<li class="dropdown"><a class="dropdown-link" href="#">Reports</a>
@@ -64,9 +66,10 @@
 								class="caret glyphicon glyphicon-menu-right"></b>
 						</span>
 						<ul class="dropdown-menu" aria-labelledby="themes">
-							<li><a href="#" id="purchaseList" >Available Stock</a> </li>
+							<li><a href="#" id="purchaseList" >Stock Report</a> </li>
 							<li><a href="#" id="purchaseList" >Purchase Report</a> </li>
 							<li><a href="#"  id="saleEntry" title="Platform Migration" >Sales Report</a></li>
+							<li><a href="#"  id="saleEntry" title="Platform Migration" >Profit/Loss Report</a></li>
 						</ul>
 					</li>
 
