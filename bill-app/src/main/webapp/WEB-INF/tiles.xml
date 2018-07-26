@@ -4,10 +4,25 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">  
         
 <tiles-definitions>  
+
+	<!-- Base Define -->
+    <definition name="empty.definition" template="/WEB-INF/layouts/empty.jsp">  
+        <put-attribute name="body" value="" />  
+    </definition>
+    
+    <definition name="login" extends="empty.definition">  
+        <put-attribute name="body" value="/WEB-INF/pages/login.jsp" />  
+    </definition> 
+    
+    <definition name="logout" extends="empty.definition">  
+        <put-attribute name="body" value="/WEB-INF/pages/login.jsp" />  
+    </definition>  
+    <definition name="accessDenied" extends="empty.definition">  
+        <put-attribute name="body" value="/WEB-INF/pages/accessDenied.jsp" />  
+    </definition>   
  
     <!-- Base Define -->
-    <definition name="base.definition" 
-        template="/WEB-INF/layouts/classic.jsp">  
+    <definition name="base.definition" template="/WEB-INF/layouts/classic.jsp">  
         <put-attribute name="title" value="" />  
         <put-attribute name="header" value="/WEB-INF/common-pages/_header.jsp" />  
         <put-attribute name="menu" value="/WEB-INF/common-pages/_menu.jsp" />  
