@@ -12,6 +12,7 @@ import com.mytest.billapp.model.Brand;
 import com.mytest.billapp.service.BrandService;
 
 @Controller
+@RequestMapping(value="admin")
 public class BrandController {
 	
 	@Autowired
