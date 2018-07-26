@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mytest.billapp.model.Brand;
 import com.mytest.billapp.model.Product;
 import com.mytest.billapp.model.ProductItems;
-import com.mytest.billapp.repsitory.ProductItemsRepository;
 import com.mytest.billapp.service.BrandService;
 import com.mytest.billapp.service.ProductItemsService;
 import com.mytest.billapp.service.ProductService;
