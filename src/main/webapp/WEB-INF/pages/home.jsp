@@ -1,4 +1,4 @@
-<div class="row">
+<%-- <div class="row">
 	<div class="col-md-24">
 		<div class="col-md-5">
 			<div class="service-box text-center">
@@ -69,4 +69,4 @@
 			</div>						
 		</div>						
 	</div>
-</div>
+</div> --%>

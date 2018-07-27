@@ -11,12 +11,12 @@
   				${SPRING_SECURITY_LAST_EXCEPTION.message}
      	</font>
         <p>Login in. To see it in action.</p>
-        <form class="m-t" role="form" action="<%=request.getContextPath()%>/appLogin" method="POST">
+        <form class="m-t" role="form" action="<%=request.getContextPath()%>/login" method="POST">
             <div class="form-group">
-                <input type="text" class="form-control" name="app_username" placeholder="Username" required="">
+                <input type="text" class="form-control" name="email" placeholder="Username" required="">
             </div>
             <div class="form-group">
-                <input type="password" name="app_password" class="form-control" placeholder="Password" required="">
+                <input type="password" name="password" class="form-control" placeholder="Password" required="">
             </div>
             <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
