@@ -24,5 +24,6 @@ public interface UserService {
 	public List<User> findAll();
 	public List<User> findAll(Sort sort);
 	public long count();
+	public User findByEmail(String email);
 
 }

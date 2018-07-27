@@ -159,3 +159,22 @@ CREATE TABLE `billingsoftware`.`sale_items` (
 ALTER TABLE `billingsoftware`.`sale_items` 
 ADD COLUMN `item_added_ts` DATETIME NULL AFTER `item_total`,
 ADD COLUMN `item_updated_ts` DATETIME NULL AFTER `item_added_ts`;
+
+create table role (
+	id int(11), 
+    role varchar(20), 
+    primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `billingsoftware`.`role` (`id`, `role`) VALUES ('1', 'ADMIN');
+INSERT INTO `billingsoftware`.`role` (`id`, `role`) VALUES ('2', 'USER');
+
+CREATE TABLE `user_role` (
+  `user_id` bigint(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `FKa68196081fvovjhkek5m97n3y` (`role_id`),
+  CONSTRAINT `FK859n2jvi8ivhui0rl0esws6o` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FKa68196081fvovjhkek5m97n3y` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `billingsoftware`.`users` (`id`, `EMAIL`, `FIRST_NAME`, `LAST_NAME`, `MOBILE`, `PASSWORD`, `USER_NAME`) VALUES ('2', 'user@gmail.com', 'User', 'Rol', '9875465452', '$2y$12$JmvJp43hi4rsylmfKfB01eG6amMQ1rMBMkAxCpiLNrDcBYCsu8f8a', 'user@gmail.com');

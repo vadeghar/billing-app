@@ -1,13 +1,16 @@
 package com.mytest.billapp.service.impl;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.mytest.billapp.model.Role;
 import com.mytest.billapp.model.User;
+import com.mytest.billapp.repsitory.RoleRepository;
 import com.mytest.billapp.repsitory.UserRepository;
 import com.mytest.billapp.service.UserService;
 
@@ -17,7 +20,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository; 
 	
+	@Autowired
+	RoleRepository roleRepository;
+	
 	public User save(User entity) {
+		Role userRole = roleRepository.findByRole("ADMIN");
+		entity.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
 		return userRepository.save(entity);
 	}
 	
@@ -72,7 +80,9 @@ public class UserServiceImpl implements UserService {
 		return userRepository.count();
 	}
 	
-	
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
 	
 	public User saveAndFlush(User entity) {
 		return userRepository.saveAndFlush(entity);
