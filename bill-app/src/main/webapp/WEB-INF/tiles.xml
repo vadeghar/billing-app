@@ -38,6 +38,11 @@
         <put-attribute name="title" value="Home Page" />  
         <put-attribute name="body" value="/WEB-INF/pages/home.jsp" />  
     </definition>  
+    
+     <definition name="userHome" extends="base.definition">  
+        <put-attribute name="title" value="User Home Page" />  
+        <put-attribute name="body" value="/WEB-INF/pages/user-home.jsp" />  
+    </definition>  
        
     <!-- ContactUs Page -->
     <definition name="contactusPage" extends="base.definition">  

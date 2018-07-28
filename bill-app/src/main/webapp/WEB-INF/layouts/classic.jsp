@@ -20,7 +20,7 @@
 	<!-- Responsive CSS -->
 	<link href="${pageContext.request.contextPath}/assets/css/responsive.css" rel="stylesheet">
 
-	<link href="${pageContext.request.contextPath}/vendor/bootstrap/css/dataTables/datatables.min.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/assets/css/dataTables/datatables.min.css" rel="stylesheet">
 	
 	<!-- Date picker CSS -->
 	<link href="${pageContext.request.contextPath}/assets/css/bootstrap-datepicker3.min.css" rel="stylesheet" />

@@ -9,9 +9,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled=true)
@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/").permitAll()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/registration").permitAll()
-			.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
+			.antMatchers("/admin/**").hasAnyAuthority("ADMIN","USER")/*hasAuthority("ADMIN")*/.anyRequest()
 			.authenticated().and().csrf().disable().formLogin()
 			.loginPage("/login").failureUrl("/login?error=true")
 			.defaultSuccessUrl("/admin/home")
@@ -69,6 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    web
 	       .ignoring()
 	       .antMatchers("/resources/**", "/static/**", "/assets/**", "/vendor/**", "/img/**");
+	    /*DefaultWebSecurityExpressionHandler handler = new DefaultWebSecurityExpressionHandler();
+	    handler.setPermissionEvaluator(new CustomPermissionEvaluator());
+	    web.expressionHandler(handler);*/
 	}
 	
 }

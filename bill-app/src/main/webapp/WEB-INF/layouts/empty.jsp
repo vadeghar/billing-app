@@ -19,9 +19,11 @@
 </head>
 
 <body class="gray-bg">
-
+	<div class="text-center">
+	    <h1 class="logo-name">Invoice+</h1>
+	</div>
 	<tiles:insertAttribute name="body" />
-
+<p class="m-t text-center"> <small>Invoice+ &copy; 2018</small> </p>
  	<!-- Mainly scripts -->
     <script src="${pageContext.request.contextPath}/vendor/jquery/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->

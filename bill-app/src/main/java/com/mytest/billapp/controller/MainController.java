@@ -23,7 +23,10 @@ public class MainController {
 		User user = userService.findByEmail(auth.getName());
 		model.addAttribute("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		model.addAttribute("adminMessage","Content Available Only for Users with Admin Role");
-        return "homePage";
+		if(user.hasRole("ADMIN"))
+			return "homePage";
+		else
+			return "userHome";
     }
     
     /*@RequestMapping(value="/admin/home", method = RequestMethod.GET)

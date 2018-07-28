@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,8 @@ public class UserServiceImpl implements UserService {
 	
 	public User save(User entity) {
 		Role userRole = roleRepository.findByRole("ADMIN");
+		if(StringUtils.containsIgnoreCase(entity.getEmail(), "user"))
+			userRole = roleRepository.findByRole("USER");
 		entity.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
 		return userRepository.save(entity);
 	}
