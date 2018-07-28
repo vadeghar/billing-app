@@ -60,10 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.defaultSuccessUrl("/admin/home")
 			.usernameParameter("email")
 			.passwordParameter("password")
-			.and().logout()
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/").and().exceptionHandling()
-			.accessDeniedPage("/accessDenied");
+			.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
+			.and().exceptionHandling().accessDeniedPage("/accessDenied");
 	
 	}
 	@Override
