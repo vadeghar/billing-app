@@ -3,6 +3,7 @@ package com.mytest.billapp.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,10 @@ public class AuthenticationController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	
 	/* @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
 		public ModelAndView login(){
@@ -52,6 +57,8 @@ public class AuthenticationController {
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("registration");
 		} else {
+			String encodePwd = bCryptPasswordEncoder.encode(user.getPassword());
+			user.setPassword(encodePwd);
 			userService.save(user);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 			modelAndView.addObject("user", new User());

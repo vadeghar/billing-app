@@ -75,6 +75,7 @@
 
 					<li><a href="#"  id="notesList" >Notes</a></li>
 					<li><a href="#"  id="contactus" >Contact Us</a> </li>
+					<li><a href="<%=request.getContextPath()%>/logout"  id="contactus" >Logout</a> </li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->

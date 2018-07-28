@@ -13,6 +13,9 @@
     <definition name="login" extends="empty.definition">  
         <put-attribute name="body" value="/WEB-INF/pages/login.jsp" />  
     </definition> 
+    <definition name="registration" extends="empty.definition">  
+        <put-attribute name="body" value="/WEB-INF/pages/registration.jsp" />  
+    </definition> 
     
     <definition name="logout" extends="empty.definition">  
         <put-attribute name="body" value="/WEB-INF/pages/login.jsp" />  
