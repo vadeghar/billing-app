@@ -18,7 +18,7 @@
 				<div class="col-lg-4">
 					<div class="stride-logo text-center">
 						<a href="#" id="logo">
-							<img class="center-block" src="img/logo.png">
+							<img class="center-block" src="<%=request.getContextPath()%>/img/logo.png">
 						</a>
 					</div>
 				</div>
@@ -38,26 +38,108 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-center">
+					<li class="dropdown"><a class="dropdown-link" href="#">Product/Brand</a>
+						<span class="dropdown-caret dropdown-toggle" data-toggle="dropdown"> 
+								<b class="caret glyphicon glyphicon-menu-right"></b>
+						</span>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="#" id="addProductBrand" >Add Product/ Brand</a> </li>
+							<li><a href="#" id="deletedProducts" >Deleted Products</a> </li>
+							<li><a href="#" id="outOfStockProducts" >Out of Stock</a> </li>
+						</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-link" href="#">Stock</a>
+						<span class="dropdown-caret dropdown-toggle" data-toggle="dropdown"> 
+								<b class="caret glyphicon glyphicon-menu-right"></b>
+						</span>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="#" id="addStock" >Add Stock</a> </li>
+							<li><a href="#" id="deletedStock" >Deleted Stock</a> </li>
+							<li><a href="#" id="lowStock" >Low Stock</a> </li>
+							<li><a href="#" id="outOfStockProducts" >Out of Stock</a> </li>
+						</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-link" href="#">Orders</a>
+						<span class="dropdown-caret dropdown-toggle" data-toggle="dropdown"> 
+								<b class="caret glyphicon glyphicon-menu-right"></b>
+						</span>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="#" id="newOrder" >New Order</a> </li>
+							<li><a href="#" id="deletedOrders" >Orders</a> </li>
+							<li><a href="#" id="cancelledOrders" >Deleted/Cancelled Orders</a> </li>
+						</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-link" href="#">Suppliers</a>
+						<span class="dropdown-caret dropdown-toggle" data-toggle="dropdown"> 
+								<b class="caret glyphicon glyphicon-menu-right"></b>
+						</span>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="#" id="newSupplier" >New Supplier</a> </li>
+							<li><a href="#" id="allSuppliers" >Suppliers</a> </li>
+							<li><a href="#" id="deletedSuppliers" >Deleted Suppliers</a> </li>
+						</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-link" href="#">Customers</a>
+						<span class="dropdown-caret dropdown-toggle" data-toggle="dropdown"> 
+								<b class="caret glyphicon glyphicon-menu-right"></b>
+						</span>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="#" id="newCustomer" >New Customer</a> </li>
+							<li><a href="#" id="allCustomers" >Customers</a> </li>
+							<li><a href="#" id="deletedCustomer" >Deleted Customers</a> </li>
+						</ul>
+					</li>
+				
+					<li class="dropdown"><a class="dropdown-link" href="#">Sales Orders</a>
+						<span class="dropdown-caret dropdown-toggle" data-toggle="dropdown"> 
+								<b class="caret glyphicon glyphicon-menu-right"></b>
+						</span>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="#" id="newSalesOrders" >New SalesOrder</a> </li>
+							<li><a href="#" id="allSalesOrders" >Sales Orders</a> </li>
+							<li><a href="#" id="deletedSalesOrders" >Deleted Sales Orders</a> </li>
+						</ul>
+					</li>
+					
+					<li class="dropdown"><a class="dropdown-link" href="#">Staff</a>
+						<span class="dropdown-caret dropdown-toggle" data-toggle="dropdown"> 
+								<b class="caret glyphicon glyphicon-menu-right"></b>
+						</span>
+						<ul class="dropdown-menu" aria-labelledby="themes">
+							<li><a href="#" id="newStaff" >New Staff</a> </li>
+							<li><a href="#" id="allStaff" >Staff</a> </li>
+							<li><a href="#" id="deletedStaff" >Deleted Staff</a> </li>
+						</ul>
+					</li>
+				
+				
+				
+				
 					<li class="dropdown"><a class="dropdown-link" href="#">Master</a>
 						<span class="dropdown-caret dropdown-toggle"
 							data-toggle="dropdown"> <b
 								class="caret glyphicon glyphicon-menu-right"></b>
 						</span>
 						<ul class="dropdown-menu" aria-labelledby="themes">
-							<li><a href="#" id="productList" >Users</a> </li>
-							<li><a href="#" id="productList" >Customer</a> </li>
+							<li><a href="#" id="userList" >Users</a> </li>
+							<li><a href="#" id="customerList" >Customer</a> </li>
 							<li><a href="#" id="productList" >Brand & Product</a> </li>
 							<li><a href="#"  id="vendorList" title="Platform Migration" >Vendor/Supplier</a></li>
 						</ul>
 					</li>
 					<li class="dropdown"><a class="dropdown-link" href="#">Inventory</a>
-						<span class="dropdown-caret dropdown-toggle"
-							data-toggle="dropdown"> <b
-								class="caret glyphicon glyphicon-menu-right"></b>
+						<span class="dropdown-caret dropdown-toggle" data-toggle="dropdown"> 
+							<b class="caret glyphicon glyphicon-menu-right"></b>
 						</span>
 						<ul class="dropdown-menu" aria-labelledby="themes">
 							<li><a href="#" id="purchaseList" >Purchases</a> </li>
-							<li><a href="#"  id="saleEntry" title="Platform Migration" >Sales</a></li>
+							<li><a href="#"  id="saleList" title="Platform Migration" >Sales</a></li>
+							<li><a href="#" id="purchaseEntry">New Purchases</a> </li>
+							<li><a href="#"  id="saleEntry" title="Platform Migration" >New Sale</a></li>
 						</ul>
 					</li>
 					<li class="dropdown"><a class="dropdown-link" href="#">Reports</a>

@@ -16,6 +16,4 @@
 <security:authorize access="hasAuthority('USER')">
  User Login
 </security:authorize>
-
-<br>
-This is ADMIN home page
+This is user home page

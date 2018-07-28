@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -126,6 +128,19 @@ public class User extends BEntity implements Serializable {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+	
+	public boolean hasRole(String role) {
+		boolean found = false;
+		if(CollectionUtils.isNotEmpty(this.getRoles())) {
+			for(Role r : this.getRoles()) {
+				if(!found) {
+					return StringUtils.equalsIgnoreCase(r.getRole(), role);
+				}
+			}
+		}
+		System.out.println("Role Not found on "+this.getEmail());
+		return found;
 	}
 
 }
