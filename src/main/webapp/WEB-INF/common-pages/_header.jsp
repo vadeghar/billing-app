@@ -38,7 +38,7 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-center">
-					<li class="dropdown"><a class="dropdown-link" href="#">Product/Brand</a>
+					<!-- <li class="dropdown"><a class="dropdown-link" href="#">Product/Brand</a>
 						<span class="dropdown-caret dropdown-toggle" data-toggle="dropdown"> 
 								<b class="caret glyphicon glyphicon-menu-right"></b>
 						</span>
@@ -115,7 +115,7 @@
 							<li><a href="#" id="deletedStaff" >Deleted Staff</a> </li>
 						</ul>
 					</li>
-				
+				 -->
 				
 				
 				

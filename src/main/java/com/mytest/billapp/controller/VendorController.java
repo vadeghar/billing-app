@@ -25,7 +25,6 @@ public class VendorController {
 	}
 	
 	@RequestMapping(value = "saveVendor", method = RequestMethod.POST)
-	@PreAuthorize("hasRole('ADMIN')")
 	public String saveVendor(@ModelAttribute Vendor vendor, Model model) {
 		try {
 			vendorService.save(vendor);
