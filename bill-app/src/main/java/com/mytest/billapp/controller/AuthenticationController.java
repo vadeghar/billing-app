@@ -3,6 +3,8 @@ package com.mytest.billapp.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -33,7 +35,19 @@ public class AuthenticationController {
 	 
 	@RequestMapping(value={"/", "/login"},  method = RequestMethod.GET)
     public String login() {
-        return "login";
+		String page = "login";
+		String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal == null) return page;
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails)principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        if(userName == null || userName.equals("anonymousUser"))
+        	return page;
+        else 
+        	return "admin/home";
     }
 	
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
