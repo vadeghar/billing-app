@@ -22,8 +22,8 @@
                <td>${brand.id}</td>
                <%-- <td>${brand.title}</td>
                <td>${brand.content}</td> --%>
-               <td><a href='${pageContext.request.contextPath}/brand/${brand.id}'>Edit</a>
-                   <a href='${pageContext.request.contextPath}/brand/delete/${brand.id}'>Delete</a>
+               <td><a href='${pageContext.request.contextPath}/admin/brand/${brand.id}'>Edit</a>
+                   <a href='${pageContext.request.contextPath}/admin/brand/delete/${brand.id}'>Delete</a>
               </td>
            </tr>
          </c:forEach>

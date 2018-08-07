@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<form:form action="${pageContext.request.contextPath}/savePurchase" method="post" modelAttribute="purchaseView"  id="myForm" >
+<form:form action="${pageContext.request.contextPath}/admin/savePurchase" method="post" modelAttribute="purchaseView"  id="myForm" >
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${purchaseView.message}"/></div>
  <div class="col-lg-6">
  	<div class="column-section mright20">
@@ -300,14 +300,14 @@ $( document ).ready(function() {
 
 function addPurchaseItem() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "${pageContext.request.contextPath}/addPurchaseItem";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/addPurchaseItem";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 	
 }
 function listPurchaseItem() {
 	document.getElementById("selectedId").value = $('#purchaseItemDTO\\.purchaseId').val();
-	document.getElementById("myForm").action = "${pageContext.request.contextPath}/loadPurchase";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/loadPurchase";
 	document.getElementById("myForm").submit();
 }
 
@@ -315,20 +315,20 @@ function listPurchaseItem() {
 
 function editPurchase(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "${pageContext.request.contextPath}/purchase";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/purchase";
 	document.getElementById("myForm").submit();
 }
 
 function editPurchaseItem(purchaseItemId) {
 	document.getElementById("selectedPurchaseItemId").value = purchaseItemId;
-	document.getElementById("myForm").action = "${pageContext.request.contextPath}/loadPurhcaseItem";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/loadPurhcaseItem";
 	document.getElementById("myForm").submit();
 }
 
 function deletePurchaseItem(purchaseItemId) {
 	document.getElementById("selectedPurchaseItemId").value = purchaseItemId;
 	if(confirm("Are you sure?")) {
-		document.getElementById("myForm").action = "${pageContext.request.contextPath}/deletePurchaseItem";
+		document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/deletePurchaseItem";
 		document.getElementById("myForm").submit();
 	}
 	
@@ -520,14 +520,14 @@ $('[name="purchase.discountType"]').click(function() {
 
 function savePurchase() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "${pageContext.request.contextPath}/savePurchase";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/savePurchase";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 }
 
 function navigate(actionName) {
 	if(actionName != '') {
-		document.getElementById("headerForm").action = "${pageContext.request.contextPath}/"+actionName;
+		document.getElementById("headerForm").action = "${pageContext.request.contextPath}/admin/"+actionName;
 		document.getElementById("headerForm").submit();
 	}else {
 		window.location = 'http://localhost:8090/home';

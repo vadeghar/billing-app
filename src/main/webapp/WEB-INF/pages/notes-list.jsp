@@ -49,13 +49,13 @@
 
 function editNotes(id) {
 	document.getElementById("selectedId").value = id;
-	document.getElementById("myForm").action = "/notes";
+	document.getElementById("myForm").action = "/admin/notes";
 	document.getElementById("myForm").submit();
 }
 
 function addNotes() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/notes";
+	document.getElementById("myForm").action = "/admin/notes";
 	document.getElementById("myForm").submit();
 }
 
@@ -70,7 +70,7 @@ function deleteNotes(id) {
 		.then((willDelete) => {
 		  if (willDelete) {
 			document.getElementById("selectedId").value = id;
-			document.getElementById("myForm").action = "/deleteNotes";
+			document.getElementById("myForm").action = "/admin/deleteNotes";
 			document.getElementById("myForm").submit();
 		  } else {
 		    

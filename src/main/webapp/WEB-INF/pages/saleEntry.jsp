@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<form:form action="${pageContext.request.contextPath}/saveSaleEntry" method="post" id="myForm" modelAttribute="sale">
+<form:form action="${pageContext.request.contextPath}/admin/saveSaleEntry" method="post" id="myForm" modelAttribute="sale">
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
 <style type="text/css">
 .sweet-alert p  {

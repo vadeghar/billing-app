@@ -11,7 +11,7 @@ import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Stock;
 import com.mytest.billapp.service.StockService;
 
-@Controller
+@Controller(value="admin")
 public class StockController {
 	
 	@Autowired

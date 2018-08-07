@@ -11,7 +11,7 @@ import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Notes;
 import com.mytest.billapp.service.NotesService;
 
-@Controller
+@Controller(value="admin")
 public class NotesController {
 	
 	@Autowired

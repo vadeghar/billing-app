@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mytest.billapp.model.User;
 import com.mytest.billapp.service.UserService;
 
-@Controller
+@Controller(value="admin")
 public class MainController {
 	
 	@Autowired
 	UserService userService;
  
-    @RequestMapping(value = { "/admin/home" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
     public String homePage(Model model) {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findByEmail(auth.getName());
@@ -40,7 +40,7 @@ public class MainController {
 		return modelAndView;
 	}*/
     
-    @RequestMapping(value = { "user/contactus" }, method = RequestMethod.POST)
+    @RequestMapping(value = { "contactus" }, method = RequestMethod.POST)
     public String contactusPage(Model model) {
     	model.addAttribute("name", "Lakshman.V");
         model.addAttribute("address", "Hyderabad");
