@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <div class="form-inline margin-top-30">
-<form:form action="${pageContext.request.contextPath}/saveBrand" method="post" modelAttribute="brand"  id="myForm" >
+<form:form action="${pageContext.request.contextPath}/admin/saveBrand" method="post" modelAttribute="brand"  id="myForm" >
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
 <input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="Refresh" onclick="listBrand()" >
 		
@@ -164,14 +164,14 @@ $( document ).ready(function() {
 
 function saveBrand() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/saveBrand";
+	document.getElementById("myForm").action = "/admin/saveBrand";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 	
 }
 function listBrand() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/brand";
+	document.getElementById("myForm").action = "/admin/brand";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 }
@@ -184,7 +184,7 @@ function listBrand() {
 
 function editBrand(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "/brand";
+	document.getElementById("myForm").action = "/admin/brand";
 	document.getElementById("myForm").submit();
 }
 
@@ -201,7 +201,7 @@ function deleteBrand(selectedId) {
 		.then((willDelete) => {
 		  if (willDelete) {
 			document.getElementById("selectedId").value = selectedId;
-			document.getElementById("myForm").action = "/deleteBrand";
+			document.getElementById("myForm").action = "/admin/deleteBrand";
 			document.getElementById("myForm").submit();
 		  } else {
 		    

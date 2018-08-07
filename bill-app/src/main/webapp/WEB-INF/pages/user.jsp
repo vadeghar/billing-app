@@ -5,7 +5,7 @@
 <div role="tabpanel" class="account-search" id="">
 	<!-- Tab #4 Content Start -->
 	<div class="account-search collection-status">
-		<form:form action="${pageContext.request.contextPath}/saveUser" method="post" modelAttribute="user" class="form-inline">
+		<form:form action="${pageContext.request.contextPath}/admin/saveUser" method="post" modelAttribute="user" class="form-inline">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">Details</h3>

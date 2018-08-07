@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mytest.billapp.model.Sale;
 
 
-@Controller
+@Controller(value="admin")
 public class SalesController {
 
 	@RequestMapping(value = "saleEntry", method = RequestMethod.POST)

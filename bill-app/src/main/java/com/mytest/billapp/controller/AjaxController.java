@@ -40,7 +40,7 @@ import com.mytest.billapp.view.SaleEntryView;
 
 @RestController
 @RequestMapping("/ajax")
-public class NoteRestController {
+public class AjaxController {
 	
 	@Autowired
 	NotesRepository noteRepository;

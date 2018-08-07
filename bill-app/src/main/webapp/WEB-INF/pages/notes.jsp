@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <div class="form-inline margin-top-30">
-<form:form action="${pageContext.request.contextPath}/saveNotes" method="post" modelAttribute="notes"  id="myForm" >
+<form:form action="${pageContext.request.contextPath}/admin/saveNotes" method="post" modelAttribute="notes"  id="myForm" >
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
 <input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="Refresh" onclick="listNotes()" >
 		
@@ -112,14 +112,14 @@ $( document ).ready(function() {
 
 function saveNotes() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/saveNotes";
+	document.getElementById("myForm").action = "/admin/saveNotes";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 	
 }
 function listNotes() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/notes";
+	document.getElementById("myForm").action = "/admin/notes";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 }
@@ -132,7 +132,7 @@ function listNotes() {
 
 function editNotes(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "/notes";
+	document.getElementById("myForm").action = "/admin/notes";
 	document.getElementById("myForm").submit();
 }
 
@@ -149,7 +149,7 @@ function deleteNotes(selectedId) {
 		.then((willDelete) => {
 		  if (willDelete) {
 			document.getElementById("selectedId").value = selectedId;
-			document.getElementById("myForm").action = "/deleteNotes";
+			document.getElementById("myForm").action = "/admin/deleteNotes";
 			document.getElementById("myForm").submit();
 		  } else {
 		    

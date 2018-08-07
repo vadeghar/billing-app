@@ -18,7 +18,7 @@ import com.mytest.billapp.service.ProductItemsService;
 import com.mytest.billapp.service.ProductService;
 import com.mytest.billapp.view.ProductView;
 
-@Controller
+@Controller(value="admin")
 public class ProductController {
 	
 	@Autowired

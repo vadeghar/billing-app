@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <div class="form-inline margin-top-30">
-<form:form action="${pageContext.request.contextPath}/saveStock" method="post" modelAttribute="stock"  id="myForm" >
+<form:form action="${pageContext.request.contextPath}/admin/saveStock" method="post" modelAttribute="stock"  id="myForm" >
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
 <input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="Refresh" onclick="listStock()" >
 		
@@ -164,14 +164,14 @@ $( document ).ready(function() {
 
 function saveStock() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/saveStock";
+	document.getElementById("myForm").action = "/admin/saveStock";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 	
 }
 function listStock() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/stock";
+	document.getElementById("myForm").action = "/admin/stock";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 }
@@ -184,7 +184,7 @@ function listStock() {
 
 function editStock(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "/stock";
+	document.getElementById("myForm").action = "/admin/stock";
 	document.getElementById("myForm").submit();
 }
 
@@ -201,7 +201,7 @@ function deleteStock(selectedId) {
 		.then((willDelete) => {
 		  if (willDelete) {
 			document.getElementById("selectedId").value = selectedId;
-			document.getElementById("myForm").action = "/deleteStock";
+			document.getElementById("myForm").action = "/admin/deleteStock";
 			document.getElementById("myForm").submit();
 		  } else {
 		    

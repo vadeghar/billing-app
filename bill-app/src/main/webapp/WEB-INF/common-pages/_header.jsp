@@ -176,37 +176,37 @@ $('#logo').on('click', function() {
 });
 
 $('#purchaseList').on('click', function() {
-	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/purchaseList';
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/purchaseList';
 	document.getElementById("headerForm").submit();
 });
 
 $('#saleEntry').on('click', function() {
-	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/saleEntry';
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/saleEntry';
 	document.getElementById("headerForm").submit();
 });
 
 $('#repList').on('click', function() {
-	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/repList';
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/repList';
 	document.getElementById("headerForm").submit();
 });
 
 $('#notesList').on('click', function() {
-	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/notesList';
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/notesList';
 	document.getElementById("headerForm").submit();
 });
 
 $('#contactus').on('click', function() {
-	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/contactus';
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/contactus';
 	document.getElementById("headerForm").submit();
 });
 
 $('#productList').on('click', function() {
-	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/productList';
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/productList';
 	document.getElementById("headerForm").submit();
 });
 
 $('#vendorList').on('click', function() {
-	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/vendorList';
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/vendorList';
 	document.getElementById("headerForm").submit();
 });
 </script>

@@ -22,8 +22,8 @@
                <td>${vendor.id}</td>
                <%-- <td>${vendor.title}</td>
                <td>${vendor.content}</td> --%>
-               <td><a href='${pageContext.request.contextPath}/vendor/${vendor.id}'>Edit</a>
-                   <a href='${pageContext.request.contextPath}/vendor/delete/${vendor.id}'>Delete</a>
+               <td><a href='${pageContext.request.contextPath}/admin/vendor/${vendor.id}'>Edit</a>
+                   <a href='${pageContext.request.contextPath}/admin/vendor/delete/${vendor.id}'>Delete</a>
               </td>
            </tr>
          </c:forEach>

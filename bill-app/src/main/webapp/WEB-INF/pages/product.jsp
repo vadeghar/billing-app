@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<form:form action="${pageContext.request.contextPath}/saveProduct" method="post" id="myForm" modelAttribute="productView">
+<form:form action="${pageContext.request.contextPath}/admin/saveProduct" method="post" id="myForm" modelAttribute="productView">
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${productView.message}"/></div>
 <input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="Refresh" onclick="listProduct()" >
 
@@ -142,14 +142,14 @@ $( document ).ready(function() {
 		var val = $("#myForm").valid();
 		if (val) {
 			document.getElementById("selectedId").value = 0;
-			document.getElementById("myForm").action = "saveProduct";
+			document.getElementById("myForm").action = "admin/saveProduct";
 			document.getElementById("myForm").submit();
 		}
 
 	}
 	function listProduct() {
 		document.getElementById("selectedId").value = 0;
-		document.getElementById("myForm").action = "productList";
+		document.getElementById("myForm").action = "admin/productList";
 		document.getElementById("myForm").submit();
 	}
 </script>
@@ -158,7 +158,7 @@ $( document ).ready(function() {
 
 function editProduct(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "productItems";
+	document.getElementById("myForm").action = "admin/productItems";
 	document.getElementById("myForm").submit();
 }
 
@@ -175,7 +175,7 @@ function deleteProduct(selectedId) {
 		  dangerMode: true,
 		}, function() {
 			document.getElementById("selectedId").value = selectedId;
-			document.getElementById("myForm").action = "deleteProduct";
+			document.getElementById("myForm").action = "admin/deleteProduct";
 			document.getElementById("myForm").submit();
 		});
 		/* .then((willDelete) => {
@@ -227,7 +227,7 @@ function showAddBrand() {
 		    return false
 		  }
 		  $('#newBrnadName').val(inputValue);
-		document.getElementById("myForm").action = "saveBrandInProduct";
+		document.getElementById("myForm").action = "admin/saveBrandInProduct";
 		document.getElementById("myForm").submit();
 		});
 	 
