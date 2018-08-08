@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mytest.billapp.model.User;
 import com.mytest.billapp.service.UserService;
 
-@Controller(value="admin")
+@Controller
+@RequestMapping(value="admin")
 public class MainController {
 	
 	@Autowired

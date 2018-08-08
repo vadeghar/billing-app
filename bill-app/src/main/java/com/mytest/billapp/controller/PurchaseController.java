@@ -29,7 +29,8 @@ import com.mytest.billapp.utils.AppUtils;
 import com.mytest.billapp.view.PurchaseView;
 
 @PropertySource("classpath:application.properties")
-@Controller(value="admin")
+@Controller
+@RequestMapping(value="admin/purchase")
 public class PurchaseController {
 	
 	@Autowired
