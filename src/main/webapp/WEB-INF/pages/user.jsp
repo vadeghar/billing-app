@@ -5,7 +5,7 @@
 <div role="tabpanel" class="account-search" id="">
 	<!-- Tab #4 Content Start -->
 	<div class="account-search collection-status">
-		<form:form action="${pageContext.request.contextPath}/admin/saveUser" method="post" modelAttribute="user" class="form-inline">
+		<form:form action="${pageContext.request.contextPath}/admin/user/saveUser" method="post" modelAttribute="user" class="form-inline">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">Details</h3>
@@ -29,7 +29,7 @@
 							<div class="row margin-top-20">
 								<div class="col-md-12">
 									<button id="btnSubmit" type="submit" class="btn btn-primary add-row">Save</button>
-									<a href="${pageContext.request.contextPath}/userList" data-toggle="tab" class="btn btn-warning">Cancel</a>
+									<a href="${pageContext.request.contextPath}/admin/useruserList" data-toggle="tab" class="btn btn-warning">Cancel</a>
 								</div>									
 							</div>
 						</div>

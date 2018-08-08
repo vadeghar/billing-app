@@ -8,7 +8,7 @@ label {
 </style>
 
 <div class="form-inline margin-top-30">
-<form:form action="${pageContext.request.contextPath}/admin/saveVendor" method="post" modelAttribute="vendor"  id="myForm" >
+<form:form action="${pageContext.request.contextPath}/admin/vendor/saveVendor" method="post" modelAttribute="vendor"  id="myForm" >
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
 <input type="button" class="btn btn-primary add-row" style="margin-top: -40px; float: right;" value="Refresh" onclick="listVendor()" >
 		
@@ -297,20 +297,20 @@ function saveVendor() {
 	var val = $("#myForm").valid();
 	if (val) {
 		document.getElementById("selectedId").value = 0;
-		document.getElementById("myForm").action = "admin/saveVendor";
+		document.getElementById("myForm").action = "admin/vendor/saveVendor";
 		document.getElementById("myForm").submit();
 	}
 	
 }
 function listVendor() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "admin/vendorList";
+	document.getElementById("myForm").action = "admin/vendor/vendorList";
 	document.getElementById("myForm").submit();
 }
 
 function editVendor(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "admin/vendor";
+	document.getElementById("myForm").action = "admin/vendor/vendor";
 	document.getElementById("myForm").submit();
 }
 
@@ -326,7 +326,7 @@ function deleteVendor(selectedId) {
 		  dangerMode: true,
 		}, function() {
 			document.getElementById("selectedId").value = selectedId;
-			document.getElementById("myForm").action = "admin/deleteVendor";
+			document.getElementById("myForm").action = "admin/vendor/deleteVendor";
 			document.getElementById("myForm").submit();
 		});
 }
