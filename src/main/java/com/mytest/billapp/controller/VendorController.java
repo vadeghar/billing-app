@@ -12,7 +12,8 @@ import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.service.VendorService;
 
-@Controller(value="admin")
+@Controller
+@RequestMapping(value="admin/vendor")
 public class VendorController {
 	
 	@Autowired

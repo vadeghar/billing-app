@@ -11,7 +11,8 @@ import com.mytest.billapp.exceptions.ResourceNotFoundException;
 import com.mytest.billapp.model.User;
 import com.mytest.billapp.service.UserService;
 
-@Controller(value="admin")
+@Controller
+@RequestMapping(value="admin/user")
 public class UserController {
 	
 	@Autowired
