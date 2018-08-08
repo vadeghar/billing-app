@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<form:form action="${pageContext.request.contextPath}/admin/purchase" method="post" modelAttribute="purchase"  id="myForm" >
+<form:form action="${pageContext.request.contextPath}/admin/purchase/purchase" method="post" modelAttribute="purchase"  id="myForm" >
 <div id="message"  style="margin-top: -40px; float: left; display: none;"><c:out value="${message}"/></div>
 <div role="tabpanel" class="" id="">	
 <a href="#" id="newPurchase" class="btn glyphicon glyphicon-plus"> New Purchase</a>
@@ -86,14 +86,14 @@ $( document ).ready(function() {
 
 $("#newPurchase").click(function(){
 	$("#selectedId").val(0);
-	document.getElementById("myForm").action = "admin/loadPurchase";
+	document.getElementById("myForm").action = "admin/purchase/loadPurchase";
 	document.getElementById("myForm").submit();
 });
 
 
 function editPurchase(selectedId) {
 	$("#selectedId").val(selectedId);
-	document.getElementById("myForm").action = "admin/loadPurchase";
+	document.getElementById("myForm").action = "admin/purchase/loadPurchase";
 	document.getElementById("myForm").submit();
 }
 
@@ -110,7 +110,7 @@ function deletePurchase(selectedId) {
 		.then((willDelete) => {
 		  if (willDelete) {
 			  $("#selectedId").val(selectedId);
-			document.getElementById("myForm").action = "admin/deletePurchase";
+			document.getElementById("myForm").action = "admin/purchase/deletePurchase";
 			document.getElementById("myForm").submit();
 		  } else {
 		    
