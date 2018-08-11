@@ -86,14 +86,14 @@ $( document ).ready(function() {
 
 $("#newPurchase").click(function(){
 	$("#selectedId").val(0);
-	document.getElementById("myForm").action = "admin/purchase/loadPurchase";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/purchase/loadPurchase";
 	document.getElementById("myForm").submit();
 });
 
 
 function editPurchase(selectedId) {
 	$("#selectedId").val(selectedId);
-	document.getElementById("myForm").action = "admin/purchase/loadPurchase";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/purchase/loadPurchase";
 	document.getElementById("myForm").submit();
 }
 
@@ -110,7 +110,7 @@ function deletePurchase(selectedId) {
 		.then((willDelete) => {
 		  if (willDelete) {
 			  $("#selectedId").val(selectedId);
-			document.getElementById("myForm").action = "admin/purchase/deletePurchase";
+			document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/purchase/deletePurchase";
 			document.getElementById("myForm").submit();
 		  } else {
 		    

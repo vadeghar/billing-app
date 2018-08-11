@@ -1,5 +1,6 @@
 package com.mytest.billapp.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mytest.billapp.dto.SessionUser;
 import com.mytest.billapp.model.User;
 import com.mytest.billapp.service.UserService;
 
@@ -46,8 +48,9 @@ public class AuthenticationController {
         }
         if(userName == null || userName.equals("anonymousUser"))
         	return page;
-        else 
+        else {
         	return "admin/home";
+        }
     }
 	
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
@@ -83,12 +86,13 @@ public class AuthenticationController {
 	}
 	
 	@RequestMapping(value="logout",  method = RequestMethod.GET)
-    public String logout() {
+    public String logout(HttpSession httpSession) {
+		httpSession.removeAttribute("sessionUser");
         return "login";
     }
 	
 	@RequestMapping(value="accessDenied",  method = RequestMethod.GET)
     public String accessDenied() {
-        return "login";
+        return "accessDenied";
     }
 }

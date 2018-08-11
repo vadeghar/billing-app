@@ -164,14 +164,14 @@ $( document ).ready(function() {
 
 function saveBrand() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/admin/brand/saveBrand";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/brand/saveBrand";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 	
 }
 function listBrand() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/admin/brand/brand";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/brand/brand";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 }
@@ -184,7 +184,7 @@ function listBrand() {
 
 function editBrand(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "/admin/brand/brand";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/brand/brand";
 	document.getElementById("myForm").submit();
 }
 
@@ -201,7 +201,7 @@ function deleteBrand(selectedId) {
 		.then((willDelete) => {
 		  if (willDelete) {
 			document.getElementById("selectedId").value = selectedId;
-			document.getElementById("myForm").action = "/admin/brand/deleteBrand";
+			document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/brand/deleteBrand";
 			document.getElementById("myForm").submit();
 		  } else {
 		    

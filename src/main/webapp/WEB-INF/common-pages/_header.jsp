@@ -23,7 +23,16 @@
 					</div>
 				</div>
 
-				<div class="col-lg-4"></div>
+				<ul class="nav navbar-top-links navbar-right">
+					<li>
+						<span class="m-r-sm text-muted welcome-message">Welcome to <c:out value="${sessionScope.sessionUser.userName}"/>.</span>
+					</li>
+					<li>
+						<a href="/logout">
+							<i class="fa fa-sign-out"></i> Log out
+						</a>
+					</li>
+				</ul>
 			</div>
 		</div>
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -176,12 +185,12 @@ $('#logo').on('click', function() {
 });
 
 $('#purchaseList').on('click', function() {
-	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/purchaseList';
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/purchase/purchaseList';
 	document.getElementById("headerForm").submit();
 });
 
 $('#saleEntry').on('click', function() {
-	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/saleEntry';
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/sale/saleEntry';
 	document.getElementById("headerForm").submit();
 });
 
@@ -191,7 +200,7 @@ $('#repList').on('click', function() {
 });
 
 $('#notesList').on('click', function() {
-	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/notesList';
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/notes/notesList';
 	document.getElementById("headerForm").submit();
 });
 
@@ -201,12 +210,12 @@ $('#contactus').on('click', function() {
 });
 
 $('#productList').on('click', function() {
-	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/productList';
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/product/productList';
 	document.getElementById("headerForm").submit();
 });
 
 $('#vendorList').on('click', function() {
-	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/vendorList';
+	document.getElementById("headerForm").action = '${pageContext.request.contextPath}/admin/vendor/vendorList';
 	document.getElementById("headerForm").submit();
 });
 </script>

@@ -9,5 +9,6 @@ import com.mytest.billapp.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	public User findByEmail(String email);
+	public User findByUserName(String userName);
 
 }

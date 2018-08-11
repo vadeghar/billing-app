@@ -104,12 +104,12 @@
         <put-attribute name="title" value="Brand" />  
         <put-attribute name="body" value="/WEB-INF/pages/brand.jsp" />  
     </definition>
-    
+   <!--  
     <definition name="error" extends="base.definition">  
         <put-attribute name="title" value="Error" />  
         <put-attribute name="body" value="/WEB-INF/pages/error.jsp" />  
     </definition>
-    
+    --> 
     <definition name="productItems" extends="base.definition">  
         <put-attribute name="title" value="Product Items" />  
         <put-attribute name="body" value="/WEB-INF/pages/productItems.jsp" />  

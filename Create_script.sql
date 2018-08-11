@@ -178,3 +178,14 @@ CREATE TABLE `user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `billingsoftware`.`users` (`id`, `EMAIL`, `FIRST_NAME`, `LAST_NAME`, `MOBILE`, `PASSWORD`, `USER_NAME`) VALUES ('2', 'user@gmail.com', 'User', 'Rol', '9875465452', '$2y$12$JmvJp43hi4rsylmfKfB01eG6amMQ1rMBMkAxCpiLNrDcBYCsu8f8a', 'user@gmail.com');
+
+
+CREATE TABLE `billingsoftware`.`permissions` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `link` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `link_UNIQUE` (`link` ASC),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC));
+ INSERT INTO `billingsoftware`.`permissions` (`id`, `name`, `link`) VALUES ('1', 'Product', 'product/productList');
+ 
