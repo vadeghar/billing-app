@@ -22,14 +22,12 @@ public class MainController {
 	UserService userService;
  
     @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-    public String homePage(Model model, HttpSession session) {
+    public String homePage(Model model) {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findByEmail(auth.getName());
 		
 		model.addAttribute("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		model.addAttribute("adminMessage","Content Available Only for Users with Admin Role");
-		SessionUser sessionUser = userService.getUserDetails(user.getEmail());
-		session.setAttribute("sessionUser", sessionUser);
 		if(user.hasRole("ADMIN"))
 			return "homePage";
 		else
