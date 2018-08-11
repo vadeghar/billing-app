@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Sort;
 
+import com.mytest.billapp.dto.SessionUser;
 import com.mytest.billapp.model.User;
 
 public interface UserService {
@@ -25,5 +26,6 @@ public interface UserService {
 	public List<User> findAll(Sort sort);
 	public long count();
 	public User findByEmail(String email);
+	public SessionUser getUserDetails(String userName);
 
 }

@@ -157,14 +157,14 @@ $( document ).ready(function() {
 		var val = $("#myForm").valid();
 		if (val) {
 			document.getElementById("selectedId").value = 0;
-			document.getElementById("myForm").action = "admin/product/saveProduct";
+			document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/product/saveProduct";
 			document.getElementById("myForm").submit();
 		}
 
 	}
 	function listProduct() {
 		document.getElementById("selectedId").value = 0;
-		document.getElementById("myForm").action = "admin/product/productList";
+		document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/product/productList";
 		document.getElementById("myForm").submit();
 	}
 </script>
@@ -173,7 +173,7 @@ $( document ).ready(function() {
 
 function editProduct(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "admin/product/product";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/product/product";
 	document.getElementById("myForm").submit();
 }
 
@@ -190,7 +190,7 @@ function deleteProduct(selectedId) {
 		  dangerMode: true,
 		}, function() {
 			document.getElementById("selectedId").value = selectedId;
-			document.getElementById("myForm").action = "admin/product/deleteProduct";
+			document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/product/deleteProduct";
 			document.getElementById("myForm").submit();
 		});
 		/* .then((willDelete) => {
@@ -242,7 +242,7 @@ function showAddBrand() {
 		    return false
 		  }
 		  $('#newBrnadName').val(inputValue);
-		document.getElementById("myForm").action = "admin/product/saveBrandInProduct";
+		document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/product/saveBrandInProduct";
 		document.getElementById("myForm").submit();
 		});
 		
@@ -250,19 +250,19 @@ function showAddBrand() {
 
 
 $('#saveProductItem').on('click', function() {
-	document.getElementById("myForm").action = "admin/product/saveProductItem";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/product/saveProductItem";
 	document.getElementById("myForm").submit();
 });
 
 function editProductItems(itemId) {
 	document.getElementById("selectedId").value = itemId;
-	document.getElementById("myForm").action = "admin/product/editProductItem";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/product/editProductItem";
 	document.getElementById("myForm").submit();
 }
 
 function deleteProductItems(itemId) {
 	document.getElementById("selectedId").value = itemId;
-	document.getElementById("myForm").action = "admin/product/deleteProductItems";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/product/deleteProductItems";
 	document.getElementById("myForm").submit();
 }
 
@@ -271,7 +271,7 @@ $('#editProductItem').on('click', function() {
 });
 $('#cancelProductItem').on('click', function() {
 	document.getElementById("selectedId").value = $('#product\\.id').val();
-	document.getElementById("myForm").action = "admin/product/productItems";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/product/productItems";
 	document.getElementById("myForm").submit();
 });
 

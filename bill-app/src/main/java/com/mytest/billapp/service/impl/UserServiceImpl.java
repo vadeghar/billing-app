@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.mytest.billapp.dto.SessionUser;
 import com.mytest.billapp.model.Role;
 import com.mytest.billapp.model.User;
 import com.mytest.billapp.repsitory.RoleRepository;
@@ -95,6 +96,22 @@ public class UserServiceImpl implements UserService {
 	public List<User> saveAll(List<User> entities) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public User findByUserName(String userName) {
+		return userRepository.findByUserName(userName);
+	}
+
+	@Override
+	public SessionUser getUserDetails(String userName) {
+		User user = findByEmail(userName);
+		if(user == null)
+			user = findByUserName(userName);
+		SessionUser sessionUser = null;
+		if(user != null) {
+			sessionUser = new SessionUser(user.getUserName(), user.getEmail(), true);
+		}
+		return sessionUser;
 	}
 
 }

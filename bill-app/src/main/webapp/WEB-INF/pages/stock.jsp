@@ -164,14 +164,14 @@ $( document ).ready(function() {
 
 function saveStock() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/admin/stock/saveStock";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/stock/saveStock";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 	
 }
 function listStock() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/admin/stock/stock";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/stock/stock";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 }
@@ -184,7 +184,7 @@ function listStock() {
 
 function editStock(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "/admin/stock/stock";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/stock/stock";
 	document.getElementById("myForm").submit();
 }
 
@@ -201,7 +201,7 @@ function deleteStock(selectedId) {
 		.then((willDelete) => {
 		  if (willDelete) {
 			document.getElementById("selectedId").value = selectedId;
-			document.getElementById("myForm").action = "/admin/stock/deleteStock";
+			document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/stock/deleteStock";
 			document.getElementById("myForm").submit();
 		  } else {
 		    

@@ -297,20 +297,20 @@ function saveVendor() {
 	var val = $("#myForm").valid();
 	if (val) {
 		document.getElementById("selectedId").value = 0;
-		document.getElementById("myForm").action = "admin/vendor/saveVendor";
+		document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/vendor/saveVendor";
 		document.getElementById("myForm").submit();
 	}
 	
 }
 function listVendor() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "admin/vendor/vendorList";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/vendor/vendorList";
 	document.getElementById("myForm").submit();
 }
 
 function editVendor(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "admin/vendor/vendor";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/vendor/vendor";
 	document.getElementById("myForm").submit();
 }
 
@@ -326,7 +326,7 @@ function deleteVendor(selectedId) {
 		  dangerMode: true,
 		}, function() {
 			document.getElementById("selectedId").value = selectedId;
-			document.getElementById("myForm").action = "admin/vendor/deleteVendor";
+			document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/vendor/deleteVendor";
 			document.getElementById("myForm").submit();
 		});
 }

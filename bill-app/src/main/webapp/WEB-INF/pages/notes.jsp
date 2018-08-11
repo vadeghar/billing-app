@@ -112,14 +112,14 @@ $( document ).ready(function() {
 
 function saveNotes() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/admin/notes/saveNotes";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/notes/saveNotes";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 	
 }
 function listNotes() {
 	document.getElementById("selectedId").value = 0;
-	document.getElementById("myForm").action = "/admin/notes/notes";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/notes/notes";
 	//document.getElementById("myForm").method = "get";
 	document.getElementById("myForm").submit();
 }
@@ -132,7 +132,7 @@ function listNotes() {
 
 function editNotes(selectedId) {
 	document.getElementById("selectedId").value = selectedId;
-	document.getElementById("myForm").action = "/admin/notes/notes";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/notes/notes";
 	document.getElementById("myForm").submit();
 }
 
@@ -149,7 +149,7 @@ function deleteNotes(selectedId) {
 		.then((willDelete) => {
 		  if (willDelete) {
 			document.getElementById("selectedId").value = selectedId;
-			document.getElementById("myForm").action = "/admin/notes/deleteNotes";
+			document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/notes/deleteNotes";
 			document.getElementById("myForm").submit();
 		  } else {
 		    

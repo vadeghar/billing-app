@@ -1,5 +1,7 @@
 package com.mytest.billapp.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.mytest.billapp.dto.SessionUser;
 import com.mytest.billapp.model.User;
 import com.mytest.billapp.service.UserService;
 
@@ -19,11 +22,14 @@ public class MainController {
 	UserService userService;
  
     @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-    public String homePage(Model model) {
+    public String homePage(Model model, HttpSession session) {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findByEmail(auth.getName());
+		
 		model.addAttribute("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		model.addAttribute("adminMessage","Content Available Only for Users with Admin Role");
+		SessionUser sessionUser = userService.getUserDetails(user.getEmail());
+		session.setAttribute("sessionUser", sessionUser);
 		if(user.hasRole("ADMIN"))
 			return "homePage";
 		else

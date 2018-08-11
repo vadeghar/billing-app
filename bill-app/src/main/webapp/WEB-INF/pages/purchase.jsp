@@ -434,7 +434,7 @@ $("#purchaseItemDTO\\.productId").on('change', function() {
 
 $('#savePurhcaseItem').on('click', function() {
 	$("#selectedPurchaseItemId").val(0);
-	document.getElementById("myForm").action = "purchase/savePurhcaseItem";
+	document.getElementById("myForm").action = "${pageContext.request.contextPath}/admin/purchase/savePurhcaseItem";
 	document.getElementById("myForm").submit();
 });
 
@@ -530,7 +530,7 @@ function navigate(actionName) {
 		document.getElementById("headerForm").action = "${pageContext.request.contextPath}/admin/purchase/"+actionName;
 		document.getElementById("headerForm").submit();
 	}else {
-		window.location = 'http://localhost:8090/home';
+		window.location = '${pageContext.request.contextPath}/home';
 	}
 }
 </script>

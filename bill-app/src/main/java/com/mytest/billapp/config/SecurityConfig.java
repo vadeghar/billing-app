@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private String rolesQuery;
 	
 	@Autowired
-	public void configureGloba(AuthenticationManagerBuilder auth) throws Exception {
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		
 		auth.
 		jdbcAuthentication()
@@ -54,7 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/").permitAll()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/registration").permitAll()
-			.antMatchers("/*/**").hasAnyAuthority("ADMIN","USER")/*hasAuthority("ADMIN")*/.anyRequest()
+			.antMatchers("/admin/**").hasAuthority("ADMIN")
+			.antMatchers("/user/**").hasAnyAuthority("ADMIN","USER")
+			/*hasAuthority("ADMIN")*/.anyRequest()
 			.authenticated().and().csrf().disable().formLogin()
 			.loginPage("/login").failureUrl("/login?error=true")
 			.defaultSuccessUrl("/admin/home")
