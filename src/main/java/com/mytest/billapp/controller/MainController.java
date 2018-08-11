@@ -15,7 +15,6 @@ import com.mytest.billapp.model.User;
 import com.mytest.billapp.service.UserService;
 
 @Controller
-@RequestMapping(value="admin")
 public class MainController {
 	
 	@Autowired

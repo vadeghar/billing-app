@@ -49,7 +49,7 @@ public class AuthenticationController {
         if(userName == null || userName.equals("anonymousUser"))
         	return page;
         else {
-        	return "admin/home";
+        	return "home";
         }
     }
 	

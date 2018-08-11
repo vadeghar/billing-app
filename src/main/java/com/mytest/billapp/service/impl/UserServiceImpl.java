@@ -8,6 +8,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mytest.billapp.dto.SessionUser;
 import com.mytest.billapp.model.Role;
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	RoleRepository roleRepository;
 	
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
 	public User save(User entity) {
 		Role userRole = roleRepository.findByRole("ADMIN");
 		if(StringUtils.containsIgnoreCase(entity.getEmail(), "user"))
@@ -84,6 +87,7 @@ public class UserServiceImpl implements UserService {
 		return userRepository.count();
 	}
 	
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
@@ -98,6 +102,7 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 	
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
 	public User findByUserName(String userName) {
 		return userRepository.findByUserName(userName);
 	}
@@ -110,6 +115,13 @@ public class UserServiceImpl implements UserService {
 		SessionUser sessionUser = null;
 		if(user != null) {
 			sessionUser = new SessionUser(user.getUserName(), user.getEmail(), true);
+			for(Role role: user.getRoles()) {
+				if(role.getRole().equals("ADMIN"))
+					sessionUser.setRole("Admin");
+				else
+					sessionUser.setRole("User");
+			}
+				
 		}
 		return sessionUser;
 	}
