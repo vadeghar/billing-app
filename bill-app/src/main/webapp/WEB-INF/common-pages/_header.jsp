@@ -23,9 +23,10 @@
 					</div>
 				</div>
 
-				<ul class="nav navbar-top-links navbar-right">
+				<ul class="nav navbar-top-links navbar-right" style="font-size: 12px; text-transform: none;">
 					<li>
-						<span class="m-r-sm text-muted welcome-message">Welcome to <c:out value="${sessionScope.sessionUser.userName}"/>.</span>
+						<span class="m-r-sm text-muted welcome-message">Welcome to <c:out value="${sessionScope.sessionUser.userName}"/>. 
+						Logged in as <c:out value="${sessionScope.sessionUser.role}"/></span>
 					</li>
 					<li>
 						<a href="/logout">
