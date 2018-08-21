@@ -15,23 +15,38 @@
 	          </ul>
 	      </div>
 	      <div class="logo-element">
-	          IN+
+	          Invoice+
 	      </div>
 	  </li>
-	  <li class="active">
-	      <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
+	  <!-- <li class="active">
+	      <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Application - Master</span> <span class="fa arrow"></span></a>
 	      <ul class="nav nav-second-level">
-	          <li><a href="index.html">Dashboard v.1</a></li>
-	          <li class="active"><a href="dashboard_2.html">Dashboard v.2</a></li>
-	          <li><a href="dashboard_3.html">Dashboard v.3</a></li>
-	          <li><a href="dashboard_4_1.html">Dashboard v.4</a></li>
-	          <li><a href="dashboard_5.html">Dashboard v.5 </a></li>
+	          <li><a href="index.html">Application Users</a></li>
+	          <li class="active"><a href="dashboard_2.html">Permissions</a></li>
+	          <li><a href="dashboard_3.html">Permission Group</a></li>
+	          <li><a href="dashboard_4_1.html">Role</a></li>
+	          <li><a href="dashboard_5.html">Customers</a></li>
+	      </ul>
+	  </li> -->
+	  <li>
+	      <a href="index.html"><i class="fa fa-server"></i> <span class="nav-label">Application - Master</span> <span class="fa arrow"></span></a>
+	      <ul class="nav nav-second-level">
+	          <li><a href="index.html">Application Users</a></li>
+	          <li><a href="dashboard_2.html">Permissions</a></li>
+	          <li><a href="dashboard_3.html">Permission Group</a></li>
+	          <li><a href="dashboard_4_1.html">Role</a></li>
+	          <li><a href="dashboard_5.html">Customers</a></li>
 	      </ul>
 	  </li>
 	  <li>
-	      <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a>
+	      <a href="index.html"><i class="fa fa-server"></i> <span class="nav-label">Invoice - Master</span> <span class="fa arrow"></span></a>
+	      <ul class="nav nav-second-level">
+	          <li><a href="#">Suppliers</a></li>
+	          <li><a href="#">Brand</a></li>
+	          <li><a href="#">Product Type</a></li>
+	      </ul>
 	  </li>
-	  <li>
+	  <!-- <li>
 	      <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Graphs</span><span class="fa arrow"></span></a>
 	      <ul class="nav nav-second-level collapse">
 	          <li><a href="graph_flot.html">Flot Charts</a></li>
@@ -43,8 +58,8 @@
 	          <li><a href="graph_peity.html">Peity Charts</a></li>
 	          <li><a href="graph_sparkline.html">Sparkline Charts</a></li>
 	      </ul>
-	  </li>
-	  <li>
+	  </li> -->
+	  <!-- <li>
 	      <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Mailbox </span><span class="label label-warning pull-right">16/24</span></a>
 	      <ul class="nav nav-second-level collapse">
 	          <li><a href="mailbox.html">Inbox</a></li>
@@ -52,26 +67,36 @@
 	          <li><a href="mail_compose.html">Compose email</a></li>
 	          <li><a href="email_template.html">Email templates</a></li>
 	      </ul>
+	  </li> -->
+	  <li>
+	      <a href="#"><i class="fa fa-shopping-basket"></i> <span class="nav-label">New Sale</span>  </a>
 	  </li>
 	  <li>
-	      <a href="metrics.html"><i class="fa fa-pie-chart"></i> <span class="nav-label">Metrics</span>  </a>
+	      <a href="#"><i class="fa fa-money"></i> <span class="nav-label">New Purchase</span></a>
 	  </li>
 	  <li>
-	      <a href="widgets.html"><i class="fa fa-flask"></i> <span class="nav-label">Widgets</span></a>
-	  </li>
-	  <li>
-	      <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">Forms</span><span class="fa arrow"></span></a>
+	      <a href="#"><i class="fa fa-life-ring"></i> <span class="nav-label">Purchase</span><span class="fa arrow"></span></a>
 	      <ul class="nav nav-second-level collapse">
-	          <li><a href="form_basic.html">Basic form</a></li>
-	          <li><a href="form_advanced.html">Advanced Plugins</a></li>
-	          <li><a href="form_wizard.html">Wizard</a></li>
-	          <li><a href="form_file_upload.html">File Upload</a></li>
-	          <li><a href="form_editors.html">Text Editor</a></li>
-	          <li><a href="form_autocomplete.html">Autocomplete</a></li>
-	          <li><a href="form_markdown.html">Markdown</a></li>
+	          <li><a href="#">New Purchase</a></li>
+	          <li><a href="form_advanced.html">Purchase List</a></li>
 	      </ul>
 	  </li>
 	  <li>
+	      <a href="#"><i class="fa fa-hdd-o"></i> <span class="nav-label">Sales</span><span class="fa arrow"></span></a>
+	      <ul class="nav nav-second-level collapse">
+	          <li><a href="#">New Sale</a></li>
+	          <li><a href="form_advanced.html">Sales List</a></li>
+	      </ul>
+	  </li>
+	  <li>
+	      <a href="#"><i class="fa fa-print"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
+	      <ul class="nav nav-second-level collapse">
+	          <li><a href="#">Sales Report</a></li>
+	          <li><a href="#">Stock Report</a></li>
+	          <li><a href="#">Purchases Report</a></li>
+	      </ul>
+	  </li>
+	  <!-- <li>
 	      <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">App Views</span>  <span class="pull-right label label-primary">SPECIAL</span></a>
 	      <ul class="nav nav-second-level collapse">
 	          <li><a href="contacts.html">Contacts</a></li>
@@ -95,8 +120,8 @@
 	          <li><a href="timeline.html">Timeline</a></li>
 	          <li><a href="pin_board.html">Pin board</a></li>
 	      </ul>
-	  </li>
-	  <li>
+	  </li> -->
+	  <!-- <li>
 	      <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">Other Pages</span><span class="fa arrow"></span></a>
 	      <ul class="nav nav-second-level collapse">
 	          <li><a href="search_results.html">Search results</a></li>
@@ -192,8 +217,8 @@
 	          <li><a href="carousel.html">Bootstrap Carousel</a></li>
 	
 	      </ul>
-	  </li>
-	  <li>
+	  </li> -->
+	  <!-- <li>
 	      <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label">Menu Levels </span><span class="fa arrow"></span></a>
 	      <ul class="nav nav-second-level collapse">
 	          <li>
@@ -226,5 +251,5 @@
       </li>
       <li class="special_link">
           <a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>
-      </li>
+      </li> -->
   </ul>
