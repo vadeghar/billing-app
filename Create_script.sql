@@ -189,3 +189,20 @@ CREATE TABLE `billingsoftware`.`permissions` (
   UNIQUE INDEX `name_UNIQUE` (`name` ASC));
  INSERT INTO `billingsoftware`.`permissions` (`id`, `name`, `link`) VALUES ('1', 'Product', 'product/productList');
  
+ CREATE TABLE `billingsoftware`.`permission_group` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `permission_groupcol_UNIQUE` (`permission_groupcol` ASC));
+  
+  ALTER TABLE `billingsoftware`.`permissions` 
+ADD COLUMN `permission_group_id` INT NULL AFTER `link`;
+
+ALTER TABLE `billingsoftware`.`permissions` 
+ADD INDEX `permission_group_id_idx` (`permission_group_id` ASC);
+ALTER TABLE `billingsoftware`.`permissions` 
+ADD CONSTRAINT `permission_group_id`
+  FOREIGN KEY (`permission_group_id`)
+  REFERENCES `billingsoftware`.`permission_group` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
