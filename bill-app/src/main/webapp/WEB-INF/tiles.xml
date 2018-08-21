@@ -22,7 +22,25 @@
     </definition>  
     <definition name="accessDenied" extends="empty.definition">  
         <put-attribute name="body" value="/WEB-INF/pages/accessDenied.jsp" />  
-    </definition>   
+    </definition> 
+    
+    <!-- Dashboard 1 Define -->
+    <definition name="base.dashboard1" template="/WEB-INF/layouts/dashboard_1.jsp">  
+        <put-attribute name="title" value=":: Home ::" />  
+        <put-attribute name="header" value="/WEB-INF/dashboard_1/header.jsp" />  
+        <put-attribute name="leftMenu" value="/WEB-INF/dashboard_1/leftMenu.jsp" />  
+        <put-attribute name="content" value="" />  
+        <put-attribute name="footer" value="/WEB-INF/dashboard_1/footer.jsp" />  
+    </definition> 
+    
+    
+    <!--Dashboard1  Home Page  -->
+    <definition name="dashboard1Home" extends="base.dashboard1">  
+        <put-attribute name="title" value=":: Home Page ::" />  
+        <put-attribute name="content" value="/WEB-INF/pages/dashboard_1/testHome.jsp" />  
+    </definition> 
+    
+     
  
     <!-- Base Define -->
     <definition name="base.definition" template="/WEB-INF/layouts/classic.jsp">  
