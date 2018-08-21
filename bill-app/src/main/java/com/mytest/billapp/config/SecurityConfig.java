@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public void configure(WebSecurity web) throws Exception {
 	    web
 	       .ignoring()
-	       .antMatchers("/resources/**", "/static/**", "/assets/**", "/vendor/**", "/img/**");
+	       .antMatchers("/resources/**", "/static/**", "/assets/**", "/vendor/**", "/img/**","/dashboard_1/**");
 	    /*DefaultWebSecurityExpressionHandler handler = new DefaultWebSecurityExpressionHandler();
 	    handler.setPermissionEvaluator(new CustomPermissionEvaluator());
 	    web.expressionHandler(handler);*/

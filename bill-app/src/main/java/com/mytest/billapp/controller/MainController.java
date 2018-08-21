@@ -28,7 +28,7 @@ public class MainController {
 		model.addAttribute("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		model.addAttribute("adminMessage","Content Available Only for Users with Admin Role");
 		if(user.hasRole("ADMIN"))
-			return "homePage";
+			return "dashboard1Home";
 		else
 			return "userHome";
     }
