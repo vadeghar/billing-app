@@ -74,8 +74,12 @@
 
     <!-- Sparkline demo data  -->
     <script src="dashboard_1/js/demo/sparkline-demo.js"></script>
+    
+     <!-- Sparkline demo data  -->
+    <script src="/dashboard_1/js/plugins/wow/wow.min.js"></script>
 	
 	<script type="text/javascript">
+	new WOW().init();
         $(document).ready(function() {
             $('.chart').easyPieChart({
                 barColor: '#f8ac59',

@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	RoleRepository roleRepository;
 	
-	@Transactional(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+	//@Transactional(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
 	public User save(User entity) {
 		Role userRole = roleRepository.findByRole("ADMIN");
 		if(StringUtils.containsIgnoreCase(entity.getEmail(), "user"))
