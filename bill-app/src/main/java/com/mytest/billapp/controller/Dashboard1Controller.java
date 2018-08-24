@@ -1,5 +1,8 @@
 package com.mytest.billapp.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +12,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Dashboard1Controller {
 
 	@RequestMapping(value = "home")
-	public String getAllBrand(Model model) {
+	public String getHome(Model model) {
+		List<String> breadcrubms = new ArrayList<String>();
+		breadcrubms.add("Home");
+		breadcrubms.add("Dashboard");
+		model.addAttribute("breadcrubms",breadcrubms);
+		System.out.println("@@@breadcrubms "+breadcrubms);
+		model.addAttribute("activeMenuItem", "");
+		model.addAttribute("breadcrubmsHeading", "Dashboard");
 	    return "dashboard1Home";
+	}
+	
+	@RequestMapping(value = "brands")
+	public String getAllBrand(Model model) {
+		List<String> breadcrubms = new ArrayList<String>();
+		breadcrubms.add("Home");
+		breadcrubms.add("Invoice - Master");
+		breadcrubms.add("Brands");
+		model.addAttribute("breadcrubms",breadcrubms);
+		model.addAttribute("activeMenuItem", "menuItemBrands");
+		model.addAttribute("breadcrubmsHeading", "Brands");
+	    return "dashboard1Brand";
 	}
 }

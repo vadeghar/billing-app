@@ -40,6 +40,12 @@
         <put-attribute name="content" value="/WEB-INF/pages/dashboard_1/testHome.jsp" />  
     </definition> 
     
+    <!-- Brand -->
+    <definition name="dashboard1Brand" extends="base.dashboard1">  
+        <put-attribute name="title" value=":: Add / Edit Brand Page ::" />  
+        <put-attribute name="content" value="/WEB-INF/pages/dashboard_1/brand.jsp" />  
+    </definition> 
+    
      
  
     <!-- Base Define -->

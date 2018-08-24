@@ -1,7 +1,7 @@
 <div class="wrapper wrapper-content">
         <div class="row">
                     <div class="col-lg-3">
-                        <div class="ibox float-e-margins wow bounceInLeft" data-wow-duration="0.8s" data-wow-delay="0.8s">
+                        <div class="ibox float-e-margins wow bounceInLeft" data-wow-duration="0.8s" data-wow-delay="1s">
                             <div class="ibox-title">
                                 <span class="label label-success pull-right">Monthly</span>
                                 <h5>Income</h5>
@@ -14,7 +14,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3 wow">
-                        <div class="ibox float-e-margins wow bounceInLeft" data-wow-duration="0.6s" data-wow-delay="0.6s">
+                        <div class="ibox float-e-margins wow bounceInLeft" data-wow-duration="0.6s" data-wow-delay="1s">
                             <div class="ibox-title">
                                 <span class="label label-info pull-right">Annual</span>
                                 <h5>Orders</h5>
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="ibox float-e-margins  wow bounceInLeft" data-wow-duration="0.4s" data-wow-delay="0.4s">
+                        <div class="ibox float-e-margins  wow bounceInLeft" data-wow-duration="0.4s" data-wow-delay="1s">
                             <div class="ibox-title">
                                 <span class="label label-primary pull-right">Today</span>
                                 <h5>visits</h5>
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="ibox float-e-margins  wow bounceInLeft" data-wow-duration="0.15s" data-wow-delay="0.2s">
+                        <div class="ibox float-e-margins  wow bounceInLeft" data-wow-duration="0.15s" data-wow-delay="1s">
                             <div class="ibox-title">
                                 <span class="label label-danger pull-right">Low value</span>
                                 <h5>User activity</h5>
@@ -55,7 +55,7 @@
         </div>
         <div class="row">
                     <div class="col-lg-12">
-                        <div class="ibox float-e-margins">
+                        <div class="ibox float-e-margins wow bounceInUp" data-wow-duration="1s" data-wow-delay="1.5s">
                             <div class="ibox-title">
                                 <h5>Orders</h5>
                                 <div class="pull-right">

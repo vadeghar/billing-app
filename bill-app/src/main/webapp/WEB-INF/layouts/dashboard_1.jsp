@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
 
     <meta charset="utf-8">
@@ -8,18 +9,28 @@
 
     <title><tiles:getAsString name="title" /></title>
 
-    <link href="dashboard_1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="dashboard_1/css/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/dashboard_1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/dashboard_1/css/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <link href="dashboard_1/css/animate.css" rel="stylesheet">
-    <link href="dashboard_1/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/dashboard_1/css/animate.css" rel="stylesheet">
+    
+    <link href="${pageContext.request.contextPath}/dashboard_1/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    
+    <link href="${pageContext.request.contextPath}/dashboard_1/css/style.css" rel="stylesheet">
 
 </head>
 <!-- Mainly scripts -->
-<script src="dashboard_1/js/jquery-3.1.1.min.js"></script>
-<script src="dashboard_1/js/bootstrap.min.js"></script>
-<script src="dashboard_1/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="dashboard_1/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="${pageContext.request.contextPath}/dashboard_1/js/jquery-3.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/dashboard_1/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/dataTables/datatables.min.js"></script>
+
+<!-- Application JavaScript  -->
+<script src="${pageContext.request.contextPath}/dashboard_1/js/api/inv.core.js"></script>
+<script src="${pageContext.request.contextPath}/dashboard_1/js/api/inv.settings.js"></script>
+<script src="${pageContext.request.contextPath}/dashboard_1/js/api/inv.ui.js"></script>
 
 <body>
     <div id="wrapper">
@@ -41,42 +52,48 @@
 	    <!-- Some other data -->
 	</div>
 	
-	
+	<input id="activeMenuItem" name="activeMenuItem" value="${activeMenuItem}">
     <!-- Flot -->
-    <script src="dashboard_1/js/plugins/flot/jquery.flot.js"></script>
-    <script src="dashboard_1/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
-    <script src="dashboard_1/js/plugins/flot/jquery.flot.spline.js"></script>
-    <script src="dashboard_1/js/plugins/flot/jquery.flot.resize.js"></script>
-    <script src="dashboard_1/js/plugins/flot/jquery.flot.pie.js"></script>
-    <script src="dashboard_1/js/plugins/flot/jquery.flot.symbol.js"></script>
-    <script src="dashboard_1/js/plugins/flot/jquery.flot.time.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/flot/jquery.flot.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/flot/jquery.flot.spline.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/flot/jquery.flot.pie.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/flot/jquery.flot.symbol.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/flot/jquery.flot.time.js"></script>
 
     <!-- Peity -->
-    <script src="dashboard_1/js/plugins/peity/jquery.peity.min.js"></script>
-    <script src="dashboard_1/js/demo/peity-demo.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/demo/peity-demo.js"></script>
 
     <!-- Custom and plugin javascript -->
-    <script src="dashboard_1/js/inspinia.js"></script>
-    <script src="dashboard_1/js/plugins/pace/pace.min.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/inspinia.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/pace/pace.min.js"></script>
 
     <!-- jQuery UI -->
-    <script src="dashboard_1/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/jquery-ui/jquery-ui.min.js"></script>
 
     <!-- Jvectormap -->
-    <script src="dashboard_1/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="dashboard_1/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 
     <!-- EayPIE -->
-    <script src="dashboard_1/js/plugins/easypiechart/jquery.easypiechart.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/easypiechart/jquery.easypiechart.js"></script>
 
     <!-- Sparkline -->
-    <script src="dashboard_1/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/sparkline/jquery.sparkline.min.js"></script>
 
     <!-- Sparkline demo data  -->
-    <script src="dashboard_1/js/demo/sparkline-demo.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/demo/sparkline-demo.js"></script>
     
      <!-- Sparkline demo data  -->
-    <script src="/dashboard_1/js/plugins/wow/wow.min.js"></script>
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/wow/wow.min.js"></script>
+    <!-- Toastr  -->
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/toastr/toastr.min.js"></script>
+    
+   
+	
+	
 	
 	<script type="text/javascript">
 	new WOW().init();
