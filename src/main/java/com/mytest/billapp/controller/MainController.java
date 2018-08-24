@@ -1,5 +1,8 @@
 package com.mytest.billapp.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,15 @@ public class MainController {
 		
 		model.addAttribute("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		model.addAttribute("adminMessage","Content Available Only for Users with Admin Role");
+		
+		List<String> breadcrubms = new ArrayList<String>();
+		breadcrubms.add("Home");
+		breadcrubms.add("Dashboard");
+		model.addAttribute("breadcrubms",breadcrubms);
+		System.out.println("@@@breadcrubms "+breadcrubms);
+		model.addAttribute("activeMenuItem", "");
+		model.addAttribute("breadcrubmsHeading", "Dashboard");
+		
 		if(user.hasRole("ADMIN"))
 			return "dashboard1Home";
 		else

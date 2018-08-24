@@ -1,7 +1,7 @@
 <ul class="nav metismenu" id="side-menu">
 	  <li class="nav-header">
 	      <div class="dropdown profile-element"> <span>
-	              <img alt="image" class="img-circle" src="dashboard_1/img/profile_small.jpg" />
+	              <img alt="image" class="img-circle" src="${pageContext.request.contextPath}/dashboard_1/img/profile_small.jpg" />
 	               </span>
 	          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 	              <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>
@@ -11,7 +11,7 @@
 	              <li><a href="contacts.html">Contacts</a></li>
 	              <li><a href="mailbox.html">Mailbox</a></li>
 	              <li class="divider"></li>
-	              <li><a href="login.html">Logout</a></li>
+	              <li><a href="/logout">Logout</a></li>
 	          </ul>
 	      </div>
 	      <div class="logo-element">
@@ -42,7 +42,7 @@
 	      <a href="index.html"><i class="fa fa-server"></i> <span class="nav-label">Invoice - Master</span> <span class="fa arrow"></span></a>
 	      <ul class="nav nav-second-level">
 	          <li><a href="#">Suppliers</a></li>
-	          <li><a href="#">Brand</a></li>
+	          <li id="menuItemBrands"><a href="${pageContext.request.contextPath}/admin/dashboard1/brands">Brand</a></li>
 	          <li><a href="#">Product Type</a></li>
 	      </ul>
 	  </li>
@@ -253,3 +253,25 @@
           <a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>
       </li> -->
   </ul>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	console.log("Active Tab is left menu : "+$('#activeMenuItem').val()); 
+	if($('#activeMenuItem').val() != '') {
+		resetSideMenuActiveClass($('#side-menu'));
+		$('#'+ $('#activeMenuItem').val()).addClass('active');
+		$('#'+ $('#activeMenuItem').val()).parent().addClass('in');
+	}
+});
+function resetSideMenuActiveClass($element){
+	console.log("dfd "+$element);
+    $element.children().each(function () {
+        var $currentElement = $(this);
+        if($currentElement.prop("tagName") == 'LI' || $currentElement.prop("tagName") == 'UL') {
+        	$currentElement.removeClass('active').removeClass('in');
+        }
+        resetSideMenuActiveClass($currentElement);
+    });
+}
+
+</script>

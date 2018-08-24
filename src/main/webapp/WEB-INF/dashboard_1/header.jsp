@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="row border-bottom">
-        <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
  <div class="navbar-header">
      <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
      <form role="search" class="navbar-form-custom" action="search_results.html">
@@ -21,7 +21,7 @@
                  <li>
                      <div class="dropdown-messages-box">
                          <a href="profile.html" class="pull-left">
-                             <img alt="image" class="img-circle" src="dashboard_1/img/a7.jpg">
+                             <img alt="image" class="img-circle" src="${pageContext.request.contextPath}/dashboard_1/img/a7.jpg">
                          </a>
                          <div>
                              <small class="pull-right">46h ago</small>
@@ -34,7 +34,7 @@
                  <li>
                      <div class="dropdown-messages-box">
                          <a href="profile.html" class="pull-left">
-                             <img alt="image" class="img-circle" src="dashboard_1/img/a4.jpg">
+                             <img alt="image" class="img-circle" src="${pageContext.request.contextPath}/dashboard_1/img/a4.jpg">
                          </a>
                          <div>
                              <small class="pull-right text-navy">5h ago</small>
@@ -47,7 +47,7 @@
                  <li>
                      <div class="dropdown-messages-box">
                          <a href="profile.html" class="pull-left">
-                             <img alt="image" class="img-circle" src="dashboard_1/img/profile.jpg">
+                             <img alt="image" class="img-circle" src="${pageContext.request.contextPath}/dashboard_1/img/profile.jpg">
                          </a>
                          <div>
                              <small class="pull-right">23h ago</small>
@@ -67,9 +67,9 @@
              </ul>
          </li>
          <li class="dropdown">
-             <h2 class="count-info">
-                 Test &nbsp;  <span class="label label-primary">8</span>
-             </h2>
+             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="true">
+                 <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
+             </a>
              <ul class="dropdown-menu dropdown-alerts">
                  <li>
                      <a href="mailbox.html">
@@ -115,12 +115,29 @@
                  <i class="fa fa-sign-out"></i> Log out
              </a>
          </li>
-         <li>
-             <a class="right-sidebar-toggle">
-                 <i class="fa fa-tasks"></i>
-             </a>
-         </li>
      </ul>
 
  </nav>
  </div>
+ <div class="row wrapper border-bottom white-bg page-heading wow bounceInUp" data-wow-duration="0.8s" data-wow-delay="0s">
+    <div class="col-lg-10">
+        <h2><c:out value="${breadcrubmsHeading}"/></h2>
+        <ol class="breadcrumb">
+        	<c:forEach items="${breadcrubms}" var="breadcrumb">
+        		<li>
+        			<c:if test="${breadcrumb eq 'Home'}">
+        				<a href="/">
+		                	<c:out value="${breadcrumb}"/>
+		                </a>
+        			</c:if>
+	                <c:if test="${breadcrumb ne 'Home'}">
+		                	<c:out value="${breadcrumb}"/>
+        			</c:if>
+	            </li>
+        	</c:forEach>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>

@@ -22,12 +22,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mytest.billapp.model.Brand;
 import com.mytest.billapp.model.Notes;
 import com.mytest.billapp.model.ProductItems;
 import com.mytest.billapp.model.Sale;
 import com.mytest.billapp.model.SaleItems;
 import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.NotesRepository;
+import com.mytest.billapp.service.BrandService;
 import com.mytest.billapp.service.ProductService;
 import com.mytest.billapp.service.SalesService;
 import com.mytest.billapp.service.StockService;
@@ -56,6 +58,14 @@ public class AjaxController {
 	
 	@Autowired
 	SalesService salesService;
+	
+	@Autowired
+	BrandService brandService;
+	
+	@GetMapping("/brands")
+	public List<Brand> getAllBrands() {
+		return brandService.findAll();
+	}
 	
 	@GetMapping("/notes")
 	public List<Notes> getAllNotes() {
