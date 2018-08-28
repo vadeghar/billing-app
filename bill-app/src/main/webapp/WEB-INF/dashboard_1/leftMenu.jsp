@@ -256,6 +256,11 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+	/* var wrapperChildren = $("#side-menu").children();
+	for (var i = 0; i < wrapperChildren.length; i++) {
+	    $(wrapperChildren[i]).removeClass('active');
+	}
+	 */
 	console.log("Active Tab is left menu : "+$('#activeMenuItem').val()); 
 	if($('#activeMenuItem').val() != '') {
 		resetSideMenuActiveClass($('#side-menu'));
@@ -264,7 +269,6 @@ $(document).ready(function() {
 	}
 });
 function resetSideMenuActiveClass($element){
-	console.log("dfd "+$element);
     $element.children().each(function () {
         var $currentElement = $(this);
         if($currentElement.prop("tagName") == 'LI' || $currentElement.prop("tagName") == 'UL') {

@@ -27,33 +27,9 @@
 
 <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/dataTables/datatables.min.js"></script>
 
-<!-- Application JavaScript  -->
-<script src="${pageContext.request.contextPath}/dashboard_1/js/api/inv.core.js"></script>
-<script src="${pageContext.request.contextPath}/dashboard_1/js/api/inv.settings.js"></script>
-<script src="${pageContext.request.contextPath}/dashboard_1/js/api/inv.ui.js"></script>
+<script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/iCheck/icheck.min.js"></script>
 
-<body>
-    <div id="wrapper">
-	    <nav class="navbar-default navbar-static-side" role="navigation">
-	        <div class="sidebar-collapse">
-		        <!-- include leftMenu here -->
-		        <tiles:insertAttribute name="leftMenu" />
-	        </div>
-	    </nav>
-	    <div id="page-wrapper" class="gray-bg">
-	    	<!-- include header here -->
-	    	<tiles:insertAttribute name="header" />
-	    	<!-- include testHome here -->
-	    	<tiles:insertAttribute name="content" />
-	    	
-	    	<!-- include footer here -->
-	    	<tiles:insertAttribute name="footer" />
-	    </div>
-	    <!-- Some other data -->
-	</div>
-	
-	<input id="activeMenuItem" name="activeMenuItem" value="${activeMenuItem}">
-    <!-- Flot -->
+<!-- Flot -->
     <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/flot/jquery.flot.js"></script>
     <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
     <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/flot/jquery.flot.spline.js"></script>
@@ -90,6 +66,35 @@
     <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/wow/wow.min.js"></script>
     <!-- Toastr  -->
     <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/toastr/toastr.min.js"></script>
+
+
+<!-- Application JavaScript  -->
+<script src="${pageContext.request.contextPath}/dashboard_1/js/api/inv.core.js"></script>
+<script src="${pageContext.request.contextPath}/dashboard_1/js/api/inv.settings.js"></script>
+<script src="${pageContext.request.contextPath}/dashboard_1/js/api/inv.ui.js"></script>
+
+<body>
+    <div id="wrapper">
+	    <nav class="navbar-default navbar-static-side" role="navigation">
+	        <div class="sidebar-collapse">
+		        <!-- include leftMenu here -->
+		        <tiles:insertAttribute name="leftMenu" />
+	        </div>
+	    </nav>
+	    <div id="page-wrapper" class="gray-bg">
+	    	<!-- include header here -->
+	    	<tiles:insertAttribute name="header" />
+	    	<!-- include testHome here -->
+	    	<tiles:insertAttribute name="content" />
+	    	
+	    	<!-- include footer here -->
+	    	<tiles:insertAttribute name="footer" />
+	    </div>
+	    <!-- Some other data -->
+	</div>
+	
+	<input id="activeMenuItem" name="activeMenuItem" value="${activeMenuItem}">
+    
     
    
 	

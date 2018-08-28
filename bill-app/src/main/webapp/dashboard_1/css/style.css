@@ -3925,8 +3925,8 @@ code {
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
-  background-color: #ffffff;
-  border-color: #e7eaec;
+  background-color: #a7b1c2;
+  border-color: #a7b1c2;
   border-image: none;
   border-style: solid solid none;
   border-width: 2px 0 0;
@@ -3934,6 +3934,8 @@ code {
   margin-bottom: 0;
   padding: 15px 15px 7px;
   min-height: 48px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 .ibox-content {
   background-color: #ffffff;
@@ -4011,7 +4013,7 @@ table.table-mail tr td {
 .ibox-tools a {
   cursor: pointer;
   margin-left: 5px;
-  color: #c4c4c4;
+  color: #ffffff;
 }
 .ibox-tools a.btn-primary {
   color: #fff;
@@ -8559,4 +8561,9 @@ body.md-skin {
   #page-wrapper {
     margin: 0;
   }
+}
+
+.d-table-btn {
+	margin-right: 10px;
+	height: 30px;
 }
