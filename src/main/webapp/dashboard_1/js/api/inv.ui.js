@@ -331,38 +331,9 @@ function initDataTableWithOptions(table, box, rId, tableColumns, options) {
 				if (_dt) {
 					_params.page = _dt.page.info().page;
 				}
-				if (data.order.length > 0) {
+				if (data && data.order && data.order.length > 0) {
 					_params.sort = data.columns[data.order[0].column].data + ',' + data.order[0].dir;
 				}
-				$.ajax({
-					url: prepareURL(_url, _params),
-					headers: _headers,
-					type: 'POST',
-					contentType: 'application/json',
-					data: JSON.stringify(simpleRequestDataAll()),
-					beforeSend: function() {
-						toastr.clear();
-						toastr.success(_AOC_INFO_LOADING, _title);
-						if (!_content.hasClass('sk-loading')) {
-							_content.addClass('sk-loading');
-						}
-					},
-					success: function(json, textStatus, jqXHR) {
-						callback({recordsTotal: json.totalElements, recordsFiltered: json.totalElements, data: json.content});
-						handleSuccess(jqXHR, textStatus);
-					},
-					error: function(jqXHR, textStatus, errorThrown) {
-						callback({recordsTotal: 0, recordsFiltered: 0, data: []});
-						handleError(jqXHR, textStatus, errorThrown);
-					},
-					complete: function(jqXHR, textStatus) {
-						$('#i-checks-all').iCheck('uncheck');
-						updateCheckboxes();
-						window.setTimeout(function() {
-							_content.toggleClass('sk-loading');
-						}, _AOC_TIMEOUT);
-					}
-				});
 			}
 	});
 	var _dt = $(table).DataTable(_opt);
