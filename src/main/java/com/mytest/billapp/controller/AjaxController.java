@@ -67,6 +67,12 @@ public class AjaxController {
 		return brandService.findAll();
 	}
 	
+	@PostMapping("/brand")
+	public Brand getBrand(Brand brand) {
+		return brandService.getOne(brand.getId());
+	}
+	
+	
 	@GetMapping("/notes")
 	public List<Notes> getAllNotes() {
 	    return noteRepository.findAll();
