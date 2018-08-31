@@ -186,8 +186,8 @@ function simpleDataCall(url, title, $content, requestData, responseCallback) {
 		beforeSend: function() {
 			toastr.clear();
 			toastr.success(_AOC_INFO_LOAD_IN_PROGRESS, title);
-			if (!$content.hasClass('sk-loading')) {
-				$content.addClass('sk-loading');
+			if (!$content.hasClass('sk-spinner') && !$content.hasClass('sk-spinner-rotating-plane')) {
+				$content.addClass('sk-spinner').addClass('sk-spinner-rotating-plane');
 			}
 		},
 		success: function(data) {
@@ -199,7 +199,7 @@ function simpleDataCall(url, title, $content, requestData, responseCallback) {
 		},
 		complete: function() {
 			window.setTimeout(function() {
-				$content.toggleClass('sk-loading');
+				$content.toggleClass('sk-spinner').toggleClass('sk-spinner-rotating-plane');
 			}, _AOC_TIMEOUT);
 		}
 	});

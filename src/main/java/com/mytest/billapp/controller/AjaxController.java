@@ -62,14 +62,29 @@ public class AjaxController {
 	@Autowired
 	BrandService brandService;
 	
-	@GetMapping("/brands")
+	@GetMapping("/brand/all")
 	public List<Brand> getAllBrands() {
 		return brandService.findAll();
 	}
 	
 	@PostMapping("/brand")
-	public Brand getBrand(Brand brand) {
+	public Brand getBrand(@RequestBody Brand brand) {
 		return brandService.getOne(brand.getId());
+	}
+	
+	@PostMapping("/brand/save")
+	public void saveBrand(@RequestBody Brand brand) {
+		Brand dbBrand =  new Brand();
+		if(brand != null && brand.getId() != 0) 
+			dbBrand = brandService.getOne(brand.getId());
+		dbBrand.setName(brand.getName());
+		brandService.save(dbBrand);
+	}
+	
+	@PostMapping("/brand/delete")
+	public void deleteBrand(@RequestBody Brand brand) {
+		if(brand != null && brand.getId() != 0) 
+			brandService.deleteById(brand.getId());
 	}
 	
 	
