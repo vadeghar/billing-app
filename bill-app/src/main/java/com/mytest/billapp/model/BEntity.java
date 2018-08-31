@@ -1,5 +1,8 @@
 package com.mytest.billapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class BEntity implements Comparable<BEntity> {
 
 	@Override

@@ -16,7 +16,12 @@
     
     <link href="${pageContext.request.contextPath}/dashboard_1/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     
+    <!-- Toastr style -->
+    <link href="${pageContext.request.contextPath}/dashboard_1/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    
+    
     <link href="${pageContext.request.contextPath}/dashboard_1/css/style.css" rel="stylesheet">
+    
 
 </head>
 <!-- Mainly scripts -->
@@ -103,6 +108,13 @@
 	<script type="text/javascript">
 	new WOW().init();
         $(document).ready(function() {
+        	toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 4000
+                };
+        	
             $('.chart').easyPieChart({
                 barColor: '#f8ac59',
 //                scaleColor: false,
