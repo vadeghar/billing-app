@@ -41,7 +41,7 @@
 	  <li>
 	      <a href="index.html"><i class="fa fa-server"></i> <span class="nav-label">Invoice - Master</span> <span class="fa arrow"></span></a>
 	      <ul class="nav nav-second-level">
-	          <li><a href="#">Suppliers</a></li>
+	          <li id="menuItemSuppliers"><a href="${pageContext.request.contextPath}/admin/dashboard1/suppliers">Suppliers</a></li>
 	          <li id="menuItemBrands"><a href="${pageContext.request.contextPath}/admin/dashboard1/brands">Brand</a></li>
 	          <li><a href="#">Product Type</a></li>
 	      </ul>

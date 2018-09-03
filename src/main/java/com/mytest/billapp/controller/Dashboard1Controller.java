@@ -34,4 +34,16 @@ public class Dashboard1Controller {
 		model.addAttribute("breadcrubmsHeading", "Brands");
 	    return "dashboard1Brand";
 	}
+	
+	@RequestMapping(value = "suppliers")
+	public String getAllSuppliers(Model model) {
+		List<String> breadcrubms = new ArrayList<String>();
+		breadcrubms.add("Home");
+		breadcrubms.add("Invoice - Master");
+		breadcrubms.add("Suppliers");
+		model.addAttribute("breadcrubms",breadcrubms);
+		model.addAttribute("activeMenuItem", "menuItemSuppliers");
+		model.addAttribute("breadcrubmsHeading", "Suppliers");
+	    return "dashboard1Supplier";
+	}
 }
