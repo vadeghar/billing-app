@@ -3,49 +3,42 @@
 	<div class="row">
 		<div class="col-lg-12 rounded p-5" >
         	<div class="ibox float-e-margins" id="brandList">
-            	<div class="ibox-title" id="saveOrUpdateTitle"> <h5>New Brand</h5></div>
+            	<div class="ibox-title" id="saveOrUpdateTitle"> <h5>New Suppler</h5></div>
        				<div class="ibox-content" id="newOrEditBrand">
                 		<div class="table-responsive">
-                				<fieldset class="col-md-6 p-3" style="border: black 1px solid; ">
-                					<legend style="border: none;">General Information</legend>
-                					<div class="col-sm-6">
-										<div class="form-group">
-											<input type="hidden" id="id">						
-											<label for="name">Name: <span class="required">*</span></label>
-											<input id="name" class="form-control"/>
-										</div>
-										<div class="form-group">
-											<label for="name" >Class: <span class="required">*</span></label>
-											<input id="name" class="form-control"/>
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<input type="hidden" id="id">						
-											<label for="name">Name: <span class="required">*</span></label>
-											<input id="name" class="form-control"/>
-										</div>
-										<div class="form-group">
-											<label for="name" >Class: <span class="required">*</span></label>
-											<input id="name" class="form-control"/>
-										</div>
-									</div>
-                				</fieldset>
                 				
-                				<fieldset class="col-md-6 p-3" style="border: black 1px solid; ">
-                					<legend style="border: none;">General Information</legend>
-                					<div class="col-sm-6">
-										<div class="form-group">
-											<input type="hidden" id="id">						
-											<label for="name">Name: <span class="required">*</span></label>
-											<input id="name" class="form-control"/>
-										</div>
-										<div class="form-group">
-											<label for="name" >Class: <span class="required">*</span></label>
-											<input id="name" class="form-control"/>
-										</div>
+								  	<div class="col-sm-12">
+								  		<fieldset class="scheduler-border">
+								 			<legend class="scheduler-border">Personal Info</legend>
+											<div class="col-sm-12">
+													<div class="form-group col-sm-6">
+														<input type="hidden" id="id">						
+														<label for="name">Name: <span class="required">*</span></label>
+														<input id="name" class="form-control"/>
+													</div>
+													<div class="form-group col-sm-6">
+														<label for="mobile" >Mobile: <span class="required">*</span></label>
+														<input id="mobile" class="form-control"/>
+													</div>
+											</div>
+											<div class="col-sm-12">
+													<div class="form-group col-sm-6">
+														<label for="name">Name: <span class="required">*</span></label>
+														<input id="name" class="form-control"/>
+													</div>
+													<div class="form-group col-sm-6">
+														<label for="mobile" >Mobile: <span class="required">*</span></label>
+														<input id="mobile" class="form-control"/>
+													</div>
+											</div>
+											
+										</fieldset>
 									</div>
+									
+									
 									<div class="col-sm-6">
+										<fieldset class="scheduler-border">
+								 			<legend class="scheduler-border">Address</legend>
 										<div class="form-group">
 											<input type="hidden" id="id">						
 											<label for="name">Name: <span class="required">*</span></label>
@@ -55,8 +48,12 @@
 											<label for="name" >Class: <span class="required">*</span></label>
 											<input id="name" class="form-control"/>
 										</div>
+										</fieldset>
 									</div>
-                				</fieldset>
+								
+                		
+                		
+                		
                 			
                 		
                 		</div>
@@ -66,7 +63,7 @@
 		<div class="col-lg-12">
             <div class="ibox float-e-margins" id="brandList">
                 <div class="ibox-title">
-                    <h5>Brands</h5>
+                    <h5>Suppliers</h5>
                     <div class="ibox-tools">
                          <a class="collapse-link">
                              <i class="fa fa-chevron-up"></i>
