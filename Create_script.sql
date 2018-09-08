@@ -206,3 +206,27 @@ ADD CONSTRAINT `permission_group_id`
   REFERENCES `billingsoftware`.`permission_group` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+  DROP TABLE IF EXISTS `supplier`;
+ CREATE TABLE `supplier` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `address_line_1` varchar(150) DEFAULT NULL,
+  `address_line_2` varchar(150) DEFAULT NULL,
+  `bank_acc_no` varchar(20) DEFAULT NULL,
+  `bank_branch` varchar(50) DEFAULT NULL,
+  `bank_city` varchar(50) DEFAULT NULL,
+  `bank_ifsc` varchar(50) DEFAULT NULL,
+  `bank_name` varchar(50) DEFAULT NULL,
+  `bank_state` varchar(50) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `company` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `fax` varchar(20) DEFAULT NULL,
+  `gst_no` varchar(20) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `state` varchar(50) DEFAULT NULL,
+  `tin_no` varchar(20) DEFAULT NULL,
+  `zip` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

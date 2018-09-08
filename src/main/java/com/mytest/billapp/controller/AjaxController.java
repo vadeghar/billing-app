@@ -27,14 +27,17 @@ import com.mytest.billapp.model.Notes;
 import com.mytest.billapp.model.ProductItems;
 import com.mytest.billapp.model.Sale;
 import com.mytest.billapp.model.SaleItems;
+import com.mytest.billapp.model.Supplier;
 import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.NotesRepository;
 import com.mytest.billapp.service.BrandService;
 import com.mytest.billapp.service.ProductService;
 import com.mytest.billapp.service.SalesService;
 import com.mytest.billapp.service.StockService;
+import com.mytest.billapp.service.SupplierService;
 import com.mytest.billapp.service.VendorService;
 import com.mytest.billapp.utils.AppConstants;
+import com.mytest.billapp.utils.AppUtils;
 import com.mytest.billapp.view.InvoiceHeaderView;
 import com.mytest.billapp.view.InvoiceItemView;
 import com.mytest.billapp.view.InvoicePrintView;
@@ -52,6 +55,9 @@ public class AjaxController {
 	
 	@Autowired
 	VendorService vendorService;
+	
+	@Autowired
+	SupplierService supplierService;
 	
 	@Autowired
 	StockService stockService;
@@ -85,6 +91,49 @@ public class AjaxController {
 	public void deleteBrand(@RequestBody Brand brand) {
 		if(brand != null && brand.getId() != 0) 
 			brandService.deleteById(brand.getId());
+	}
+	
+	@GetMapping("/supplier/all")
+	public List<Supplier> getAllSupplier() {
+		return supplierService.findAll();
+	}
+	
+	@PostMapping("/supplier")
+	public Supplier getSupplier(@RequestBody Supplier supplier) {
+		return supplierService.getOne(supplier.getId());
+	}
+	
+	@PostMapping("/supplier/save")
+	public void saveSupplier(@RequestBody Supplier supplier) {
+		Supplier dbSupplier =  new Supplier();
+		if(supplier != null && AppUtils.isValidNonZeroLong(supplier.getId())) 
+			dbSupplier = supplierService.getOne(supplier.getId());
+		dbSupplier.setName(supplier.getName());
+		dbSupplier.setAddressLine1(supplier.getAddressLine1());
+		dbSupplier.setAddressLine2(supplier.getAddressLine2());
+		dbSupplier.setBankAccNo(supplier.getBankAccNo());
+		dbSupplier.setBankBranch(supplier.getBankBranch());
+		dbSupplier.setBankCity(supplier.getBankCity());
+		dbSupplier.setBankIfsc(supplier.getBankIfsc());
+		dbSupplier.setBankName(supplier.getBankName());
+		dbSupplier.setBankState(supplier.getBankState());
+		dbSupplier.setCity(supplier.getCity());
+		dbSupplier.setCompany(supplier.getCompany());
+		dbSupplier.setEmail(supplier.getEmail());
+		dbSupplier.setFax(supplier.getFax());
+		dbSupplier.setGstNo(supplier.getGstNo());
+		dbSupplier.setMobile(supplier.getMobile());
+		dbSupplier.setPhone(supplier.getPhone());
+		dbSupplier.setState(supplier.getState());
+		dbSupplier.setTinNo(supplier.getTinNo());
+		dbSupplier.setZip(supplier.getZip());
+		supplierService.save(dbSupplier);
+	}
+	
+	@PostMapping("/supplier/delete")
+	public void deleteSupplier(@RequestBody Supplier supplier) {
+		if(supplier != null && supplier.getId() != 0) 
+			supplierService.deleteById(supplier.getId());
 	}
 	
 	

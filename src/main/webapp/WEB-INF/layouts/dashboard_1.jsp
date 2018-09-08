@@ -98,7 +98,7 @@
 	    <!-- Some other data -->
 	</div>
 	
-	<input id="activeMenuItem" name="activeMenuItem" value="${activeMenuItem}">
+	<input type="hidden" id="activeMenuItem" name="activeMenuItem" value="${activeMenuItem}">
     
     
    
