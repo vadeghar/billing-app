@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mytest.billapp.model.Brand;
 import com.mytest.billapp.model.Notes;
+import com.mytest.billapp.model.Permissions;
 import com.mytest.billapp.model.ProductItems;
 import com.mytest.billapp.model.Sale;
 import com.mytest.billapp.model.SaleItems;
@@ -31,6 +32,7 @@ import com.mytest.billapp.model.Supplier;
 import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.NotesRepository;
 import com.mytest.billapp.service.BrandService;
+import com.mytest.billapp.service.PermissionsService;
 import com.mytest.billapp.service.ProductService;
 import com.mytest.billapp.service.SalesService;
 import com.mytest.billapp.service.StockService;
@@ -68,6 +70,36 @@ public class AjaxController {
 	@Autowired
 	BrandService brandService;
 	
+	@Autowired
+	PermissionsService permissionsService;
+	
+	@GetMapping("/permissions/all")
+	public List<Permissions> getAllPermissionss() {
+		return permissionsService.findAll();
+	}
+
+	@PostMapping("/permissions")
+	public Permissions getPermissions(@RequestBody Permissions permissions) {
+		return permissionsService.getOne(permissions.getId());
+	}
+
+	@PostMapping("/permissions/save")
+	public void savePermissions(@RequestBody Permissions permissions) {
+		Permissions dbPermissions =  new Permissions();
+		if(permissions != null && AppUtils.isValidNonZeroLong(permissions.getId())) 
+			dbPermissions = permissionsService.getOne(permissions.getId());
+		dbPermissions.setName(permissions.getName());
+		dbPermissions.setLink(permissions.getLink());
+		permissionsService.save(dbPermissions);
+	}
+
+	@PostMapping("/permissions/delete")
+	public void deletePermissions(@RequestBody Permissions permissions) {
+		if(permissions != null && AppUtils.isValidNonZeroLong(permissions.getId())) 
+			permissionsService.deleteById(permissions.getId());
+	}
+	
+	
 	@GetMapping("/brand/all")
 	public List<Brand> getAllBrands() {
 		return brandService.findAll();
@@ -81,7 +113,7 @@ public class AjaxController {
 	@PostMapping("/brand/save")
 	public void saveBrand(@RequestBody Brand brand) {
 		Brand dbBrand =  new Brand();
-		if(brand != null && brand.getId() != 0) 
+		if(brand != null && AppUtils.isValidNonZeroLong(brand.getId())) 
 			dbBrand = brandService.getOne(brand.getId());
 		dbBrand.setName(brand.getName());
 		brandService.save(dbBrand);
@@ -89,7 +121,7 @@ public class AjaxController {
 	
 	@PostMapping("/brand/delete")
 	public void deleteBrand(@RequestBody Brand brand) {
-		if(brand != null && brand.getId() != 0) 
+		if(brand != null && AppUtils.isValidNonZeroLong(brand.getId())) 
 			brandService.deleteById(brand.getId());
 	}
 	

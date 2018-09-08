@@ -46,4 +46,16 @@ public class Dashboard1Controller {
 		model.addAttribute("breadcrubmsHeading", "Suppliers");
 	    return "dashboard1Supplier";
 	}
+	
+	@RequestMapping(value = "permissions")
+	public String getAllPermissions(Model model) {
+		List<String> breadcrubms = new ArrayList<String>();
+		breadcrubms.add("Home");
+		breadcrubms.add("Application - Master");
+		breadcrubms.add("Permissions");
+		model.addAttribute("breadcrubms",breadcrubms);
+		model.addAttribute("activeMenuItem", "menuItemPermissions");
+		model.addAttribute("breadcrubmsHeading", "Permissions");
+	    return "dashboard1Permissions";
+	}
 }

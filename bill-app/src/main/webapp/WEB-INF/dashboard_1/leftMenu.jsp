@@ -32,7 +32,7 @@
 	      <a href="index.html"><i class="fa fa-server"></i> <span class="nav-label">Application - Master</span> <span class="fa arrow"></span></a>
 	      <ul class="nav nav-second-level">
 	          <li><a href="index.html">Application Users</a></li>
-	          <li><a href="dashboard_2.html">Permissions</a></li>
+	          <li id="menuItemPermissions"><a  href="${pageContext.request.contextPath}/admin/dashboard1/permissions">Permissions</a></li>
 	          <li><a href="dashboard_3.html">Permission Group</a></li>
 	          <li><a href="dashboard_4_1.html">Role</a></li>
 	          <li><a href="dashboard_5.html">Customers</a></li>
