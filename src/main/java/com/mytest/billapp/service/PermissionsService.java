@@ -6,7 +6,7 @@ import org.springframework.data.domain.Sort;
 
 import com.mytest.billapp.model.Permissions;
 
-public interface PermissionService {
+public interface PermissionsService {
 	public Permissions save(Permissions entity);
 	public List<Permissions> saveAll(List<Permissions> entities);
 	public Permissions saveAndFlush(Permissions entity);

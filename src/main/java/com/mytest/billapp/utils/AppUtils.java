@@ -35,4 +35,17 @@ public class AppUtils {
 		return false;
 	}
 	
+	public static boolean isValidNonZeroNumber(Object object) {
+		if(object == null) return false;
+		if(object instanceof Long) {
+			if(((Long)object).longValue() > 0)
+				return true;
+		}
+		if(object instanceof Integer) {
+			if(((Integer)object).intValue() > 0)
+				return true;
+		}
+		return false;
+	}
+	
 }

@@ -51,6 +51,12 @@
         <put-attribute name="title" value=":: Suppliers ::" />  
         <put-attribute name="content" value="/WEB-INF/pages/dashboard_1/supplier.jsp" />  
     </definition> 
+    
+    <!-- Permissions -->
+    <definition name="dashboard1Permissions" extends="base.dashboard1">  
+        <put-attribute name="title" value=":: Permissions ::" />  
+        <put-attribute name="content" value="/WEB-INF/pages/dashboard_1/permissions.jsp" />  
+    </definition> 
  
     <!-- Base Define -->
     <definition name="base.definition" template="/WEB-INF/layouts/classic.jsp">  

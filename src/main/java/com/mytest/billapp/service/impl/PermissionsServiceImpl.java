@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import com.mytest.billapp.model.Permissions;
 import com.mytest.billapp.repsitory.PermissionsRepository;
-import com.mytest.billapp.service.PermissionService;
+import com.mytest.billapp.service.PermissionsService;
 
-public class PermissionServiceImpl implements PermissionService{
+@Service
+public class PermissionsServiceImpl implements PermissionsService{
 	
 	@Autowired
 	PermissionsRepository permissionsRepository; 
