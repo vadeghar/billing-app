@@ -26,4 +26,13 @@ public class AppUtils {
 		return discount;
 	}
 	
+	public static boolean isValidNonZeroLong(Object object) {
+		if(object == null) return false;
+		if(object instanceof Long) {
+			if(((Long)object).longValue() > 0)
+				return true;
+		}
+		return false;
+	}
+	
 }
