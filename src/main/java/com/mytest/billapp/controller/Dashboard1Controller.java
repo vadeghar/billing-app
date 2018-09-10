@@ -58,4 +58,18 @@ public class Dashboard1Controller {
 		model.addAttribute("breadcrubmsHeading", "Permissions");
 	    return "dashboard1Permissions";
 	}
+	
+	@RequestMapping(value = "roles")
+	public String getRoles(Model model) {
+		List<String> breadcrubms = new ArrayList<String>();
+		breadcrubms.add("Home");
+		breadcrubms.add("Application - Master");
+		breadcrubms.add("Roles");
+		model.addAttribute("breadcrubms",breadcrubms);
+		model.addAttribute("activeMenuItem", "menuItemRoles");
+		model.addAttribute("breadcrubmsHeading", "Role");
+	    return "dashboard1Role";
+	}
+	
+	
 }
