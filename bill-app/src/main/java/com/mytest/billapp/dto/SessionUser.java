@@ -1,6 +1,7 @@
 package com.mytest.billapp.dto;
 
 import java.util.List;
+import java.util.Map;
 
 public class SessionUser {
 	
@@ -16,6 +17,7 @@ public class SessionUser {
 	private String role;
 	private List<String> allRoles;
 	private List<MenuItem> userMenuItems;
+	private Map<String, String> userPermissions;
 	
 	public String getUserName() {
 		return userName;
@@ -53,4 +55,11 @@ public class SessionUser {
 	public void setAllRoles(List<String> allRoles) {
 		this.allRoles = allRoles;
 	}
+	public Map<String, String> getUserPermissions() {
+		return userPermissions;
+	}
+	public void setUserPermissions(Map<String, String> userPermissions) {
+		this.userPermissions = userPermissions;
+	}
+	
 }
