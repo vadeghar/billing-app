@@ -146,6 +146,10 @@ var DEL_REQ_DATA = {};
 	}
 	
 	function editCallback(role) {
+		console.log(JSON.stringify(role));
+		$(':checkbox').each(function() {
+		    //console.log(this.val());
+		});
 		if(role) {
 			$(":input").each(function(i){
 				if($(this).data('input') !== undefined) {
@@ -156,7 +160,7 @@ var DEL_REQ_DATA = {};
 			$('#collapseLink').click();
 			$("#saveOrUpdate strong").text("Update");
 			$("#saveOrUpdateTitle h5").text("Edit Role");
-			$('#name').focus();
+			$('#role').focus();
 		}
 	}
 	
