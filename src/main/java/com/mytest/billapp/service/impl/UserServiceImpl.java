@@ -1,9 +1,13 @@
 package com.mytest.billapp.service.impl;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -12,6 +16,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mytest.billapp.dto.SessionUser;
+import com.mytest.billapp.model.Permissions;
 import com.mytest.billapp.model.Role;
 import com.mytest.billapp.model.User;
 import com.mytest.billapp.repsitory.RoleRepository;
@@ -112,6 +117,16 @@ public class UserServiceImpl implements UserService {
 		User user = findByEmail(userName);
 		if(user == null)
 			user = findByUserName(userName);
+		Set<Role> userRoles = user.getRoles();
+		Map<String, String> userPermissions = new HashMap<>();
+		if(CollectionUtils.isNotEmpty(userRoles)) {
+			for(Role r : userRoles) {
+				if(CollectionUtils.isEmpty(r.getPermissions())) continue;
+				for(Permissions p : r.getPermissions()) {
+					userPermissions.put(p.getName(), p.getLink());
+				}
+			}
+		}
 		SessionUser sessionUser = null;
 		if(user != null) {
 			sessionUser = new SessionUser(user.getUserName(), user.getEmail(), true);
@@ -121,7 +136,7 @@ public class UserServiceImpl implements UserService {
 				else
 					sessionUser.setRole("User");
 			}
-				
+			sessionUser.setUserPermissions(userPermissions);	
 		}
 		return sessionUser;
 	}

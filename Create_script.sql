@@ -230,3 +230,9 @@ ADD CONSTRAINT `permission_group_id`
   `zip` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `billingsoftware`.`role_permission` (
+  `role_id` INT NOT NULL,
+  `permission_id` INT NOT NULL,
+  PRIMARY KEY (`role_id`, `permission_id`));

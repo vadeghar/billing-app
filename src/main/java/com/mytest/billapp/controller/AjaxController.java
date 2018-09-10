@@ -26,6 +26,7 @@ import com.mytest.billapp.model.Brand;
 import com.mytest.billapp.model.Notes;
 import com.mytest.billapp.model.Permissions;
 import com.mytest.billapp.model.ProductItems;
+import com.mytest.billapp.model.Role;
 import com.mytest.billapp.model.Sale;
 import com.mytest.billapp.model.SaleItems;
 import com.mytest.billapp.model.Supplier;
@@ -34,6 +35,7 @@ import com.mytest.billapp.repsitory.NotesRepository;
 import com.mytest.billapp.service.BrandService;
 import com.mytest.billapp.service.PermissionsService;
 import com.mytest.billapp.service.ProductService;
+import com.mytest.billapp.service.RoleService;
 import com.mytest.billapp.service.SalesService;
 import com.mytest.billapp.service.StockService;
 import com.mytest.billapp.service.SupplierService;
@@ -71,7 +73,37 @@ public class AjaxController {
 	BrandService brandService;
 	
 	@Autowired
+	RoleService roleService;
+	
+	@Autowired
 	PermissionsService permissionsService;
+	
+	@GetMapping("/role/all")
+	public List<Role> getAllRole() {
+		return roleService.findAll();
+	}
+
+	@PostMapping("/role")
+	public Role getRole(@RequestBody Role role) {
+		return roleService.getOne(role.getId());
+	}
+
+	@PostMapping("/role/save")
+	public void saveRole(@RequestBody Role role) {
+		Role dbRole =  new Role();
+		if(role != null && AppUtils.isValidNonZeroLong(role.getId())) 
+			dbRole = roleService.getOne(role.getId());
+		//dbRole.setName(role.getName());
+		//dbRole.setLink(role.getLink());
+		roleService.save(dbRole);
+	}
+
+	@PostMapping("/role/delete")
+	public void deleteRole(@RequestBody Role role) {
+		if(role != null && AppUtils.isValidNonZeroLong(role.getId())) 
+			roleService.deleteById(role.getId());
+	}
+	
 	
 	@GetMapping("/permissions/all")
 	public List<Permissions> getAllPermissionss() {
