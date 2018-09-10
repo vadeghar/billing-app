@@ -11,7 +11,7 @@
 
     <link href="${pageContext.request.contextPath}/dashboard_1/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/dashboard_1/css/font-awesome/css/font-awesome.css" rel="stylesheet">
-
+	<link href="${pageContext.request.contextPath}/dashboard_1/css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/dashboard_1/css/animate.css" rel="stylesheet">
     
     <link href="${pageContext.request.contextPath}/dashboard_1/css/plugins/dataTables/datatables.min.css" rel="stylesheet">

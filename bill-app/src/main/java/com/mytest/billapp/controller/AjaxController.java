@@ -107,7 +107,9 @@ public class AjaxController {
 	
 	@GetMapping("/permissions/all")
 	public List<Permissions> getAllPermissionss() {
-		return permissionsService.findAll();
+		List<Permissions> allPermissions = permissionsService.findAll();
+		allPermissions.sort((Permissions o1, Permissions o2)->o1.getName().compareTo(o2.getName()));
+		return allPermissions;
 	}
 
 	@PostMapping("/permissions")
