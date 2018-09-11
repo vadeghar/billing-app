@@ -3,8 +3,10 @@ package com.mytest.billapp.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mytest.billapp.model.Brand;
 import com.mytest.billapp.model.Notes;
@@ -93,8 +96,14 @@ public class AjaxController {
 		Role dbRole =  new Role();
 		if(role != null && AppUtils.isValidNonZeroLong(role.getId())) 
 			dbRole = roleService.getOne(role.getId());
-		//dbRole.setName(role.getName());
-		//dbRole.setLink(role.getLink());
+		dbRole.setRole(role.getRole());
+		dbRole.setPermissions(new HashSet<>());
+		Set<Permissions> permissionsList = new HashSet<>();
+		if(!CollectionUtils.isEmpty(role.getPermissions())) {
+			for(Permissions uiPerm : role.getPermissions())
+				permissionsList.add(permissionsService.getOne(uiPerm.getId()));
+		}
+		dbRole.setPermissions(permissionsList);
 		roleService.save(dbRole);
 	}
 
@@ -107,6 +116,7 @@ public class AjaxController {
 	
 	@GetMapping("/permissions/all")
 	public List<Permissions> getAllPermissionss() {
+		ServletUriComponentsBuilder.fromCurrentRequest() ;
 		List<Permissions> allPermissions = permissionsService.findAll();
 		allPermissions.sort((Permissions o1, Permissions o2)->o1.getName().compareTo(o2.getName()));
 		return allPermissions;
