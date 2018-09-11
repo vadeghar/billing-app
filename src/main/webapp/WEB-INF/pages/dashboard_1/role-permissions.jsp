@@ -165,14 +165,36 @@ function updatePermissions() {
 	
 	function editCallback(role) {
 		console.log(JSON.stringify(role));
-		$(':checkbox').each(function() {
-		    //console.log(this.val());
-		});
+		var permIds = [];
 		if(role) {
 			$(":input").each(function(i){
 				if($(this).data('input') !== undefined) {
 					var elementName = $(this).attr('id');
 					$('#'+elementName).val(role[elementName]);
+				}
+			});
+			
+			$.each(role.permissions, function(i, p){
+				permIds.push(p.id);
+			});
+			console.log("--- "+permIds);
+			$('input[type="checkbox"]').each(function () {
+				var uiIdCheckbox = $(this);
+				var found = 'No';
+				console.log(permIds.includes($(uiIdCheckbox).val()) +"::"+$(uiIdCheckbox).val()+"Index: "+permIds.indexOf($(uiIdCheckbox).val()));
+				for(var i = 0; i <= permIds.length; i++) {
+					if(permIds[i] == $(uiIdCheckbox).val()) {
+						found = 'Yes';
+						console.log("Made Yes to "+$(uiIdCheckbox).val())
+						return;
+					}
+					if(found == 'Yes') return;
+					console.log("No Change for "+$(uiIdCheckbox).val())
+				}
+				if(found == 'Yes') {
+					$(uiIdCheckbox).attr('checked', true);
+				}else {
+					$(uiIdCheckbox).attr('checked', false);
 				}
 			});
 			$('#collapseLink').click();
