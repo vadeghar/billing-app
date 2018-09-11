@@ -21,7 +21,7 @@
 									</div>
 							</div>
 							<div class="col-sm-12">
-								<div class="form-group col-sm-3"><label>Roles</label></div>
+								<div class="form-group col-sm-3"><label>Permissions</label></div>
 							</div>
 							<div class="col-sm-12" id="allPermissionsId">
 								
@@ -86,7 +86,24 @@ var ALL_PERMISSIONS = '${pageContext.request.contextPath}/ajax/permissions/all';
 var REQ_FLDS = ['#role'];
 var REQ_MSGS = ['Role Name is required'];
 var DEL_REQ_DATA = {};
-	
+
+var sList = '';
+var permission = {id:''};
+var checkedPermissions = [];
+
+function updatePermissions() {
+	//alert("DFDF");
+	checkedPermissions = [];
+	$('input[type="checkbox"]').each(function () {
+		permission ={id:''};
+		if(this.checked) {
+			permission.id = $(this).val();
+			checkedPermissions.push(permission);
+		}
+	    sList += "(" + $(this).val() + "-" + (this.checked ? "checked" : "not checked") + ")";
+	});
+  console.log(checkedPermissions);
+}
 	$('#cancel').on('click', function() {
 		resetFields();
 		$("#saveOrUpdate strong").text("Save");
@@ -112,6 +129,7 @@ var DEL_REQ_DATA = {};
 		_requestData = '{'+_requestData+'}';
 		console.log(_requestData);
 		var obj = $.parseJSON(_requestData);
+		obj["permissions"] = checkedPermissions;
 		console.log(obj);
 		return obj;
 	} 
@@ -256,7 +274,7 @@ var DEL_REQ_DATA = {};
 		var divBlock = '';
 		$.each(data, function( index, permission) {
 			aa = aa+ '<li>'+
-			            '<input type="checkbox" value="'+permission.id+'" name="" class="i-checks" checked/>'+
+			            '<input type="checkbox" value="'+permission.id+'" name="" class="i-checks"  onclick="updatePermissions();"/>'+
 			            '<span class="m-l-xs">'+permission.name+'</span>'+
 			         '</li>';
          if((index+1)%4 == 0) {
