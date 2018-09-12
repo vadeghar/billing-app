@@ -34,10 +34,10 @@ public class UserServiceImpl implements UserService {
 	
 	//@Transactional(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
 	public User save(User entity) {
-		Role userRole = roleRepository.findByRole("ADMIN");
+		/*Role userRole = roleRepository.findByRole("ADMIN");
 		if(StringUtils.containsIgnoreCase(entity.getEmail(), "user"))
 			userRole = roleRepository.findByRole("USER");
-		entity.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+		entity.setRoles(new HashSet<Role>(Arrays.asList(userRole)));*/
 		return userRepository.save(entity);
 	}
 	

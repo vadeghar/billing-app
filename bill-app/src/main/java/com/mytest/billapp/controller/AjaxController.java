@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import com.mytest.billapp.model.Role;
 import com.mytest.billapp.model.Sale;
 import com.mytest.billapp.model.SaleItems;
 import com.mytest.billapp.model.Supplier;
+import com.mytest.billapp.model.User;
 import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.NotesRepository;
 import com.mytest.billapp.service.BrandService;
@@ -42,6 +44,7 @@ import com.mytest.billapp.service.RoleService;
 import com.mytest.billapp.service.SalesService;
 import com.mytest.billapp.service.StockService;
 import com.mytest.billapp.service.SupplierService;
+import com.mytest.billapp.service.UserService;
 import com.mytest.billapp.service.VendorService;
 import com.mytest.billapp.utils.AppConstants;
 import com.mytest.billapp.utils.AppUtils;
@@ -80,6 +83,53 @@ public class AjaxController {
 	
 	@Autowired
 	PermissionsService permissionsService;
+	
+	@Autowired
+	UserService userService;
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	
+	@GetMapping("/user/all")
+	public List<User> getAllUser() {
+		return userService.findAll();
+	}
+
+	@PostMapping("/user")
+	public User getUser(@RequestBody User user) {
+		return userService.getOne(user.getId());
+	}
+
+	@PostMapping("/user/save")
+	public void saveUser(@RequestBody User user) {
+		User dbUser =  new User();
+		if(user != null && AppUtils.isValidNonZeroLong(user.getId())) 
+			dbUser = userService.getOne(user.getId());
+		dbUser.setEmail(user.getEmail());
+		dbUser.setFirstName(user.getFirstName());
+		dbUser.setLastName(user.getLastName());
+		dbUser.setMobile(user.getMobile());
+		dbUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		dbUser.setUserName(user.getUserName());
+		dbUser.setRoles(new HashSet<>());
+		Set<Role> roleList = new HashSet<>();
+		if(!CollectionUtils.isEmpty(user.getRoles())) {
+			for(Role uiRole : user.getRoles())
+				roleList.add(roleService.getOne(uiRole.getId()));
+		}
+		dbUser.setRoles(roleList);
+		userService.save(dbUser);
+	}
+
+	@PostMapping("/user/delete")
+	public void deleteUser(@RequestBody User user) {
+		if(user != null && AppUtils.isValidNonZeroLong(user.getId())) 
+			userService.deleteById(user.getId());
+	}
+	
+	
+	
+	
 	
 	@GetMapping("/role/all")
 	public List<Role> getAllRole() {

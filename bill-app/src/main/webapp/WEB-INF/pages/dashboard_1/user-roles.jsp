@@ -2,28 +2,50 @@
 <div class="wrapper wrapper-content">
 	<div class="row">
 		<div class="col-lg-12 rounded p-5" >
-        	<div class="ibox float-e-margins" id="roleList">
+        	<div class="ibox float-e-margins" id="userList">
             	<div class="ibox-title" id="saveOrUpdateTitle"> 
-            		<h5>New Suppler</h5>
+            		<h5>New User</h5>
             		<div class="ibox-tools">
                          <a class="collapse-link" id="collapseLink">
                              <i class="fa fa-chevron-down"></i>
                          </a>
                      </div>
             	</div>
-       				<div class="ibox-content" id="newOrEditRole" style="display: none;">
+       				<div class="ibox-content" id="newOrEditUser" style="display: none;">
                 		<div class="table-responsive">
 							<div class="col-sm-12">
-									<div class="form-group col-sm-3">
-										<input type="hidden" id="id" data-input>						
-										<label for="role">Role: <span class="required">*</span></label>
-										<input id="role" class="form-control" data-input/>
-									</div>
+									<div class="col-sm-12">
+										<div class="form-group col-sm-3">
+											<input type="hidden" id="id" data-input>						
+											<label for="firstName">First Name: <span class="required">*</span></label>
+											<input id="firstName" class="form-control" data-input autocomplete="off"/>
+										</div>
+										<div class="form-group col-sm-3">
+											<label for="lastName" >Last Name: <span class="required">*</span></label>
+											<input id="lastName" class="form-control" data-input autocomplete="off"/>
+										</div>
+										<div class="form-group col-sm-3">
+											<label for="email" >Email:</label>
+											<input id="email" class="form-control" data-input autocomplete="off" autocomplete="off"/>
+										</div>
+										<div class="form-group col-sm-3">
+											<label for="password" >Password:</label>
+											<input type="password" id="password" class="form-control" data-input autocomplete="off"/>
+										</div>
+										<div class="form-group col-sm-3">
+											<label for="mobile">Mobile No:</label>
+											<input id="mobile" class="form-control" data-input autocomplete="off"/>
+										</div>
+										<div class="form-group col-sm-3">
+											<label for="userName" >Login User Name:</label>
+											<input id="userName" class="form-control" data-input autocomplete="off"/>
+										</div>
+								</div>
 							</div>
 							<div class="col-sm-12">
-								<div class="form-group col-sm-3"><label>Permissions</label></div>
+								<div class="form-group col-sm-3"><label>Roles</label></div>
 							</div>
-							<div class="col-sm-12" id="allPermissionsId">
+							<div class="col-sm-12" id="allRolesId">
 								
 							</div>
 							<div class="col-sm-12 text-center">
@@ -35,28 +57,31 @@
                 </div>
         </div>
 		<div class="col-lg-12">
-            <div class="ibox float-e-margins" id="roleList">
+            <div class="ibox float-e-margins" id="userList">
                 <div class="ibox-title">
-                    <h5>Roles</h5>
+                    <h5>Users</h5>
                     <div class="ibox-tools">
                          <a class="collapse-link">
                              <i class="fa fa-chevron-up"></i>
                          </a>
                      </div>
                  </div>
-                 <div class="ibox-content" id="roleDataTable">
+                 <div class="ibox-content" id="userDataTable">
                     <div class="table-responsive">
-                    	<table id="roleListDataTable" class="table table-striped dt-responsive">
+                    	<table id="userListDataTable" class="table table-striped dt-responsive">
 							<thead>
 								<tr>
 									<th  class="all no-sort">ID</th>
-									<th class="min-tablet no-sort">Role</th>
+									<th class="min-tablet no-sort">First Name</th>
+									<th class="min-tablet no-sort">Last Name</th>
+									<th class="min-tablet no-sort">Email</th>
+									<th class="min-tablet no-sort">Mobile</th>
 									<th class="min-tablet no-sort">Action</th>
 								</tr>
 							</thead>
 						</table>
                     </div>
-                    <div class="modal inmodal" id="confirmDeleteModel" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                    <div class="modal inmodal" id="confirmDeleteModel" tabindex="-1" user="dialog" aria-hidden="true" style="display: none;">
                          <div class="modal-dialog">
                              <div class="modal-content animated flipInY">
                                  <div class="modal-body">
@@ -77,43 +102,42 @@
 
 <script type="text/javascript">
 var tableColumns = [];
-var DATA_LIST_URL = '${pageContext.request.contextPath}/ajax/role/all';
-var EDIT_URL = '${pageContext.request.contextPath}/ajax/role';
-var SAVE_URL = '${pageContext.request.contextPath}/ajax/role/save';
-var DELETE_URL = '${pageContext.request.contextPath}/ajax/role/delete';
-var ALL_PERMISSIONS = '${pageContext.request.contextPath}/ajax/permissions/all';
+var DATA_LIST_URL = '${pageContext.request.contextPath}/ajax/user/all';
+var EDIT_URL = '${pageContext.request.contextPath}/ajax/user';
+var SAVE_URL = '${pageContext.request.contextPath}/ajax/user/save';
+var DELETE_URL = '${pageContext.request.contextPath}/ajax/user/delete';
+var ALL_ROLES = '${pageContext.request.contextPath}/ajax/role/all';
 
-var REQ_FLDS = ['#role'];
-var REQ_MSGS = ['Role Name is required'];
+var REQ_FLDS = ['#user'];
+var REQ_MSGS = ['User Name is required'];
 var DEL_REQ_DATA = {};
 
 var sList = '';
-var permission = {id:''};
-var checkedPermissions = [];
+var role = {id:''};
+var checkedRoles = [];
 
-function updatePermissions() {
+function updateRoles() {
 	//alert("DFDF");
-	checkedPermissions = [];
+	checkedRoles = [];
 	$('input[type="checkbox"]').each(function () {
-		permission ={id:''};
+		role ={id:''};
 		if(this.checked) {
-			permission.id = $(this).val();
-			checkedPermissions.push(permission);
+			role.id = $(this).val();
+			checkedRoles.push(role);
 		}
 	    sList += "(" + $(this).val() + "-" + (this.checked ? "checked" : "not checked") + ")";
 	});
-  console.log(checkedPermissions);
 }
 	$('#cancel').on('click', function() {
 		resetFields();
 		$("#saveOrUpdate strong").text("Save");
-		$("#saveOrUpdateTitle h5").text("New Role");
+		$("#saveOrUpdateTitle h5").text("New User");
 	});
 	$('#saveOrUpdate').on('click', function() {
 		var isValid = validate();
 		var _requestData = getSaveRequestData();
 		if(isValid) {
-			simpleDataCall(SAVE_URL, "Save Role", $('#newOrEditRole'), _requestData, saveCallback)
+			simpleDataCall(SAVE_URL, "Save User", $('#newOrEditUser'), _requestData, saveCallback)
 		}
 	});
 	
@@ -127,30 +151,28 @@ function updatePermissions() {
 		});
 		_requestData = _requestData.replace(/.$/,"");
 		_requestData = '{'+_requestData+'}';
-		console.log(_requestData);
 		var obj = $.parseJSON(_requestData);
-		obj["permissions"] = checkedPermissions;
-		console.log(obj);
+		obj["roles"] = checkedRoles;
 		return obj;
 	} 
 	
 	$('#confirmDeleteBtn').on('click', function() {
-		simpleDataCall(DELETE_URL, "Delete Role", $('#newOrEditRole'), DEL_REQ_DATA, deleteCallback)
+		simpleDataCall(DELETE_URL, "Delete User", $('#newOrEditUser'), DEL_REQ_DATA, deleteCallback)
 	});
 	
 	$('#confirmNoBtn').on('click', function() {
 		DEL_REQ_DATA = {};
 	});
 	
-	function editRole(id) {
+	function editUser(id) {
 		var  _requestData = { id: id }
-		simpleDataCall(EDIT_URL, "Edit Role", $('#newOrEditRole'), _requestData, editCallback)
+		simpleDataCall(EDIT_URL, "Edit User", $('#newOrEditUser'), _requestData, editCallback)
 	}
 	
 	function saveCallback() {
 		toastr.success('Succesfully Saved');
 		resetFields();
-		RefreshTable('#roleListDataTable', DATA_LIST_URL)
+		RefreshTable('#userListDataTable', DATA_LIST_URL)
 	}
 	
 	function setDeleteRequest(id) {
@@ -160,46 +182,43 @@ function updatePermissions() {
 	function deleteCallback() {
 		$('#confirmNoBtn').click();
 		toastr.success('Succesfully Deleted');
-		RefreshTable('#roleListDataTable', DATA_LIST_URL)
+		RefreshTable('#userListDataTable', DATA_LIST_URL)
 	}
 	
-	function editCallback(role) {
-		console.log(JSON.stringify(role));
+	function editCallback(user) {
+		$('input:checkbox').removeAttr('checked');
 		var permIds = [];
-		if(role) {
+		if(user) {
 			$(":input").each(function(i){
 				if($(this).data('input') !== undefined) {
 					var elementName = $(this).attr('id');
-					$('#'+elementName).val(role[elementName]);
+					$('#'+elementName).val(user[elementName]);
 				}
 			});
 			
-			$.each(role.permissions, function(i, p){
+			$.each(user.roles, function(i, p){
 				permIds.push(p.id);
 			});
-			console.log("--- "+permIds);
 			$('input[type="checkbox"]').each(function () {
 				var uiIdCheckbox = $(this);
 				var found = 'No';
 				if(isExist(permIds, $(uiIdCheckbox).val())){ 
-					console.log("Checked "+$(uiIdCheckbox).val());
 					$(uiIdCheckbox).attr('checked', true);
 				}else
-					$(uiIdCheckbox).attr('checked', false);
+					$(uiIdCheckbox).removeAttr('checked');
 				
 			});
-			updatePermissions();
+			updateRoles();
 			$('#collapseLink').click();
 			$("#saveOrUpdate strong").text("Update");
-			$("#saveOrUpdateTitle h5").text("Edit Role");
-			$('#role').focus();
+			$("#saveOrUpdateTitle h5").text("Edit User");
+			$('#firstName').focus();
 		}
 	}
 	
 	function validate() {
 		var allValid = true;
 		$.each(REQ_FLDS, function( index, fieldName ) {
-			console.log("Validating : "+fieldName);
 			if($(fieldName).val() == '') {
 				toastr.error(REQ_MSGS[index]);
 				allValid = false;
@@ -221,7 +240,7 @@ function updatePermissions() {
 		});
 		$('#collapseLink').click();
 		$("#saveOrUpdate strong").text("Save");
-		$("#saveOrUpdateTitle h5").text("New Role");
+		$("#saveOrUpdateTitle h5").text("New User");
 	}
 	function InitOverviewDataTable()
 	{
@@ -230,13 +249,22 @@ function updatePermissions() {
 				"data" : "id"
 		    },
 		    {
-	     		"data" : "role"
-		    }, 
+	     		"data" : "firstName"
+		    },
+		    {
+	     		"data" : "lastName"
+		    },
+		    {
+	     		"data" : "email"
+		    },
+		    {
+	     		"data" : "mobile"
+		    },
 		    {"mRender": function ( data, type, row ) {
-		        return '<button class="glyphicon glyphicon-pencil bg-white" style="margin-right: 10px" onclick="editRole('+row.id+')"/>' 
+		        return '<button class="glyphicon glyphicon-pencil bg-white" style="margin-right: 10px" onclick="editUser('+row.id+')"/>' 
 		        +'<button class="glyphicon glyphicon-trash bg-white" style="margin-right: 10px" data-toggle="modal" data-target="#confirmDeleteModel" onclick="setDeleteRequest('+row.id+')"/>';}, "orderable": false
 		    }];
-		loadDataTable(DATA_LIST_URL, $("#roleListDataTable") , tableColumns, $('#roleDataTable'));
+		loadDataTable(DATA_LIST_URL, $("#userListDataTable") , tableColumns, $('#userDataTable'));
 	}
 	
 	function loadDataTable(url, tId, tableColumns, $content) {
@@ -248,17 +276,6 @@ function updatePermissions() {
 	        "ajax" : {
 	            "url" : url,
 	            dataSrc : '',
-	            /* beforeSend: function() {
-	    			toastr.clear();
-	    			if (!$content.hasClass('sk-spinner') && !$content.hasClass('sk-spinner-rotating-plane')) {
-	    				$content.addClass('sk-spinner').addClass('sk-spinner-rotating-plane');
-	    			}
-	    		},
-	    		complete: function() {
-	    			window.setTimeout(function() {
-	    				$content.toggleClass('sk-spinner').toggleClass('sk-spinner-rotating-plane');
-	    			}, _AOC_TIMEOUT);
-	    		} */
 	        },
 	        "columns" : tableColumns
 	    });
@@ -279,47 +296,52 @@ function updatePermissions() {
 	    table.fnDraw();
 	  });
 	}
-	function loadAllPermssions() {
-		simpleGetDataCall(ALL_PERMISSIONS, "All Permissions", $('#allPermissions'), addPermissionsToPage)
+	function loadAllRoles() {
+		simpleGetDataCall(ALL_ROLES, "All Roles", $('#allRoles'), addRolesToPage)
 	}
 	
-	function addPermissionsToPage(data) {
+	function addRolesToPage(data) {
 		var aa = '';
 		var divBlock = '';
-		$.each(data, function( index, permission) {
+		$.each(data, function( index, role) {
 			aa = aa+ '<li>'+
-			            '<input type="checkbox" value="'+permission.id+'" name="" class="i-checks"  onclick="updatePermissions();"/>'+
-			            '<span class="m-l-xs">'+permission.name+'</span>'+
+			            '<input type="checkbox" value="'+role.id+'" name="" class="i-checks"  onclick="updateRoles();"/>'+
+			            '<span class="m-l-xs">'+role.role+'</span>'+
 			         '</li>';
-         if((index+1)%4 == 0) {
-				var start = '<div class="col-lg-3">'+
-								'<div class="ibox-content" style="border: none;">'+
-									'<ul class="todo-list m-t">'+
-									aa+
-									'</ul>'+
-								'</div>'+
-							'</div>';
-				divBlock = divBlock+start;
-				aa= '';
+	         var start = '<div class="col-lg-3">'+
+				'<div class="ibox-content" style="border: none;">'+
+					'<ul class="todo-list m-t">'+
+					aa+
+					'</ul>'+
+				'</div>'+
+			'</div>';
+			if(data.length > 4) {
+				if((index+1)%4 == 0) {
+					divBlock = divBlock+start;
+					aa= '';
+				}
+			}else {
+				divBlock = start;
 			}
 		});
-		$('#allPermissionsId').html(divBlock);
+		$('#allRolesId').html(divBlock);
 	}
 	
 	function isExist(arr, ele) {
-		console.log("Check: "+ele+" in "+arr);
 		for(var i=0; i <= arr.length; i++) {
 			if(arr[i] == ele) {
-				console.log("Found: "+ele);
 				return true;
 			}
 		}
-		console.log("Not Found: "+ele);
 		return false;
 	}
 	
 	$(document).ready(function () {
 	  InitOverviewDataTable();
-	  loadAllPermssions();
+	  loadAllRoles();
+	  $(":input").each(function(){
+		  $(this).attr('autocomplete','off');
+	  });
+	  
 	});
 </script>
