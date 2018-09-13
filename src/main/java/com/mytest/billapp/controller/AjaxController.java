@@ -3,6 +3,7 @@ package com.mytest.billapp.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mytest.billapp.model.Brand;
+import com.mytest.billapp.model.Customer;
 import com.mytest.billapp.model.Notes;
 import com.mytest.billapp.model.Permissions;
 import com.mytest.billapp.model.ProductItems;
@@ -38,6 +40,7 @@ import com.mytest.billapp.model.User;
 import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.NotesRepository;
 import com.mytest.billapp.service.BrandService;
+import com.mytest.billapp.service.CustomerService;
 import com.mytest.billapp.service.PermissionsService;
 import com.mytest.billapp.service.ProductService;
 import com.mytest.billapp.service.RoleService;
@@ -88,6 +91,40 @@ public class AjaxController {
 	UserService userService;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	CustomerService customerService;
+	
+	
+	@GetMapping("/customer/all")
+	public List<Customer> getAllCustomers() {
+		return customerService.findAll();
+	}
+
+	@PostMapping("/customer")
+	public Customer getCustomer(@RequestBody Customer customer) {
+		return customerService.getOne(customer.getId());
+	}
+
+	@PostMapping("/customer/save")
+	public void saveCustomer(@RequestBody Customer customer) {
+		Customer dbCustomer =  new Customer();
+		if(customer != null && AppUtils.isValidNonZeroLong(customer.getId())) 
+			dbCustomer = customerService.getOne(customer.getId());
+		dbCustomer.setName(customer.getName());
+		dbCustomer.setAddress(customer.getAddress());
+		dbCustomer.setEmail(customer.getEmail());
+		dbCustomer.setMobileNo(customer.getMobileNo());
+		if(dbCustomer.getEntryDate() == null)
+			dbCustomer.setEntryDate(new Date());
+		customerService.save(dbCustomer);
+	}
+
+	@PostMapping("/customer/delete")
+	public void deleteCustomer(@RequestBody Customer customer) {
+		if(customer != null && AppUtils.isValidNonZeroLong(customer.getId())) 
+			customerService.deleteById(customer.getId());
+	}
 	
 	
 	@GetMapping("/user/all")

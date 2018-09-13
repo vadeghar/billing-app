@@ -34,7 +34,7 @@
 	          <li id="menuItemUsers"><a href="${pageContext.request.contextPath}/admin/dashboard1/users">Application Users</a></li>
 	          <li id="menuItemPermissions"><a  href="${pageContext.request.contextPath}/admin/dashboard1/permissions">Permissions</a></li>
 	          <li id="menuItemRoles"><a href="${pageContext.request.contextPath}/admin/dashboard1/roles">Role</a></li>
-	          <li><a href="dashboard_5.html">Customers</a></li>
+	          <li id="menuItemCustomers"><a href="${pageContext.request.contextPath}/admin/dashboard1/customers">Customers</a></li>
 	      </ul>
 	  </li>
 	  <li>

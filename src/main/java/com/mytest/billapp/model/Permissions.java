@@ -1,5 +1,6 @@
 package com.mytest.billapp.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -18,8 +19,10 @@ public class Permissions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 	
+	@Column(name = "NAME")
 	private String name;
 	
+	@Column(name = "LINK")
 	private String link;
 
 	public long getId() {
