@@ -14,47 +14,45 @@
        				<div class="ibox-content" id="newOrEditUser" style="display: none;">
                 		<div class="table-responsive">
 							<div class="col-sm-12">
-									<div class="col-sm-12">
-										<div class="form-group col-sm-3">
-											<input type="hidden" id="id" data-input>						
-											<label for="firstName">First Name: <span class="required">*</span></label>
-											<input id="firstName" class="form-control" data-input autocomplete="off"/>
-										</div>
-										<div class="form-group col-sm-3">
-											<label for="lastName" >Last Name: <span class="required">*</span></label>
-											<input id="lastName" class="form-control" data-input autocomplete="off"/>
-										</div>
-										<div class="form-group col-sm-3">
-											<label for="email" >Email:</label>
-											<input id="email" class="form-control" data-input autocomplete="off" autocomplete="off"/>
-										</div>
-										<div class="form-group col-sm-3">
-											<label for="password" >Password:</label>
-											<input type="password" id="password" class="form-control" data-input autocomplete="off"/>
-										</div>
-										<div class="form-group col-sm-3">
-											<label for="mobile">Mobile No:</label>
-											<input id="mobile" class="form-control" data-input autocomplete="off"/>
-										</div>
-										<div class="form-group col-sm-3">
-											<label for="userName" >Login User Name:</label>
-											<input id="userName" class="form-control" data-input autocomplete="off"/>
-										</div>
+								<div class="form-group col-sm-3">
+									<input type="hidden" id="id" data-input>						
+									<label for="firstName">First Name: <span class="required">*</span></label>
+									<input id="firstName" class="form-control" data-input autocomplete="off"/>
 								</div>
-							</div>
-							<div class="col-sm-12">
-								<div class="form-group col-sm-3"><label>Roles</label></div>
-							</div>
-							<div class="col-sm-12" id="allRolesId">
-								
-							</div>
-							<div class="col-sm-12 text-center">
-		                  		<button class="btn btn-sm btn-primary  m-t-n-xs" type="button" id="saveOrUpdate"><strong>Save</strong></button>
-		                  		<button class="btn btn-sm btn-primary  m-t-n-xs" type="button" id="cancel"><strong>Cancel</strong></button>
-		                  	</div>
-	                	</div>
+								<div class="form-group col-sm-3">
+									<label for="lastName" >Last Name: <span class="required">*</span></label>
+									<input id="lastName" class="form-control" data-input autocomplete="off"/>
+								</div>
+								<div class="form-group col-sm-3">
+									<label for="email" >Email:</label>
+									<input id="email" class="form-control" data-input autocomplete="off" autocomplete="off"/>
+								</div>
+								<div class="form-group col-sm-3">
+									<label for="password" >Password:</label>
+									<input type="password" id="password" class="form-control" data-input autocomplete="off"/>
+								</div>
+								<div class="form-group col-sm-3">
+									<label for="mobile">Mobile No:</label>
+									<input id="mobile" class="form-control" data-input autocomplete="off"/>
+								</div>
+								<div class="form-group col-sm-3">
+									<label for="userName" >Login User Name:</label>
+									<input id="userName" class="form-control" data-input autocomplete="off"/>
+								</div>
+						</div>
+						<div class="col-sm-12">
+							<div class="form-group col-sm-3"><label>Roles</label></div>
+						</div>
+						<div class="col-sm-12" id="allRolesId">
+							
+						</div>
+						<div class="col-sm-12 text-center">
+	                  		<button class="btn btn-sm btn-primary  m-t-n-xs" type="button" id="saveOrUpdate"><strong>Save</strong></button>
+	                  		<button class="btn btn-sm btn-primary  m-t-n-xs" type="button" id="cancel"><strong>Cancel</strong></button>
+	                  	</div>
                 	</div>
-                </div>
+               	</div>
+               </div>
         </div>
 		<div class="col-lg-12">
             <div class="ibox float-e-margins" id="userList">

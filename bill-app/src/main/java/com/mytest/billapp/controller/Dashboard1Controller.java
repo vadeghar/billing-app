@@ -83,5 +83,17 @@ public class Dashboard1Controller {
 	    return "dashboard1User";
 	}
 	
+	@RequestMapping(value = "customers")
+	public String getCustomer(Model model) {
+		List<String> breadcrubms = new ArrayList<String>();
+		breadcrubms.add("Home");
+		breadcrubms.add("Application - Master");
+		breadcrubms.add("Customers");
+		model.addAttribute("breadcrubms",breadcrubms);
+		model.addAttribute("activeMenuItem", "menuItemCustomers");
+		model.addAttribute("breadcrubmsHeading", "Customers");
+	    return "dashboard1Customer";
+	}
+	
 	
 }
