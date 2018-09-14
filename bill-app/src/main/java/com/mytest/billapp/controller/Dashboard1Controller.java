@@ -106,4 +106,16 @@ public class Dashboard1Controller {
 		model.addAttribute("breadcrubmsHeading", "Jewel-Category");
 	    return "dashboard1JewelCategory";
 	}
+	
+	@RequestMapping(value = "purchaseEntry")
+	public String purchaseEntry(Model model) {
+		List<String> breadcrubms = new ArrayList<String>();
+		breadcrubms.add("Home");
+		breadcrubms.add("Invoice - Master");
+		breadcrubms.add("Pruchase Entry");
+		model.addAttribute("breadcrubms",breadcrubms);
+		model.addAttribute("activeMenuItem", "menuItemPurchaseEntry");
+		model.addAttribute("breadcrubmsHeading", "Purchase Entry");
+	    return "dashboard1PurchaseEntry";
+	}
 }

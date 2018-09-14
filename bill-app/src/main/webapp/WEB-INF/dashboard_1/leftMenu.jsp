@@ -68,9 +68,11 @@
 	          <li><a href="email_template.html">Email templates</a></li>
 	      </ul>
 	  </li> -->
-	   <li>
-	      <a href="#"><i class="fa fa-money"></i> <span class="nav-label">Purchase Entry</span></a>
+	  <li id="menuItemPurchaseEntry">
+	  	<a href="${pageContext.request.contextPath}/admin/dashboard1/purchaseEntry">Purchase Entry</a>
 	  </li>
+	          
+	
 	  <li>
 	      <a href="#"><i class="fa fa-shopping-basket"></i> <span class="nav-label">Sale Entry</span>  </a>
 	  </li>
