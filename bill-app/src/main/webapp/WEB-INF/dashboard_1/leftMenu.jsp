@@ -42,7 +42,8 @@
 	      <ul class="nav nav-second-level">
 	          <li id="menuItemSuppliers"><a href="${pageContext.request.contextPath}/admin/dashboard1/suppliers">Suppliers</a></li>
 	          <li id="menuItemBrands"><a href="${pageContext.request.contextPath}/admin/dashboard1/brands">Brand</a></li>
-	          <li><a href="#">Product Type</a></li>
+	           <li id="menuItemJewelCategory"><a href="${pageContext.request.contextPath}/admin/dashboard1/jewelCategory">Category</a></li>
+	         <!--  <li><a href="#">Product Type</a></li> -->
 	      </ul>
 	  </li>
 	  <!-- <li>
@@ -67,12 +68,13 @@
 	          <li><a href="email_template.html">Email templates</a></li>
 	      </ul>
 	  </li> -->
-	  <li>
-	      <a href="#"><i class="fa fa-shopping-basket"></i> <span class="nav-label">New Sale</span>  </a>
+	   <li>
+	      <a href="#"><i class="fa fa-money"></i> <span class="nav-label">Purchase Entry</span></a>
 	  </li>
 	  <li>
-	      <a href="#"><i class="fa fa-money"></i> <span class="nav-label">New Purchase</span></a>
+	      <a href="#"><i class="fa fa-shopping-basket"></i> <span class="nav-label">Sale Entry</span>  </a>
 	  </li>
+	 
 	  <li>
 	      <a href="#"><i class="fa fa-life-ring"></i> <span class="nav-label">Purchase</span><span class="fa arrow"></span></a>
 	      <ul class="nav nav-second-level collapse">

@@ -29,6 +29,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mytest.billapp.model.Brand;
 import com.mytest.billapp.model.Customer;
+import com.mytest.billapp.model.JewelCategory;
 import com.mytest.billapp.model.Notes;
 import com.mytest.billapp.model.Permissions;
 import com.mytest.billapp.model.ProductItems;
@@ -41,6 +42,7 @@ import com.mytest.billapp.model.Vendor;
 import com.mytest.billapp.repsitory.NotesRepository;
 import com.mytest.billapp.service.BrandService;
 import com.mytest.billapp.service.CustomerService;
+import com.mytest.billapp.service.JewelCategoryService;
 import com.mytest.billapp.service.PermissionsService;
 import com.mytest.billapp.service.ProductService;
 import com.mytest.billapp.service.RoleService;
@@ -94,6 +96,35 @@ public class AjaxController {
 	
 	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	JewelCategoryService jewelCategoryService;
+	
+	
+	@GetMapping("/jewelCategory/all")
+	public List<JewelCategory> getAllJewelCategorys() {
+		return jewelCategoryService.findAll();
+	}
+	
+	@PostMapping("/jewelCategory")
+	public JewelCategory getJewelCategory(@RequestBody JewelCategory jewelCategory) {
+		return jewelCategoryService.getOne(jewelCategory.getId());
+	}
+	
+	@PostMapping("/jewelCategory/save")
+	public void saveJewelCategory(@RequestBody JewelCategory jewelCategory) {
+		JewelCategory dbJewelCategory =  new JewelCategory();
+		if(jewelCategory != null && AppUtils.isValidNonZeroLong(jewelCategory.getId())) 
+			dbJewelCategory = jewelCategoryService.getOne(jewelCategory.getId());
+		dbJewelCategory.setName(jewelCategory.getName());
+		jewelCategoryService.save(dbJewelCategory);
+	}
+	
+	@PostMapping("/jewelCategory/delete")
+	public void deleteJewelCategory(@RequestBody JewelCategory jewelCategory) {
+		if(jewelCategory != null && AppUtils.isValidNonZeroLong(jewelCategory.getId())) 
+			jewelCategoryService.deleteById(jewelCategory.getId());
+	}
 	
 	
 	@GetMapping("/customer/all")

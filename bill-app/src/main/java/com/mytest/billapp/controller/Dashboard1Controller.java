@@ -95,5 +95,15 @@ public class Dashboard1Controller {
 	    return "dashboard1Customer";
 	}
 	
-	
+	@RequestMapping(value = "jewelCategory")
+	public String getAllJewelCategory(Model model) {
+		List<String> breadcrubms = new ArrayList<String>();
+		breadcrubms.add("Home");
+		breadcrubms.add("Invoice - Master");
+		breadcrubms.add("Jewel Category");
+		model.addAttribute("breadcrubms",breadcrubms);
+		model.addAttribute("activeMenuItem", "menuItemJewelCategory");
+		model.addAttribute("breadcrubmsHeading", "Jewel-Category");
+	    return "dashboard1JewelCategory";
+	}
 }

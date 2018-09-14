@@ -75,6 +75,17 @@
         <put-attribute name="title" value=":: Customers ::" />  
         <put-attribute name="content" value="/WEB-INF/pages/dashboard_1/customer.jsp" />  
     </definition> 
+    
+     <!-- Jewel Category -->
+    <definition name="dashboard1JewelCategory" extends="base.dashboard1">  
+        <put-attribute name="title" value=":: Categories under Jewel ::" />  
+        <put-attribute name="content" value="/WEB-INF/pages/dashboard_1/jewel-category.jsp" />  
+    </definition> 
+    
+    
+    
+    
+    
  
     <!-- Base Define -->
     <definition name="base.definition" template="/WEB-INF/layouts/classic.jsp">  
