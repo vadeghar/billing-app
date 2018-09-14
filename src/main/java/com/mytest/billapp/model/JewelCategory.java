@@ -14,7 +14,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 @Entity
-@Table(name = "JEWER_CATEGORY")
+@Table(name = "JEWEL_CATEGORY")
 @EntityListeners(AuditingEntityListener.class)
 public class JewelCategory extends BEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

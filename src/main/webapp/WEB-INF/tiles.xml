@@ -82,9 +82,12 @@
         <put-attribute name="content" value="/WEB-INF/pages/dashboard_1/jewel-category.jsp" />  
     </definition> 
     
+     <definition name=" dashboard1PurchaseEntry" extends="base.dashboard1">  
+        <put-attribute name="title" value=":: New Purchase ::" />  
+        <put-attribute name="content" value="/WEB-INF/pages/dashboard_1/purchase-entry.jsp" />  
+    </definition> 
     
-    
-    
+   
     
  
     <!-- Base Define -->
