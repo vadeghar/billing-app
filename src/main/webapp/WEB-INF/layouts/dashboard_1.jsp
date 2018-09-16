@@ -18,7 +18,7 @@
     
     <!-- Toastr style -->
     <link href="${pageContext.request.contextPath}/dashboard_1/css/plugins/toastr/toastr.min.css" rel="stylesheet">
-    
+    <link href="${pageContext.request.contextPath}/dashboard_1/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     
     <link href="${pageContext.request.contextPath}/dashboard_1/css/style.css" rel="stylesheet">
     
@@ -71,7 +71,13 @@
     <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/wow/wow.min.js"></script>
     <!-- Toastr  -->
     <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/toastr/toastr.min.js"></script>
+    
+     <!-- Date range use moment.js same as full calendar plugin -->
+    <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/fullcalendar/moment.min.js"></script>
 
+    <!-- Data picker -->
+   <script src="${pageContext.request.contextPath}/dashboard_1/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    
 
 <!-- Application JavaScript  -->
 <script src="${pageContext.request.contextPath}/dashboard_1/js/api/inv.core.js"></script>
@@ -108,6 +114,17 @@
 	<script type="text/javascript">
 	new WOW().init();
         $(document).ready(function() {
+        	
+        	$('input[type="my-date"]').datepicker({
+          		 format: 'mm/dd/yyyy',
+                   todayBtn: "linked",
+                   keyboardNavigation: false,
+                   forceParse: false,
+                   calendarWeeks: true,
+                   todayHighlight: true,
+                   autoclose: true
+               });
+        	
         	toastr.options = {
                     closeButton: true,
                     progressBar: true,
