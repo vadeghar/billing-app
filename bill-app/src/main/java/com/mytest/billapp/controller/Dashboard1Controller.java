@@ -108,7 +108,7 @@ public class Dashboard1Controller {
 	}
 	
 	@RequestMapping(value = "purchaseEntry")
-	public String purchaseEntry(Model model) {
+	public String getPurchaseEntry(Model model) {
 		List<String> breadcrubms = new ArrayList<String>();
 		breadcrubms.add("Home");
 		breadcrubms.add("Invoice - Master");

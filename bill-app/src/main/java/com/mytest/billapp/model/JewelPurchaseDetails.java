@@ -46,6 +46,9 @@ public class JewelPurchaseDetails  extends BEntity implements Serializable {
 	@Column(name="QUANTITY")
 	private Integer quantity;
 	
+	@Column(name="QUALITY")
+	private Integer quality;
+	
 	@Column(name="TOTAL_WEIGHT")
 	private BigDecimal totalWieght;
 	
@@ -191,6 +194,14 @@ public class JewelPurchaseDetails  extends BEntity implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	public Integer getQuality() {
+		return quality;
+	}
+
+	public void setQuality(Integer quality) {
+		this.quality = quality;
 	}
 	
 }
