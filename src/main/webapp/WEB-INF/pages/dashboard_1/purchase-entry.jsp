@@ -16,7 +16,7 @@
                 			<div class="form-group col-sm-3">
 								<input type="hidden" id="id" data-input>						
 								<label for="name">Supplier: <span class="required">*</span></label>
-								<input id="name" class="form-control" data-input autocomplete="off"/>
+								<select id="supplierId"  class="form-control"></select>
 							</div>
 							<div class="form-group col-sm-3">
 								<label for="purchaseDate" >Purchase Date: <span class="required">*</span></label>
@@ -26,6 +26,11 @@
                                     </span>
                                     <input type="my-date" class="form-control" id="purchaseDate">
                                 </div>
+							</div>
+							<div class="form-group col-sm-3">
+								<input type="hidden" id="id" data-input>						
+								<label for="name">Live Price: <span class="required">*</span></label>
+								<span id="livePrice"  class="form-control"></span>
 							</div>
                 		</div>
                 		<div class="form-group col-sm-3" >
@@ -49,7 +54,7 @@
 			             </a>
 			         </div>
 			   	</div>
-				<div class="ibox-content" id="newOrEditPurchaseEntry">
+				<div class="ibox-content" id="newOrEditPurchaseDetail">
 					<div class="table-responsive">
 			     			<div class="col-lg-12">
 			      				<table  class="table table-condensed small-text" id="tb">
@@ -67,11 +72,7 @@
 										<th><a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Items"><span class="glyphicon glyphicon-plus"></span></a></th>
 									</tr>
 									<tr>
-										<td><select name="categoryId" id="categoryId[0]" class="form-control">
-										  <option value="" selected>Select Category</option>
-										    <option value="Engineer">Engineer</option>
-										    <option value="Accountant">Accountant</option>
-										</select></td>
+										<td><select name="categoryId" id="categoryId[0]" class="form-control categoryList"></select></td>
 										<td><input type="text" name="totalWieght" id="totalWieght[0]" class="form-control"></td>
 										<td><input type="text" name="quantity" id="quantity[0]" class="form-control"></td>
 										<td><input type="text" name="avgWieght" id="avgWieght[0]" class="form-control"></td>
@@ -92,6 +93,58 @@
 	</div>
 </div>
  <script type="text/javascript">
+ var SUPPLIER_LIST_URL = '${pageContext.request.contextPath}/ajax/supplier/all';
+ var CATEGORY_LIST_URL = '${pageContext.request.contextPath}/ajax/jewelCategory/all';
+ var LIVE_GOLD_RATE = 'http://www.svbcgold.com/LPriceSvbc.asmx/getSVBCPriceN8943';
+ 
+ $(document).ready(function () {
+	 loadLivePrice();
+	 simpleGetDataCall(SUPPLIER_LIST_URL, "Supplier List", $('#newOrEditPurchaseEntry'), loadSupplierList);
+	 var _requestData = {};
+	// livePriceCallback();
+	// simpleDataCall(LIVE_GOLD_RATE, "Updating Live Price", $('#newOrEditPurchaseEntry'), _requestData, livePriceCallback);
+ });
+ 
+ 
+ function loadSupplierList(data) {
+	 if(data) {
+		 $('#supplierId') .empty();
+		 $.each(data, function( index, supplier ) {
+			 $('<option/>', { value : supplier.id }).text(supplier.name).appendTo('#supplierId');
+		 });
+		 simpleGetDataCall(CATEGORY_LIST_URL, "Supplier List", $('#newOrEditPurchaseDetail'), loadCategoryList);
+	 }
+ }
+ 
+ function loadCategoryList(data) {
+	 if(data) {
+		 $('.categoryList') .empty();
+		 $.each(data, function( index, category ) {
+			 $('<option/>', { value : category.id }).text(category.name).appendTo('.categoryList');
+		 });
+	 }
+ }
+ function loadLivePrice() {
+	 
+	 $.ajax({
+		  type: "POST",
+		  beforeSend: function(request) {
+		    request.setRequestHeader("Content-Type", "application/json");
+		  },
+		  url: LIVE_GOLD_RATE,
+		  data: "{}",
+		  processData: false,
+		  success: function(msg) {
+		    console.log(JSON.stringify(msg));
+		  }
+		});
+	 
+		/* var _requestData = {};
+		simpleDataCall(LIVE_GOLD_RATE, "Updating Live Price", $('#newOrEditPurchaseEntry'), _requestData, livePriceCallback); */
+	 }
+	 function livePriceCallback(data) {
+		console.log(data);
+	 }
 /*  
  $("input.tr_clone_add").live('click', function() {
 	    var $tr    = $(this).closest('.tr_clone');
