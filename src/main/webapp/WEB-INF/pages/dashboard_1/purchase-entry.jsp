@@ -108,14 +108,11 @@
 		 	var tRow = $("#tb tr:eq("+rowCount+")").clone(true);
 		 	$.each(tRow.find("td"), function( index, tColumn ) {
 				$.each($(tColumn).find("input"), function( index, tColumn ) {
-					var idVal = $(this).attr("id");
-					idVal.replace(rowCount-1, rowCount);
-					console.log(idVal+" rowCount "+rowCount-1);
+					console.log("ID: "+$(this).attr("id")+" --- "+(rowCount-1));
+					$(this).attr("id").replace(rowCount-1, rowCount);
 				});
 				$.each($(tColumn).find("select"), function( index, tColumn ) {
-					var idVal = $(this).attr("id");
-					idVal.replace(rowCount-1, rowCount);
-					console.log("Select "+idVal);
+					$(this).attr("id").replace(rowCount-1, rowCount);
 				});
 			});
             var data = tRow.appendTo("#tb");
