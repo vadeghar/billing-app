@@ -166,7 +166,7 @@ var SAVE_URL = '${pageContext.request.contextPath}/ajax/supplier/save';
 var DELETE_URL = '${pageContext.request.contextPath}/ajax/supplier/delete';
 
 var REQ_FLDS = ['#name','#mobile','#addressLine1', '#city', '#bankName','#bankAccNo', '#bankIfsc'];
-var REQ_MSGS = ['Supplier Name is required','Mobile Number is required', 'Address Line is required', 'City is required', 'Bank name is required','Bank Account Number is required',''];
+var REQ_MSGS = ['Supplier Name is required','Mobile Number is required', 'Address Line is required', 'City is required', 'Bank name is required','Bank Account Number is required','IFSC is required'];
 var DEL_REQ_DATA = {};
 	
 	$('#cancel').on('click', function() {

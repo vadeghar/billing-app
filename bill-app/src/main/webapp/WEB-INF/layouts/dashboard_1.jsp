@@ -5,6 +5,7 @@
 <head>
 
     <meta charset="utf-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><tiles:getAsString name="title" /></title>
@@ -116,7 +117,7 @@
         $(document).ready(function() {
         	
         	$('input[type="my-date"]').datepicker({
-          		 format: 'mm/dd/yyyy',
+          		 format: 'dd/mm/yyyy',
                    todayBtn: "linked",
                    keyboardNavigation: false,
                    forceParse: false,
