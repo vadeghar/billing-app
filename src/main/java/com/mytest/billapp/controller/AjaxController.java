@@ -43,6 +43,7 @@ import com.mytest.billapp.repsitory.NotesRepository;
 import com.mytest.billapp.service.BrandService;
 import com.mytest.billapp.service.CustomerService;
 import com.mytest.billapp.service.JewelCategoryService;
+import com.mytest.billapp.service.LivePriceService;
 import com.mytest.billapp.service.PermissionsService;
 import com.mytest.billapp.service.ProductService;
 import com.mytest.billapp.service.RoleService;
@@ -99,6 +100,14 @@ public class AjaxController {
 	
 	@Autowired
 	JewelCategoryService jewelCategoryService;
+	
+	@Autowired
+	LivePriceService livePriceService;
+	
+	@GetMapping("liveprice")
+	public String getLivePrice() {
+		return livePriceService.getLivePriceObject();
+	}
 	
 	
 	@GetMapping("/jewelCategory/all")

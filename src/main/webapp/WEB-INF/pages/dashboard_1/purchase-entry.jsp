@@ -28,8 +28,7 @@
                                 </div>
 							</div>
 							<div class="form-group col-sm-3">
-								<input type="hidden" id="id" data-input>						
-								<label for="name">Live Price: <span class="required">*</span></label>
+								<label for="">Live Price: </label>
 								<span id="livePrice"  class="form-control"></span>
 							</div>
                 		</div>
@@ -72,16 +71,16 @@
 										<th><a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Items"><span class="glyphicon glyphicon-plus"></span></a></th>
 									</tr>
 									<tr>
-										<td><select name="categoryId" id="categoryId[0]" class="form-control categoryList"></select></td>
-										<td><input type="text" name="totalWieght" id="totalWieght[0]" class="form-control"></td>
-										<td><input type="text" name="quantity" id="quantity[0]" class="form-control"></td>
-										<td><input type="text" name="avgWieght" id="avgWieght[0]" class="form-control"></td>
-										<td><input type="text" name="quality" id="quality[0]" class="form-control"></td>
-										<td><input type="text" name="rateCutAt" id="rateCutAt[0]" class="form-control"></td>
-										<td><input type="my-date" name="rateCutDate" id="rateCutDate[0]" class="form-control"></td>
-										<td><input type="text" name="makingChargePerPc" id="makingChargePerPc[0]" class="form-control"></td>
-										<td><input type="text" name="wastagePerPc" id="wastagePerPc[0]" class="form-control"></td>
-										<td><input type="text" name="taxRate" id="taxRate[0]" class="form-control"></td>
+										<td><select name="categoryId" id="categoryId_0" class="form-control categoryList"></select></td>
+										<td><input type="text" name="totalWieght" id="totalWieght_0" class="form-control"></td>
+										<td><input type="text" name="quantity" id="quantity_0" class="form-control"></td>
+										<td><input type="text" name="avgWieght" id="avgWieght_0" class="form-control"></td>
+										<td><input type="text" name="quality" id="quality_0" class="form-control"></td>
+										<td><input type="text" name="rateCutAt" id="rateCutAt_0" class="form-control"></td>
+										<td><input type="my-date" name="rateCutDate" id="rateCutDate_0" class="form-control"></td>
+										<td><input type="text" name="makingChargePerPc" id="makingChargePerPc_0" class="form-control"></td>
+										<td><input type="text" name="wastagePerPc" id="wastagePerPc_0" class="form-control"></td>
+										<td><input type="text" name="taxRate" id="taxRate_0" class="form-control"></td>
 										<td><a href='javascript:void(0);'  class='remove'><span class='glyphicon glyphicon-remove'></span></a></td>
 									</tr>
 								</table>
@@ -95,14 +94,11 @@
  <script type="text/javascript">
  var SUPPLIER_LIST_URL = '${pageContext.request.contextPath}/ajax/supplier/all';
  var CATEGORY_LIST_URL = '${pageContext.request.contextPath}/ajax/jewelCategory/all';
- var LIVE_GOLD_RATE = 'http://www.svbcgold.com/LPriceSvbc.asmx/getSVBCPriceN8943';
+ var LIVE_RATE = '${pageContext.request.contextPath}/ajax/liveprice';
  
  $(document).ready(function () {
-	 loadLivePrice();
 	 simpleGetDataCall(SUPPLIER_LIST_URL, "Supplier List", $('#newOrEditPurchaseEntry'), loadSupplierList);
-	 var _requestData = {};
-	// livePriceCallback();
-	// simpleDataCall(LIVE_GOLD_RATE, "Updating Live Price", $('#newOrEditPurchaseEntry'), _requestData, livePriceCallback);
+	// simpleGetDataCall(LIVE_RATE, "Updating Live Price", $('#newOrEditPurchaseDetail'), livePriceCallback);
  });
  
  
@@ -124,53 +120,53 @@
 		 });
 	 }
  }
- function loadLivePrice() {
-	 
-	 $.ajax({
-		  type: "POST",
-		  beforeSend: function(request) {
-		    request.setRequestHeader("Content-Type", "application/json");
-		  },
-		  url: LIVE_GOLD_RATE,
-		  data: "{}",
-		  processData: false,
-		  success: function(msg) {
-		    console.log(JSON.stringify(msg));
-		  }
-		});
-	 
-		/* var _requestData = {};
-		simpleDataCall(LIVE_GOLD_RATE, "Updating Live Price", $('#newOrEditPurchaseEntry'), _requestData, livePriceCallback); */
-	 }
+ 
 	 function livePriceCallback(data) {
-		console.log(data);
+		 var liveObject = $.parseJSON(data);
+		 var _24Ct = '';
+		 var _22Ct = '';
+		var dataD = $.parseJSON(liveObject.d);
+		 $.each(dataD , function( index, br ) {
+			 if(br.Br == 'HYDERABAD')
+				 _24Ct = br.Lpr / 10;
+			 if(br.Br == 'VISAKHAPATNAM' && br.Pur == "916.0")
+				 _22Ct =  br.Lpr / 10; 
+		 });
+		 $('#livePrice').html(_24Ct+" ::: "+_22Ct);
 	 }
-/*  
- $("input.tr_clone_add").live('click', function() {
-	    var $tr    = $(this).closest('.tr_clone');
-	    var $clone = $tr.clone();
-	    $clone.find(':text').val('');
-	    $tr.after($clone);
-	});
- 
- 
-  */
- $(function(){
+	 
+  $(function(){
 	 	$('#addMore').on('click', function() {
+			var rows = [];
+			$('input[name="taxRate"]').each(function(){
+					var ids = $(this).attr('id').split('_');
+					rows.push(ids[1]);
+			});
+		
+			var maxIndex = Math.max.apply(Math,rows);
+		
+		
 	 		var rowCount = $('#tb tr').length - 1;
-		 	var tRow = $("#tb tr:eq("+rowCount+")").clone(true);
+		 	var tRow = $("#tb tr:eq("+maxIndex+")").clone(true);
 		 	$.each(tRow.find("td"), function( index, tColumn ) {
 				$.each($(tColumn).find("input"), function( index, tColumn ) {
 					console.log("ID: "+$(this).attr("id")+" --- "+(rowCount-1));
-					$(this).attr("id").replace(rowCount-1, rowCount);
+					//alert($(this).attr("id").indexOf("_"));
+					if($(this).attr("id").indexOf("_") != -1){
+						var latest = split($(this).attr("id"));
+						console.log("latest: "+latest);
+					} else {
+						var latest = $(this).attr("id");
+					}
+					$(this).attr("id", latest+"_"+(maxIndex+1));
+					//$(this).attr("id").replace(rowCount-1, rowCount);
 				});
-				$.each($(tColumn).find("select"), function( index, tColumn ) {
-					$(this).attr("id").replace(rowCount-1, rowCount);
-				});
+				
 			});
-            var data = tRow.appendTo("#tb");
-            data.find("input").val('');
+          var data = tRow.appendTo("#tb");
+          data.find("input").val('');
 	     });
+	 	
 	     $(document).on('click', '.remove', function() {
 	         var trIndex = $(this).closest("tr").index();
 	            if(trIndex>1) {
@@ -179,6 +175,6 @@
 	             alert("Sorry!! Can't remove first row!");
 	           }
 	      });
-	});   
+	}); 
  
  </script>
