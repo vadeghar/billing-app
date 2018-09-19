@@ -135,7 +135,8 @@
 			 if(br.Br == 'VISAKHAPATNAM' && br.Pur == "916.0")
 				 _22Ct =  br.Lpr / 10; 
 		 });
-		 $('#livePrice').html(_24Ct+" ::: "+_22Ct);
+		 
+		 $('#livePrice').html("<div style='background-color: red'>"+_24Ct+" ::: "+_22Ct+"</div>");
 	 }
 	 
   $(function(){
