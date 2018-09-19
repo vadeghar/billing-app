@@ -108,6 +108,7 @@
 		 $.each(data, function( index, supplier ) {
 			 $('<option/>', { value : supplier.id }).text(supplier.name).appendTo('#supplierId');
 		 });
+		 liveGoldPrice();
 		 simpleGetDataCall(CATEGORY_LIST_URL, "Supplier List", $('#newOrEditPurchaseDetail'), loadCategoryList);
 	 }
  }
@@ -120,7 +121,9 @@
 		 });
 	 }
  }
- 
+ function liveGoldPrice() {
+	 simpleGetDataCall(LIVE_RATE, "Updating Live Price", $('#livePrice'), livePriceCallback);
+ }
 	 function livePriceCallback(data) {
 		 var liveObject = $.parseJSON(data);
 		 var _24Ct = '';
