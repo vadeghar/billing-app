@@ -34,7 +34,7 @@
 			                                <i class="fa fa-inr fa-3x"></i>
 			                            </div>
 			                            <div class="col-xs-9 ">
-			                            	<div class="label label-primary">999</div>
+			                            	<div class="label label-primary">Gold 999</div>
 			                                <h2 class="font-bold" id="live24CtPrice"></h2>
 			                            </div>
 			                        </div>
@@ -47,8 +47,21 @@
 			                                <i class="fa fa-inr fa-3x"></i>
 			                            </div>
 			                            <div class="col-xs-9 ">
-			                            	<div class="label label-primary">916</div>
+			                            	<div class="label label-primary">Gold 916</div>
 			                                <h2 class="font-bold" id="live22CtPrice"></h2>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			                <div class="col-sm-2" id="liveSilverPrices">
+			                    <div class="widget style1 lazur-bg">
+			                        <div class="row vertical-align">
+			                            <div class="col-xs-3">
+			                                <i class="fa fa-inr fa-3x"></i>
+			                            </div>
+			                            <div class="col-xs-9 ">
+			                            	<div class="label label-primary">Silver</div>
+			                                <h2 class="font-bold" id="liveSilverPrice">442</h2>
 			                            </div>
 			                        </div>
 			                    </div>
@@ -154,7 +167,7 @@
 			 if(br.Br == 'HYDERABAD')
 				 _24Ct = br.Lpr / 10;
 			 if(br.Br == 'VISAKHAPATNAM' && br.Pur == "916.0")
-				 _22Ct =  br.Lpr / 10; 
+				 _22Ct =  br.Lpr; 
 		 });
 		 
 		 $('#live24CtPrice').html(Math.round(0.0 + _24Ct));
