@@ -91,31 +91,33 @@
 				<div class="ibox-content" id="newOrEditPurchaseDetail">
 					<div class="table-responsive">
 			     			<div class="col-lg-12">
-			      				<table  class="table table-condensed small-text" id="tb">
+			      				<table  class="table table-condensed small-text table100" id="tb">
 									<tr class="tr-header">
-										<th>Category</th>
-										<th>Weight</th>
-										<th>Pcs</th>
-										<th>Weight/Pc</th>
-										<th>Quality</th>
-										<th>Rate Cut@</th>
-										<th>Rate Cut Date</th>
-										<th>MC</th>
-										<th>Wastage(%)/Pc</th>
-										<th>Tax Rate</th>
-										<th><a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Items"><span class="glyphicon glyphicon-plus"></span></a></th>
+										<th class="td16" >Category</th>
+										<th  class="td8">Weight</th>
+										<th class="td8">Pcs</th>
+										<th class="td8">Weight/Pc</th>
+										<th class="td8">Quality</th>
+										<th class="td8">Rate Cut@</th>
+										<th class="td12">Rate Cut Date</th>
+										<th class="td8">MC</th>
+										<th class="td6">Wastage(%)/Pc</th>
+										<th class="td6">Tax Rate</th>
+										<th class="td8">Total</th>
+										<th class="td4"><a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Items"><span class="glyphicon glyphicon-plus"></span></a></th>
 									</tr>
 									<tr>
 										<td><select name="categoryId" id="categoryId_0" class="form-control categoryList"></select></td>
-										<td><input type="text" name="totalWieght" id="totalWieght_0" class="form-control"></td>
+										<td><input type="text" name="totalWieght" id="totalWieght_0" class="form-control" pattern="[0-9.]+"></td>
 										<td><input type="text" name="quantity" id="quantity_0" class="form-control"></td>
-										<td><input type="text" name="avgWieght" id="avgWieght_0" class="form-control"></td>
+										<td><input type="text" name="avgWieght" id="avgWieght_0" class="form-control" readonly="readonly"></td>
 										<td><input type="text" name="quality" id="quality_0" class="form-control"></td>
 										<td><input type="text" name="rateCutAt" id="rateCutAt_0" class="form-control"></td>
 										<td><input type="my-date" name="rateCutDate" id="rateCutDate_0" class="form-control"></td>
 										<td><input type="text" name="makingChargePerPc" id="makingChargePerPc_0" class="form-control"></td>
 										<td><input type="text" name="wastagePerPc" id="wastagePerPc_0" class="form-control"></td>
 										<td><input type="text" name="taxRate" id="taxRate_0" class="form-control"></td>
+										<td><input type="text" name="total" id="total_0" class="form-control" readonly="readonly"></td>
 										<td><a href='javascript:void(0);'  class='remove'><span class='glyphicon glyphicon-remove'></span></a></td>
 									</tr>
 								</table>
@@ -131,10 +133,80 @@
  var CATEGORY_LIST_URL = '${pageContext.request.contextPath}/ajax/jewelCategory/all';
  var LIVE_RATE = '${pageContext.request.contextPath}/ajax/liveprice';
  
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  $(document).ready(function () {
 	 simpleGetDataCall(SUPPLIER_LIST_URL, "Supplier List", $('#newOrEditPurchaseEntry'), loadSupplierList);
+	 
+	 $("select[name='categoryId']").on('change', function() {
+		 alert($(this).attr('id'));
+	 });
+	 $("input[name='totalWieght']").on('change', function() {
+		 alert($(this).attr('id'));
+	 });
+	 $("input[name='quantity']").on('change', function() {
+		 alert($(this).attr('id'));
+	 });
+	 
+	 $("input[name='avgWieght']").on('change', function() {
+		 alert($(this).attr('id'));
+	 });
+	 
+	 $("input[name='quality']").on('change', function() {
+		 alert($(this).attr('id'));
+	 });
+	 
+	 $("input[name='rateCutAt']").on('change', function() {
+		 alert($(this).attr('id'));
+	 });
+	 
+	 $("input[name='rateCutDate']").on('change', function() {
+		 alert($(this).attr('id'));
+	 });
+	 
+	 $("input[name='makingChargePerPc']").on('change', function() {
+		 alert($(this).attr('id'));
+	 });
+	 
+	 $("input[name='wastagePerPc']").on('change', function() {
+		 alert($(this).attr('id'));
+	 });
+	 
+	 $("input[name='taxRate']").on('change', function() {
+		 alert($(this).attr('id'));
+	 });
+	 $("input[name='total']").on('change', function() {
+		 alert($(this).attr('id'));
+	 });
+	 
+	 $("input[name='totalWieght'], input[name='taxRate']").keyup(function(){
+		    var val = $(this).val();
+		    if(isNaN(val)){
+		         val = val.replace(/[^0-9\.]/g,'');
+		         if(val.split('.').length>2) 
+		             val =val.replace(/\.+$/,"");
+		    }
+		    $(this).val(val); 
+		});
+	 
  });
  
+ function updateRowTotal(rowNo) {
+	 
+ }
  
  function loadSupplierList(data) {
 	 if(data) {
@@ -190,6 +262,12 @@
 		 	$.each(tRow.find("td"), function( index, tColumn ) {
 				$.each($(tColumn).find("input"), function( index, tColumn ) {
 					console.log("ID: "+$(this).attr("id")+" --- "+(rowCount-1));
+					var ids = $(this).attr('id').split('_');
+					$(this).attr("id", ids[0]+"_"+(maxIndex+1));
+				});
+				
+				$.each($(tColumn).find("select"), function( index, tColumn ) {
+					console.log("Select ID: "+$(this).attr("id")+" --- "+(rowCount-1));
 					var ids = $(this).attr('id').split('_');
 					$(this).attr("id", ids[0]+"_"+(maxIndex+1));
 				});

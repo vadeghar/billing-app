@@ -8585,3 +8585,46 @@ legend.scheduler-border {
 	 padding:0 10px;
 	 border-bottom:none;
 }
+
+.td2 {
+width: 2%;	
+}
+.td4 {
+width: 4%;	
+}
+.td6 {
+width: 6%;	
+}
+.td8 {
+width: 8%;	
+}
+.td10 {
+width: 10%;	
+}
+.td12 {
+width: 12%;	
+}
+.td14 {
+width: 14%;	
+}
+.td16 {
+width: 16%;	
+}
+.td18 {
+width: 18%;	
+}
+.td20 {
+width: 20%;	
+}
+.td22 {
+width: 22%;	
+}
+.td24 {
+width: 24%;	
+}
+.td26 {
+width: 26%;	
+}
+.table100 {
+	width: 100%;
+}
