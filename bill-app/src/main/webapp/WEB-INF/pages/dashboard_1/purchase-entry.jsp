@@ -27,10 +27,32 @@
                                     <input type="my-date" class="form-control" id="purchaseDate">
                                 </div>
 							</div>
-							<div class="form-group col-sm-3">
-								<label for="">Live Price: </label>
-								<span id="livePrice"  class="form-control"></span>
-							</div>
+							<div class="col-sm-2" id="live24CtPrices">
+			                    <div class="widget style1 lazur-bg">
+			                        <div class="row vertical-align">
+			                            <div class="col-xs-3">
+			                                <i class="fa fa-inr fa-3x"></i>
+			                            </div>
+			                            <div class="col-xs-9 ">
+			                            	<div class="label label-primary">999</div>
+			                                <h2 class="font-bold" id="live24CtPrice"></h2>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			                <div class="col-sm-2" id="live22Prices">
+			                    <div class="widget style1 lazur-bg">
+			                        <div class="row vertical-align">
+			                            <div class="col-xs-3">
+			                                <i class="fa fa-inr fa-3x"></i>
+			                            </div>
+			                            <div class="col-xs-9 ">
+			                            	<div class="label label-primary">916</div>
+			                                <h2 class="font-bold" id="live22CtPrice"></h2>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
                 		</div>
                 		<div class="form-group col-sm-3" >
 				        	<div class="center-block">
@@ -98,7 +120,6 @@
  
  $(document).ready(function () {
 	 simpleGetDataCall(SUPPLIER_LIST_URL, "Supplier List", $('#newOrEditPurchaseEntry'), loadSupplierList);
-	// simpleGetDataCall(LIVE_RATE, "Updating Live Price", $('#newOrEditPurchaseDetail'), livePriceCallback);
  });
  
  
@@ -122,7 +143,7 @@
 	 }
  }
  function liveGoldPrice() {
-	 simpleGetDataCall(LIVE_RATE, "Updating Live Price", $('#livePrice'), livePriceCallback);
+	 simpleGetDataCall(LIVE_RATE, "Updating Live Price", $('#livePrices'), livePriceCallback);
  }
 	 function livePriceCallback(data) {
 		 var liveObject = $.parseJSON(data);
@@ -136,7 +157,8 @@
 				 _22Ct =  br.Lpr / 10; 
 		 });
 		 
-		 $('#livePrice').html("<div style='background-color: red'>"+_24Ct+" ::: "+_22Ct+"</div>");
+		 $('#live24CtPrice').html(Math.round(0.0 + _24Ct));
+		 $('#live22CtPrice').html(Math.round(0.0 + _22Ct));
 	 }
 	 
   $(function(){
@@ -151,19 +173,12 @@
 		
 		
 	 		var rowCount = $('#tb tr').length - 1;
-		 	var tRow = $("#tb tr:eq("+maxIndex+")").clone(true);
+		 	var tRow = $("#tb tr:eq("+rowCount+")").clone(true);
 		 	$.each(tRow.find("td"), function( index, tColumn ) {
 				$.each($(tColumn).find("input"), function( index, tColumn ) {
 					console.log("ID: "+$(this).attr("id")+" --- "+(rowCount-1));
-					//alert($(this).attr("id").indexOf("_"));
-					if($(this).attr("id").indexOf("_") != -1){
-						var latest = split($(this).attr("id"));
-						console.log("latest: "+latest);
-					} else {
-						var latest = $(this).attr("id");
-					}
-					$(this).attr("id", latest+"_"+(maxIndex+1));
-					//$(this).attr("id").replace(rowCount-1, rowCount);
+					var ids = $(this).attr('id').split('_');
+					$(this).attr("id", ids[0]+"_"+(maxIndex+1));
 				});
 				
 			});
