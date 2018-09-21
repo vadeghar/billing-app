@@ -108,15 +108,15 @@
 									</tr>
 									<tr>
 										<td><select name="categoryId" id="categoryId_0" class="form-control categoryList"></select></td>
-										<td><input type="text" name="totalWieght" id="totalWieght_0" class="form-control" pattern="[0-9.]+"></td>
-										<td><input type="text" name="quantity" id="quantity_0" class="form-control"></td>
+										<td><input type="text" name="totalWieght" id="totalWieght_0" class="form-control" maxlength="7"></td>
+										<td><input type="text" name="quantity" id="quantity_0" class="form-control" maxlength="4"></td>
 										<td><input type="text" name="avgWieght" id="avgWieght_0" class="form-control" readonly="readonly"></td>
-										<td><input type="text" name="quality" id="quality_0" class="form-control"></td>
-										<td><input type="text" name="rateCutAt" id="rateCutAt_0" class="form-control"></td>
+										<td><input type="text" name="quality" id="quality_0" class="form-control" maxlength="3"></td>
+										<td><input type="text" name="rateCutAt" id="rateCutAt_0" class="form-control" maxlength="6"></td>
 										<td><input type="my-date" name="rateCutDate" id="rateCutDate_0" class="form-control"></td>
-										<td><input type="text" name="makingChargePerPc" id="makingChargePerPc_0" class="form-control"></td>
-										<td><input type="text" name="wastagePerPc" id="wastagePerPc_0" class="form-control"></td>
-										<td><input type="text" name="taxRate" id="taxRate_0" class="form-control"></td>
+										<td><input type="text" name="makingChargePerPc" id="makingChargePerPc_0" class="form-control" maxlength="4"></td>
+										<td><input type="text" name="wastagePerPc" id="wastagePerPc_0" class="form-control" maxlength="7"></td>
+										<td><input type="text" name="taxRate" id="taxRate_0" class="form-control" maxlength="5"></td>
 										<td><input type="text" name="total" id="total_0" class="form-control" readonly="readonly"></td>
 										<td><a href='javascript:void(0);'  class='remove'><span class='glyphicon glyphicon-remove'></span></a></td>
 									</tr>
@@ -152,13 +152,17 @@
 	 simpleGetDataCall(SUPPLIER_LIST_URL, "Supplier List", $('#newOrEditPurchaseEntry'), loadSupplierList);
 	 
 	 $("select[name='categoryId']").on('change', function() {
-		 alert($(this).attr('id'));
+		// alert($(this).attr('id'));
 	 });
 	 $("input[name='totalWieght']").on('change', function() {
-		 alert($(this).attr('id'));
+		 var attrId = $(this).attr('id').split('_');
+		 updateAvgWeight(attrId[1]);
+		 updateRowTotal(attrId[1]);
 	 });
 	 $("input[name='quantity']").on('change', function() {
-		 alert($(this).attr('id'));
+		 var attrId = $(this).attr('id').split('_');
+		 updateAvgWeight(attrId[1]);
+		 updateRowTotal(attrId[1]);
 	 });
 	 
 	 $("input[name='avgWieght']").on('change', function() {
@@ -166,11 +170,13 @@
 	 });
 	 
 	 $("input[name='quality']").on('change', function() {
-		 alert($(this).attr('id'));
+		 var attrId = $(this).attr('id').split('_');
+		 updateRowTotal(attrId[1]);
 	 });
 	 
 	 $("input[name='rateCutAt']").on('change', function() {
-		 alert($(this).attr('id'));
+		 var attrId = $(this).attr('id').split('_');
+		 updateRowTotal(attrId[1]);
 	 });
 	 
 	 $("input[name='rateCutDate']").on('change', function() {
@@ -178,21 +184,24 @@
 	 });
 	 
 	 $("input[name='makingChargePerPc']").on('change', function() {
-		 alert($(this).attr('id'));
+		 var attrId = $(this).attr('id').split('_');
+		 updateRowTotal(attrId[1]);
 	 });
 	 
 	 $("input[name='wastagePerPc']").on('change', function() {
-		 alert($(this).attr('id'));
+		 var attrId = $(this).attr('id').split('_');
+		 updateRowTotal(attrId[1]);
 	 });
 	 
 	 $("input[name='taxRate']").on('change', function() {
-		 alert($(this).attr('id'));
+		 var attrId = $(this).attr('id').split('_');
+		 updateRowTotal(attrId[1]);
 	 });
 	 $("input[name='total']").on('change', function() {
 		 alert($(this).attr('id'));
 	 });
 	 
-	 $("input[name='totalWieght'], input[name='taxRate']").keyup(function(){
+	 $("input[name='totalWieght'], input[name='quantity'], input[name='quality'], input[name='rateCutAt'], input[name='makingChargePerPc'], input[name='wastagePerPc'], input[name='taxRate']").keyup(function(){
 		    var val = $(this).val();
 		    if(isNaN(val)){
 		         val = val.replace(/[^0-9\.]/g,'');
@@ -204,8 +213,27 @@
 	 
  });
  
+ function updateAvgWeight(rowNo) {
+	 if($('#totalWieght_'+rowNo).val() != '' && $('#quantity_'+rowNo).val() != '')
+	 	$('#avgWieght_'+rowNo).val((parseFloat($('#totalWieght_'+rowNo).val()) / parseFloat($('#quantity_'+rowNo).val())).toFixed(3));
+ } 
+ 
  function updateRowTotal(rowNo) {
-	 
+	 var mcRs=0;
+	 var wastageRs=0;
+	 var taxToal=0;
+	 var totalPrice=0;
+	 if($('#rateCutAt_'+rowNo).val() != '' && $('#quantity_'+rowNo).val() != '') {
+		 totalPrice = (parseFloat($('#totalWieght_'+rowNo).val()) * parseFloat($('#rateCutAt_'+rowNo).val())).toFixed(2);
+		 if($('#makingChargePerPc_'+rowNo).val() != '')
+		 	mcRs = parseInt($('#quantity_'+rowNo).val()) * parseInt($('#makingChargePerPc_'+rowNo).val());
+		 if($('#wastagePerPc_'+rowNo).val() != '')
+		 	wastageRs = parseInt($('#quantity_'+rowNo).val()) * parseFloat($('#wastagePerPc_'+rowNo).val());
+		 if($('#taxRate_'+rowNo).val() != '')
+			 taxToal = (totalPrice * parseInt($('#taxRate_'+rowNo).val())) / 100;
+		 
+		 $('#total_'+rowNo).val(totalPrice+mcRs+wastageRs+taxToal);
+	 }
  }
  
  function loadSupplierList(data) {
