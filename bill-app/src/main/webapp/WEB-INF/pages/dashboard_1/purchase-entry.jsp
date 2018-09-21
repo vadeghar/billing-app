@@ -94,15 +94,15 @@
 			      				<table  class="table table-condensed small-text table100" id="tb">
 									<tr class="tr-header">
 										<th class="td16" >Category</th>
-										<th  class="td8">Weight</th>
+										<th  class="td8">Weight (in Gms)</th>
 										<th class="td8">Pcs</th>
 										<th class="td8">Weight/Pc</th>
 										<th class="td8">Quality</th>
-										<th class="td8">Rate Cut@</th>
-										<th class="td12">Rate Cut Date</th>
-										<th class="td8">MC</th>
-										<th class="td6">Wastage(%)/Pc</th>
-										<th class="td6">Tax Rate</th>
+										<th class="td8">Rate/10Gms</th>
+										<th class="td12">Rate Date</th>
+										<th class="td8">MC/Pc in Rs</th>
+										<th class="td6">Wastage/Pc in Gms.</th>
+										<th class="td6">Tax Rate/Pc in %</th>
 										<th class="td8">Total</th>
 										<th class="td4"><a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Items"><span class="glyphicon glyphicon-plus"></span></a></th>
 									</tr>
@@ -152,7 +152,6 @@
 	 simpleGetDataCall(SUPPLIER_LIST_URL, "Supplier List", $('#newOrEditPurchaseEntry'), loadSupplierList);
 	 
 	 $("select[name='categoryId']").on('change', function() {
-		// alert($(this).attr('id'));
 	 });
 	 $("input[name='totalWieght']").on('change', function() {
 		 var attrId = $(this).attr('id').split('_');
@@ -166,7 +165,6 @@
 	 });
 	 
 	 $("input[name='avgWieght']").on('change', function() {
-		 alert($(this).attr('id'));
 	 });
 	 
 	 $("input[name='quality']").on('change', function() {
@@ -180,7 +178,6 @@
 	 });
 	 
 	 $("input[name='rateCutDate']").on('change', function() {
-		 alert($(this).attr('id'));
 	 });
 	 
 	 $("input[name='makingChargePerPc']").on('change', function() {
@@ -198,7 +195,6 @@
 		 updateRowTotal(attrId[1]);
 	 });
 	 $("input[name='total']").on('change', function() {
-		 alert($(this).attr('id'));
 	 });
 	 
 	 $("input[name='totalWieght'], input[name='quantity'], input[name='quality'], input[name='rateCutAt'], input[name='makingChargePerPc'], input[name='wastagePerPc'], input[name='taxRate']").keyup(function(){
@@ -223,16 +219,23 @@
 	 var wastageRs=0;
 	 var taxToal=0;
 	 var totalPrice=0;
-	 if($('#rateCutAt_'+rowNo).val() != '' && $('#quantity_'+rowNo).val() != '') {
-		 totalPrice = (parseFloat($('#totalWieght_'+rowNo).val()) * parseFloat($('#rateCutAt_'+rowNo).val())).toFixed(2);
+	 if($('#rateCutAt_'+rowNo).val() != '' && $('#totalWieght_'+rowNo).val() != '') {
+		 totalPrice = parseFloat($('#totalWieght_'+rowNo).val()) * parseFloat($('#rateCutAt_'+rowNo).val())
+		 console.log("totalPrice: "+totalPrice);
 		 if($('#makingChargePerPc_'+rowNo).val() != '')
 		 	mcRs = parseInt($('#quantity_'+rowNo).val()) * parseInt($('#makingChargePerPc_'+rowNo).val());
-		 if($('#wastagePerPc_'+rowNo).val() != '')
-		 	wastageRs = parseInt($('#quantity_'+rowNo).val()) * parseFloat($('#wastagePerPc_'+rowNo).val());
+		 console.log("MC: "+mcRs);
+		 if($('#wastagePerPc_'+rowNo).val() != '') { 
+			 var wastageGms = parseInt($('#quantity_'+rowNo).val()) * parseFloat($('#wastagePerPc_'+rowNo).val());
+		 	wastageRs = wastageGms * parseFloat($('#rateCutAt_'+rowNo).val());
+		 }
+		 console.log("wastageRs: "+wastageRs);
 		 if($('#taxRate_'+rowNo).val() != '')
 			 taxToal = (totalPrice * parseInt($('#taxRate_'+rowNo).val())) / 100;
-		 
-		 $('#total_'+rowNo).val(totalPrice+mcRs+wastageRs+taxToal);
+		 console.log("taxToal: "+taxToal);
+		 var total = (parseFloat(totalPrice)+parseFloat(mcRs)+parseFloat(wastageRs)+parseFloat(taxToal)).toFixed(2);
+		 console.log("totalPrice+mcRs+wastageRs+taxToal : "+(total));
+		 $('#total_'+rowNo).val(total);
 	 }
  }
  

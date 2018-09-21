@@ -8628,3 +8628,7 @@ width: 26%;
 .table100 {
 	width: 100%;
 }
+
+input[name='total'] {
+	padding: 0px;
+}
