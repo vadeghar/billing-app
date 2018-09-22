@@ -13,13 +13,17 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.mytest.billapp.utils.JsonDateDeSerializer;
+import com.mytest.billapp.utils.JsonDateSerializer;
 
 @Entity
 @Table(name = "JEWEL_PURCHASE")
@@ -39,6 +43,9 @@ public class JewelPurchase  extends BEntity implements Serializable {
 	@Column(name="SUPPLIER_ID")
 	private Long supplierId;
 	
+
+	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonDeserialize(using=JsonDateDeSerializer.class)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="PURCHASE_DATE")
 	private Date purchaseDate;

@@ -29,7 +29,7 @@
 	      </ul>
 	  </li> -->
 	  <li>
-	      <a href="index.html"><i class="fa fa-server"></i> <span class="nav-label">Application - Master</span> <span class="fa arrow"></span></a>
+	      <a href="#"><i class="fa fa-server"></i> <span class="nav-label">Application - Master</span> <span class="fa arrow"></span></a>
 	      <ul class="nav nav-second-level">
 	          <li id="menuItemUsers"><a href="${pageContext.request.contextPath}/admin/dashboard1/users">Application Users</a></li>
 	          <li id="menuItemPermissions"><a  href="${pageContext.request.contextPath}/admin/dashboard1/permissions">Permissions</a></li>
@@ -69,7 +69,7 @@
 	      </ul>
 	  </li> -->
 	  <li id="menuItemPurchaseEntry">
-	  	<a href="${pageContext.request.contextPath}/admin/dashboard1/purchaseEntry">Purchase Entry</a>
+	  	<a href="${pageContext.request.contextPath}/admin/dashboard1/purchaseEntry"><i class="fa fa-shopping-basket"></i> <span class="nav-label">Purchase Entry</span></a>
 	  </li>
 	          
 	

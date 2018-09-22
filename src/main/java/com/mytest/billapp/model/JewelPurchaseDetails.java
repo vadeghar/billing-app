@@ -21,6 +21,11 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.mytest.billapp.utils.JsonDateDeSerializer;
+import com.mytest.billapp.utils.JsonDateSerializer;
+
 @Entity
 @Table(name = "JEWEL_PURCHASE_DETAILS")
 @EntityListeners(AuditingEntityListener.class)
@@ -58,7 +63,8 @@ public class JewelPurchaseDetails  extends BEntity implements Serializable {
 	@Column(name="RATE_CUT_AT")
 	private BigDecimal rateCutAt;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@JsonSerialize(using=JsonDateSerializer.class)
+	@JsonDeserialize(using=JsonDateDeSerializer.class)
 	@Column(name="RATE_CUT_DATE")
 	private Date rateCutDate;
 	
