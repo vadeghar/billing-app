@@ -4687,8 +4687,8 @@ body.mini-navbar.fixed-sidebar .logo-element {
 }
 .invoice-total > tbody > tr > td:last-child {
   border-bottom: 1px solid #DDDDDD;
-  text-align: right;
-  width: 15%;
+  text-align: left;
+  width: 50%;
 }
 /* ERROR & LOGIN & LOCKSCREEN*/
 .middle-box {
@@ -8631,4 +8631,8 @@ width: 26%;
 
 input[name='total'] {
 	padding: 0px;
+}
+
+.form-control[readonly] {
+	background-color: #FFFF;
 }

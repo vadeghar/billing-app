@@ -6,15 +6,15 @@
             	<div class="ibox-title" id="saveOrUpdateTitle"> 
             		<h5>New Purchase Entry</h5>
             		<div class="ibox-tools">
-                         <a class="collapse-link" id="collapseLink">
-                             <i class="fa fa-chevron-up"></i>
-                         </a>
-                     </div>
+                        <a class="collapse-link" id="collapseLink">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
             	</div>
        				<div class="ibox-content" id="newOrEditPurchaseEntry">
                 		<div class="table-responsive">
                 			<div class="form-group col-sm-3">
-								<input type="hidden" id="id" data-input>						
+								<input type="hidden" id="id" data-input>					
 								<label for="name">Supplier: <span class="required">*</span></label>
 								<select id="supplierId"  class="form-control"></select>
 							</div>
@@ -27,45 +27,66 @@
                                     <input type="my-date" class="form-control" id="purchaseDate">
                                 </div>
 							</div>
-							<div class="col-sm-2" id="live24CtPrices">
-			                    <div class="widget style1 lazur-bg">
-			                        <div class="row vertical-align">
-			                            <div class="col-xs-3">
-			                                <i class="fa fa-inr fa-3x"></i>
-			                            </div>
-			                            <div class="col-xs-9 ">
-			                            	<div class="label label-primary">Gold 999</div>
-			                                <h2 class="font-bold" id="live24CtPrice"></h2>
-			                            </div>
-			                        </div>
-			                    </div>
-			                </div>
-			                <div class="col-sm-2" id="live22Prices">
-			                    <div class="widget style1 lazur-bg">
-			                        <div class="row vertical-align">
-			                            <div class="col-xs-3">
-			                                <i class="fa fa-inr fa-3x"></i>
-			                            </div>
-			                            <div class="col-xs-9 ">
-			                            	<div class="label label-primary">Gold 916</div>
-			                                <h2 class="font-bold" id="live22CtPrice"></h2>
-			                            </div>
-			                        </div>
-			                    </div>
-			                </div>
-			                <div class="col-sm-2" id="liveSilverPrices">
-			                    <div class="widget style1 lazur-bg">
-			                        <div class="row vertical-align">
-			                            <div class="col-xs-3">
-			                                <i class="fa fa-inr fa-3x"></i>
-			                            </div>
-			                            <div class="col-xs-9 ">
-			                            	<div class="label label-primary">Silver</div>
-			                                <h2 class="font-bold" id="liveSilverPrice">442</h2>
-			                            </div>
-			                        </div>
-			                    </div>
-			                </div>
+							<div class="col-sm-4">
+								<table class="table invoice-total">
+	                                <tbody>
+	                                <tr>
+	                                    <td><strong>Purchase Total :</strong></td>
+	                                    <td>Rs. 00.00</td>
+	                                </tr>
+	                                <tr>
+	                                    <td><strong>Payed :</strong></td>
+	                                    <td>Rs. 00.00</td>
+	                                </tr>
+	                                <tr>
+	                                    <td><strong>Balance :</strong></td>
+	                                    <td>Rs. 00.00</td>
+	                                </tr>
+	                                </tbody>
+	                            </table>
+		                    </div>
+		                    <div class="col-sm-2">
+		                    	<div class="col-sm-12" id="live24CtPrices">
+				                    <div class="widget style1 lazur-bg">
+				                        <div class="row vertical-align">
+				                            <div class="col-xs-3">
+				                                <i class="fa fa-inr fa-3x"></i>
+				                            </div>
+				                            <div class="col-xs-9 ">
+				                            	<div class="label label-primary">Gold 999</div>
+				                                <h2 class="font-bold" id="live24CtPrice"></h2>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="col-sm-12" id="live22Prices">
+				                    <div class="widget style1 lazur-bg">
+				                        <div class="row vertical-align">
+				                            <div class="col-xs-3">
+				                                <i class="fa fa-inr fa-3x"></i>
+				                            </div>
+				                            <div class="col-xs-9 ">
+				                            	<div class="label label-primary">Gold 916</div>
+				                                <h2 class="font-bold" id="live22CtPrice"></h2>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+				                <!-- <div class="col-sm-12" id="liveSilverPrices">
+				                    <div class="widget style1 lazur-bg">
+				                        <div class="row vertical-align">
+				                            <div class="col-xs-3">
+				                                <i class="fa fa-inr fa-3x"></i>
+				                            </div>
+				                            <div class="col-xs-9 ">
+				                            	<div class="label label-primary">Silver</div>
+				                                <h2 class="font-bold" id="liveSilverPrice">442</h2>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div> -->
+		                    
+		                    </div>
                 		</div>
                 		<div class="form-group col-sm-3" >
 				        	<div class="center-block">
@@ -93,12 +114,12 @@
 			     			<div class="col-lg-12">
 			      				<table  class="table table-condensed small-text table100" id="tb">
 									<tr class="tr-header">
-										<th class="td16" >Category</th>
-										<th  class="td8">Weight (in Gms)</th>
-										<th class="td8">Pcs</th>
+										<th class="td16" >Category<span class="required">*</span></th>
+										<th  class="td8">Weight (in Gms)<span class="required">*</span></th>
+										<th class="td8">Pcs<span class="required">*</span></th>
 										<th class="td8">Weight/Pc</th>
 										<th class="td8">Quality</th>
-										<th class="td8">Rate/10Gms</th>
+										<th class="td8">Rate/Gm</th>
 										<th class="td12">Rate Date</th>
 										<th class="td8">MC/Pc in Rs</th>
 										<th class="td6">Wastage/Pc in Gms.</th>
@@ -107,7 +128,9 @@
 										<th class="td4"><a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add More Items"><span class="glyphicon glyphicon-plus"></span></a></th>
 									</tr>
 									<tr>
-										<td><select name="categoryId" id="categoryId_0" class="form-control categoryList"></select></td>
+										<td>
+										<input type="hidden" id="purchaseDetailId_0" name="purchaseDetailId">
+										<select name="categoryId" id="categoryId_0" class="form-control categoryList"></select></td>
 										<td><input type="text" name="totalWieght" id="totalWieght_0" class="form-control" maxlength="7"></td>
 										<td><input type="text" name="quantity" id="quantity_0" class="form-control" maxlength="4"></td>
 										<td><input type="text" name="avgWieght" id="avgWieght_0" class="form-control" readonly="readonly"></td>
@@ -132,12 +155,133 @@
  var SUPPLIER_LIST_URL = '${pageContext.request.contextPath}/ajax/supplier/all';
  var CATEGORY_LIST_URL = '${pageContext.request.contextPath}/ajax/jewelCategory/all';
  var LIVE_RATE = '${pageContext.request.contextPath}/ajax/liveprice';
+ var SAVE_URL = '${pageContext.request.contextPath}/ajax/jewelPurchase/save';
+ 
+ 
+ var DATA_LIST_URL = '${pageContext.request.contextPath}/ajax/jewelCategory/all';
+ var EDIT_URL = '${pageContext.request.contextPath}/ajax/jewelCategory';
+
+ var DELETE_URL = '${pageContext.request.contextPath}/ajax/jewelCategory/delete';
+ 
+ var REQ_FLDS = ['#supplierId','#purchaseDate'];
+ var REQ_MSGS = ['Selct Supplie name', 'Purchase Date is required'];
+ 
+ var DETAILS_REQ_FLDS = ['categoryId','totalWieght','quantity'];
+ var DETAILS_REQ_MSGS = ['Select Category', 'Enter total weight', 'Enter total number of pcs'];
  
  
 
  
+ $('#saveOrUpdate').on('click', function() {
+	var isValid = validate();
+	if(isValid) {
+		var isDetailsValid = validateDetails();
+		if(isDetailsValid) {
+			alert('Every thing is fine now, can continue with save');
+			simpleDataCall(SAVE_URL, "Save Category", $('#newOrEditJewelCategory'), prepareRequestData(), saveCallback); 
+		}
+		
+	}
+});
+
+ function prepareRequestData() {
+	 var _request = {id: 0, supplierId: 0, purchaseDate: '', _purchaseDetails : []};
+	 var  _requestData = {
+				id: $('#id').val(),
+				supplierId: $('#supplierId').val(),
+				purchaseDate: $('#purchaseDate').val(),
+				jewelPurchaseDetails: preparePurchaseDetails()
+			}
+	 return _requestData;
+ }
  
+ function preparePurchaseDetails() {
+	 var _purchaseDetails = [];
+	 
+	 
+	var rows = [];
+	$('select[name="categoryId"]').each(function(){
+			var ids = $(this).attr('id').split('_');
+			rows.push(ids[1]);
+	});
+	$.each(rows, function(index, val) {
+		var _purchaseDetail = {id: 0, categoryId: 0, quantity: 0, quality: 0, totalWieght: 0.0, avgWieght: 0.0, rateCutAt:0.0, 
+				 rateCutDate: '28/09/2018', taxRate: 0.0,
+				 makingChargePerPc: 0.0, wastagePerPc: 0.0};
+		_purchaseDetail.id = $('#purchaseDetailId_'+val).val();
+		_purchaseDetail.categoryId=$('#categoryId_'+val).val();
+		_purchaseDetail.quantity=$('#quantity_'+val).val();
+		_purchaseDetail.quality=$('#quality_'+val).val();
+		_purchaseDetail.totalWieght=$('#totalWieght_'+val).val();
+		_purchaseDetail.avgWieght=$('#avgWieght_'+val).val();
+		_purchaseDetail.rateCutAt=$('#rateCutAt_'+val).val();
+		_purchaseDetail.rateCutDate=$('#rateCutDate_'+val).val();
+		_purchaseDetail.taxRate=$('#taxRate_'+val).val();
+		_purchaseDetail.makingChargePerPc=$('#makingChargePerPc_'+val).val();
+		_purchaseDetail.wastagePerPc=$('#wastagePerPc_'+val).val();
+		_purchaseDetails.push(_purchaseDetail);
+	});
+	 return _purchaseDetails;
+ }
  
+ function saveCallback() {
+	 console.log("saved");
+ }
+
+ function validateDetails() {
+	 var allValid = true;
+	 var rows = [];
+		$('select[name="categoryId"]').each(function(){
+				var ids = $(this).attr('id').split('_');
+				rows.push(ids[1]);
+		});
+		$.each(rows, function(index, val) {
+			$.each(DETAILS_REQ_FLDS, function( index1, fieldName ) {
+				var t = '#'+fieldName+'_'+val;
+				if($(t).val().trim() == '') {
+					toastr.error('Row '+(index+1)+' '+DETAILS_REQ_MSGS[index1]);
+					allValid = false;
+					return false;
+				}
+			});
+		});
+		if(!allValid)
+			return false;
+		else
+			return true;
+		/* var maxIndex = Math.max.apply(Math,rows);
+	
+	
+		var rowCount = $('#tb tr').length - 1;
+	 	var tRow = $("#tb tr:eq("+rowCount+")").clone(true);
+	 	$.each(tRow.find("td"), function( index, tColumn ) {
+			$.each($(tColumn).find("input"), function( index, tColumn ) {
+				console.log("ID: "+$(this).attr("id")+" --- "+(rowCount-1));
+				var ids = $(this).attr('id').split('_');
+				$(this).attr("id", ids[0]+"_"+(maxIndex+1));
+			});
+			
+			$.each($(tColumn).find("select"), function( index, tColumn ) {
+				console.log("Select ID: "+$(this).attr("id")+" --- "+(rowCount-1));
+				var ids = $(this).attr('id').split('_');
+				$(this).attr("id", ids[0]+"_"+(maxIndex+1));
+			}); */
+ }
+ 
+ function validate() {
+		var allValid = true;
+		$.each(REQ_FLDS, function( index, fieldName ) {
+			if($(fieldName).val().trim() == '') {
+				toastr.error(REQ_MSGS[index]);
+				allValid = false;
+				return false;
+			}
+		});
+		if(!allValid)
+			return false;
+		else
+			return true;
+	}
 
  
  
