@@ -1,6 +1,5 @@
 package com.mytest.billapp.controller;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,7 +31,6 @@ import com.mytest.billapp.model.Brand;
 import com.mytest.billapp.model.Customer;
 import com.mytest.billapp.model.JewelCategory;
 import com.mytest.billapp.model.JewelPurchase;
-import com.mytest.billapp.model.JewelPurchaseDetails;
 import com.mytest.billapp.model.Notes;
 import com.mytest.billapp.model.Permissions;
 import com.mytest.billapp.model.ProductItems;
@@ -116,36 +114,8 @@ public class AjaxController {
 	JewelPurchaseDetailsService JewelPurchaseDetailsService; 
 	
 	@PostMapping("/jewelPurchase/save")
-	public void saveJewelPurchase(@RequestBody JewelPurchase jewelPurchase) {
-		JewelPurchase dbJewelPurchase =  new JewelPurchase();
-		List<JewelPurchaseDetails> dbJewelPurchaseDetailsList = new ArrayList<>();
-		if(jewelPurchase != null && AppUtils.isValidNonZeroLong(jewelPurchase.getId())) 
-			dbJewelPurchase = jewelPurchaseService.getOne(jewelPurchase.getId());
-		BigDecimal totalAmount = new BigDecimal(0.0);
-		dbJewelPurchase.setPurchaseDate(jewelPurchase.getPurchaseDate());
-		dbJewelPurchase.setSupplierId(jewelPurchase.getSupplierId());
-		dbJewelPurchase.setTotalAmount(totalAmount);
-		if(CollectionUtils.isNotEmpty(jewelPurchase.getJewelPurchaseDetails())) {
-			for(JewelPurchaseDetails jewelPurchaseDetails : jewelPurchase.getJewelPurchaseDetails() ) {
-				JewelPurchaseDetails dbJewelPurchaseDetails = new JewelPurchaseDetails();
-				if(AppUtils.isValidNonZeroLong(jewelPurchaseDetails.getId())) 
-					dbJewelPurchaseDetails = JewelPurchaseDetailsService.findById(jewelPurchaseDetails.getId());
-				dbJewelPurchaseDetails.setAvgWieght(jewelPurchaseDetails.getAvgWieght());
-				dbJewelPurchaseDetails.setCategoryId(jewelPurchaseDetails.getCategoryId());
-				dbJewelPurchaseDetails.setJewelPurchase(dbJewelPurchase);
-				dbJewelPurchaseDetails.setMakingChargePerPc(jewelPurchaseDetails.getMakingChargePerPc());
-				dbJewelPurchaseDetails.setQuality(jewelPurchaseDetails.getQuality());
-				dbJewelPurchaseDetails.setQuantity(jewelPurchaseDetails.getQuantity());
-				dbJewelPurchaseDetails.setRateCutAt(jewelPurchaseDetails.getRateCutAt());
-				dbJewelPurchaseDetails.setRateCutDate(jewelPurchaseDetails.getRateCutDate());
-				dbJewelPurchaseDetails.setTaxRate(jewelPurchaseDetails.getTaxRate());
-				dbJewelPurchaseDetails.setTotalWieght(jewelPurchaseDetails.getTotalWieght());
-				dbJewelPurchaseDetails.setWastagePerPc(jewelPurchaseDetails.getWastagePerPc());
-				dbJewelPurchaseDetailsList.add(dbJewelPurchaseDetails);
-			}
-		}
-		dbJewelPurchase.setJewelPurchaseDetails(dbJewelPurchaseDetailsList);
-		jewelPurchaseService.save(dbJewelPurchase);
+	public JewelPurchase saveJewelPurchase(@RequestBody JewelPurchase jewelPurchase) {
+		return jewelPurchaseService.save(jewelPurchase);
 	}
 	
 	

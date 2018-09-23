@@ -1,14 +1,20 @@
 package com.mytest.billapp.service.impl;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.mytest.billapp.model.JewelPurchase;
+import com.mytest.billapp.model.JewelPurchaseDetails;
+import com.mytest.billapp.repsitory.JewelPurchaseDetailsRepository;
 import com.mytest.billapp.repsitory.JewelPurchaseRepository;
 import com.mytest.billapp.service.JewelPurchaseService;
+import com.mytest.billapp.utils.AppUtils;
 
 @Service
 public class JewelPurchaseServiceImpl implements JewelPurchaseService {
@@ -16,10 +22,85 @@ public class JewelPurchaseServiceImpl implements JewelPurchaseService {
 	@Autowired
 	JewelPurchaseRepository jewelPurchaseRepository; 
 	
-	public JewelPurchase save(JewelPurchase entity) {
-		return jewelPurchaseRepository.save(entity);
+	@Autowired
+	JewelPurchaseDetailsRepository jewelPurchaseDetailsRepository;
+	
+	public JewelPurchase save(JewelPurchase jewelPurchase) {
+		
+		JewelPurchase dbJewelPurchase =  new JewelPurchase();
+		List<JewelPurchaseDetails> dbJewelPurchaseDetailsList = new ArrayList<>();
+		if(jewelPurchase != null && AppUtils.isValidNonZeroLong(jewelPurchase.getId())) 
+			dbJewelPurchase = getOne(jewelPurchase.getId());
+		BigDecimal totalAmount = new BigDecimal(0.0);
+		dbJewelPurchase.setPurchaseDate(jewelPurchase.getPurchaseDate());
+		dbJewelPurchase.setSupplierId(jewelPurchase.getSupplierId());
+		dbJewelPurchase.setTotalAmount(totalAmount);
+		if(CollectionUtils.isNotEmpty(jewelPurchase.getJewelPurchaseDetails())) {
+			for(JewelPurchaseDetails jewelPurchaseDetails : jewelPurchase.getJewelPurchaseDetails() ) {
+				JewelPurchaseDetails dbJewelPurchaseDetails = new JewelPurchaseDetails();
+				if(AppUtils.isValidNonZeroLong(jewelPurchaseDetails.getId())) 
+					dbJewelPurchaseDetails = jewelPurchaseDetailsRepository.findOne(jewelPurchaseDetails.getId());
+				
+				dbJewelPurchaseDetails.setCategoryId(jewelPurchaseDetails.getCategoryId());
+				dbJewelPurchaseDetails.setTotalWieght(jewelPurchaseDetails.getTotalWieght());
+				dbJewelPurchaseDetails.setQuantity(jewelPurchaseDetails.getQuantity());
+				BigDecimal avgWeight = new BigDecimal(jewelPurchaseDetails.getTotalWieght().floatValue() / jewelPurchaseDetails.getQuantity());
+				dbJewelPurchaseDetails.setAvgWieght(AppUtils.roundUp(avgWeight));
+				dbJewelPurchaseDetails.setQuality(jewelPurchaseDetails.getQuality());
+				dbJewelPurchaseDetails.setJewelPurchase(dbJewelPurchase);
+				dbJewelPurchaseDetails.setRateCutDate(jewelPurchaseDetails.getRateCutDate());
+				dbJewelPurchaseDetails.setRateCutAt(jewelPurchaseDetails.getRateCutAt());
+				dbJewelPurchaseDetails.setMakingChargePerPc(jewelPurchaseDetails.getMakingChargePerPc());
+				dbJewelPurchaseDetails.setTaxRate(jewelPurchaseDetails.getTaxRate());
+				dbJewelPurchaseDetails.setWastagePerPc(jewelPurchaseDetails.getWastagePerPc());
+				dbJewelPurchaseDetails.setPurchaseTotal(getPurchaseTotal(dbJewelPurchaseDetails));
+				dbJewelPurchaseDetailsList.add(dbJewelPurchaseDetails);
+			}
+		}
+		dbJewelPurchase.setJewelPurchaseDetails(dbJewelPurchaseDetailsList);
+		dbJewelPurchase.setTotalAmount(getAllPurchaseDetalsTotal(dbJewelPurchaseDetailsList));
+		return jewelPurchaseRepository.save(dbJewelPurchase);
 	}
 	
+	private BigDecimal getAllPurchaseDetalsTotal(List<JewelPurchaseDetails> dbJewelPurchaseDetailsList) {
+		BigDecimal purchaseTotal = BigDecimal.ZERO;
+		for(JewelPurchaseDetails detail: dbJewelPurchaseDetailsList) {
+			purchaseTotal = purchaseTotal.add(detail.getPurchaseTotal());
+		}
+		return AppUtils.roundUp(purchaseTotal);
+	}
+
+	private BigDecimal getPurchaseTotal(JewelPurchaseDetails dbJewelPurchaseDetails) {
+		BigDecimal purchaseTotal = BigDecimal.ZERO;
+		if(AppUtils.isValidNonZeroNumber(dbJewelPurchaseDetails.getRateCutAt())) {
+			if(AppUtils.isValidNonZeroNumber(dbJewelPurchaseDetails.getTotalWieght()) && AppUtils.isValidNonZeroNumber(dbJewelPurchaseDetails.getQuality())) {
+				BigDecimal netWeight = dbJewelPurchaseDetails.getTotalWieght().multiply(new BigDecimal(dbJewelPurchaseDetails.getQuality())).divide(new BigDecimal(100));
+				System.out.println("Net weight: "+netWeight.doubleValue());
+				purchaseTotal = netWeight.multiply(dbJewelPurchaseDetails.getRateCutAt());
+				System.out.println("Purchase Total: "+purchaseTotal.doubleValue());
+				if(AppUtils.isValidNonZeroNumber(dbJewelPurchaseDetails.getMakingChargePerPc())) {
+					BigDecimal mc = new BigDecimal(dbJewelPurchaseDetails.getQuantity()).multiply(dbJewelPurchaseDetails.getMakingChargePerPc());
+					System.out.println("Making Charge Total: "+mc.doubleValue());
+					purchaseTotal = purchaseTotal.add(mc);
+					System.out.println("Purchase Total: "+purchaseTotal.doubleValue());
+				}
+				if(AppUtils.isValidNonZeroNumber(dbJewelPurchaseDetails.getWastagePerPc())) {
+					BigDecimal wastageTotal = new BigDecimal(dbJewelPurchaseDetails.getQuantity()).multiply(dbJewelPurchaseDetails.getWastagePerPc());
+					System.out.println("Wastage Total: "+wastageTotal.doubleValue());
+					purchaseTotal = purchaseTotal.add(wastageTotal);
+					System.out.println("Purchase Total: "+purchaseTotal.doubleValue());
+				}
+				if(AppUtils.isValidNonZeroNumber(dbJewelPurchaseDetails.getTaxRate())) {
+					BigDecimal taxToal = purchaseTotal.multiply(dbJewelPurchaseDetails.getTaxRate()).divide(new BigDecimal(100));
+					System.out.println("Tax Total: "+taxToal.doubleValue());
+					purchaseTotal = purchaseTotal.add(taxToal);
+					System.out.println("Purchase Total: "+purchaseTotal.doubleValue());
+				}
+			}
+		}
+		return AppUtils.roundUp(purchaseTotal);
+	}
+
 	public List<JewelPurchase> saveAll(List<JewelPurchase> entities) {
 		return jewelPurchaseRepository.save(entities);
 	}

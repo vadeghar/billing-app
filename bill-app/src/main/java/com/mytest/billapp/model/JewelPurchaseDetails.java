@@ -21,6 +21,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mytest.billapp.utils.JsonDateDeSerializer;
@@ -41,6 +42,7 @@ public class JewelPurchaseDetails  extends BEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PURCHASE_ID")
     private JewelPurchase jewelPurchase;
@@ -89,6 +91,9 @@ public class JewelPurchaseDetails  extends BEntity implements Serializable {
 	@Column(name="MODIFIED_DATE")
 	@LastModifiedBy
 	private Date modifiedDate;
+	
+	@Column(name="PURCHASE_TOTAL")
+	private BigDecimal purchaseTotal;
 
 	public Long getId() {
 		return id;
@@ -208,6 +213,14 @@ public class JewelPurchaseDetails  extends BEntity implements Serializable {
 
 	public void setQuality(Integer quality) {
 		this.quality = quality;
+	}
+
+	public BigDecimal getPurchaseTotal() {
+		return purchaseTotal;
+	}
+
+	public void setPurchaseTotal(BigDecimal purchaseTotal) {
+		this.purchaseTotal = purchaseTotal;
 	}
 	
 }

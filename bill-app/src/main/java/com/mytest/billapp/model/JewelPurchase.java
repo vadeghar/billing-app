@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mytest.billapp.utils.JsonDateDeSerializer;
 import com.mytest.billapp.utils.JsonDateSerializer;
+import com.mytest.billapp.utils.JsonJewelPurchaseDetailsSerializer;
 
 @Entity
 @Table(name = "JEWEL_PURCHASE")
@@ -52,6 +53,7 @@ public class JewelPurchase  extends BEntity implements Serializable {
 	
 	@Column(name="TOTAL_AMOUNT")
 	private BigDecimal totalAmount;
+	
 	
 	@OneToMany(
 	        mappedBy = "jewelPurchase", 

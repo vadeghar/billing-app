@@ -224,8 +224,8 @@
 	 return _purchaseDetails;
  }
  
- function saveCallback() {
-	 console.log("saved");
+ function saveCallback(data) {
+	 console.log("saved: "+JSON.stringify(data));
  }
 
  function validateDetails() {
