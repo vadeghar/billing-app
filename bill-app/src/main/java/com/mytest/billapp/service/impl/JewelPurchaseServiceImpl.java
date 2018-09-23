@@ -5,15 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.mytest.billapp.model.JewelCategory;
 import com.mytest.billapp.model.JewelPurchase;
 import com.mytest.billapp.model.JewelPurchaseDetails;
+import com.mytest.billapp.model.JewelStock;
 import com.mytest.billapp.repsitory.JewelPurchaseDetailsRepository;
 import com.mytest.billapp.repsitory.JewelPurchaseRepository;
+import com.mytest.billapp.service.JewelCategoryService;
 import com.mytest.billapp.service.JewelPurchaseService;
+import com.mytest.billapp.service.JewelStockService;
 import com.mytest.billapp.utils.AppUtils;
 
 @Service
@@ -24,6 +29,12 @@ public class JewelPurchaseServiceImpl implements JewelPurchaseService {
 	
 	@Autowired
 	JewelPurchaseDetailsRepository jewelPurchaseDetailsRepository;
+	
+	@Autowired
+	JewelCategoryService jewelCategoryService;
+	
+	@Autowired
+	JewelStockService jewelStockService;
 	
 	public JewelPurchase save(JewelPurchase jewelPurchase) {
 		
@@ -40,7 +51,7 @@ public class JewelPurchaseServiceImpl implements JewelPurchaseService {
 				JewelPurchaseDetails dbJewelPurchaseDetails = new JewelPurchaseDetails();
 				if(AppUtils.isValidNonZeroLong(jewelPurchaseDetails.getId())) 
 					dbJewelPurchaseDetails = jewelPurchaseDetailsRepository.findOne(jewelPurchaseDetails.getId());
-				
+				JewelCategory jewelCategory = jewelCategoryService.getOne(jewelPurchaseDetails.getCategoryId());
 				dbJewelPurchaseDetails.setCategoryId(jewelPurchaseDetails.getCategoryId());
 				dbJewelPurchaseDetails.setTotalWieght(jewelPurchaseDetails.getTotalWieght());
 				dbJewelPurchaseDetails.setQuantity(jewelPurchaseDetails.getQuantity());
@@ -54,14 +65,35 @@ public class JewelPurchaseServiceImpl implements JewelPurchaseService {
 				dbJewelPurchaseDetails.setTaxRate(jewelPurchaseDetails.getTaxRate());
 				dbJewelPurchaseDetails.setWastagePerPc(jewelPurchaseDetails.getWastagePerPc());
 				dbJewelPurchaseDetails.setPurchaseTotal(getPurchaseTotal(dbJewelPurchaseDetails));
+				dbJewelPurchaseDetails.setGeneratedItemCode("SJ-"+dbJewelPurchase.getSupplierId()+jewelCategory.getName().toUpperCase());
 				dbJewelPurchaseDetailsList.add(dbJewelPurchaseDetails);
 			}
 		}
 		dbJewelPurchase.setJewelPurchaseDetails(dbJewelPurchaseDetailsList);
 		dbJewelPurchase.setTotalAmount(getAllPurchaseDetalsTotal(dbJewelPurchaseDetailsList));
-		return jewelPurchaseRepository.save(dbJewelPurchase);
+		JewelPurchase savedJewelPurchase = jewelPurchaseRepository.save(dbJewelPurchase);
+		updateJewelStock(savedJewelPurchase);
+		return savedJewelPurchase;
 	}
 	
+	private void updateJewelStock(JewelPurchase savedJewelPurchase) {
+		for(JewelPurchaseDetails jewelPurchaseDetails : savedJewelPurchase.getJewelPurchaseDetails()) {
+			JewelStock jewelStock = null;
+			if(!StringUtils.isEmpty(jewelPurchaseDetails.getGeneratedItemCode())) {
+				jewelStock = jewelStockService.findByItemCode(jewelPurchaseDetails.getGeneratedItemCode());
+			}
+			if(jewelStock == null)
+				jewelStock = new JewelStock();
+			jewelStock.setItemCode(jewelPurchaseDetails.getGeneratedItemCode());
+			jewelStock.setCategoryId(jewelPurchaseDetails.getCategoryId());
+			Integer quantity = jewelStock.getQuantity() + jewelPurchaseDetails.getQuantity();
+			BigDecimal totalWeight = jewelStock.getTotalWeight().add(jewelPurchaseDetails.getTotalWieght());
+			jewelStock.setQuantity(quantity);
+			jewelStock.setTotalWeight(totalWeight);
+			jewelStockService.save(jewelStock);
+		}
+	}
+
 	private BigDecimal getAllPurchaseDetalsTotal(List<JewelPurchaseDetails> dbJewelPurchaseDetailsList) {
 		BigDecimal purchaseTotal = BigDecimal.ZERO;
 		for(JewelPurchaseDetails detail: dbJewelPurchaseDetailsList) {
