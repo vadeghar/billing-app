@@ -94,6 +94,7 @@ public class JewelPurchaseDetails  extends BEntity implements Serializable {
 	
 	@Column(name="PURCHASE_TOTAL")
 	private BigDecimal purchaseTotal;
+	
 
 	public Long getId() {
 		return id;
