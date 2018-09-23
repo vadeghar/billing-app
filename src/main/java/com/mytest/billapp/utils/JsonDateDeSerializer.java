@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -18,11 +19,13 @@ public class JsonDateDeSerializer extends JsonDeserializer<Date>{
 
 	@Override
 	public Date deserialize(JsonParser jsonParser, DeserializationContext arg1) throws IOException, JsonProcessingException {
-		 String date = jsonParser.getText();
-		try {
-			return dateFormat.parse(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		if(!StringUtils.isEmpty(jsonParser.getText())) {
+			String date = jsonParser.getText();
+			try {
+				return dateFormat.parse(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
